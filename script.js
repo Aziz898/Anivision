@@ -1,4 +1,4 @@
-// Простой скрипт для проверки загрузки сайта
-document.addEventListener("DOMContentLoaded", function() {
-  console.log("Anime Mini App загружен");
+// Простой скрипт для отладки
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Сайт Anivision загружен");
 });
