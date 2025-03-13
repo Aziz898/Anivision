@@ -1,0 +1,61 @@
+/* Общие стили для сайта */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 1em;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  background: #444;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin: 0 1em;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+main {
+  padding: 1em;
+}
+
+.anime-card {
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin: 1em;
+  display: inline-block;
+  text-align: center;
+  vertical-align: top;
+}
+
+.watch-btn {
+  display: inline-block;
+  background: #007BFF;
+  color: #fff;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 0.5em;
+}
+
+footer {
+  background: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1em;
+}
