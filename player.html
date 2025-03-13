@@ -7,29 +7,43 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Лёгкая шапка (без sidebar), чтобы показать пример -->
+  <!-- Упрощенная шапка -->
   <header class="topbar" style="justify-content: space-between;">
     <div style="margin-left: 1rem;">
       <a href="index.html" class="btn btn-signin">На главную</a>
     </div>
-    <h2>Аниме Плеер</h2>
+    <h2>Anivision Player</h2>
     <div style="margin-right: 1rem;">
-      <button class="btn btn-theme-toggle" id="theme-toggle-btn">Сменить тему</button>
+      <label class="switch">
+        <input type="checkbox" id="theme-toggle-checkbox-player">
+        <span class="slider round"></span>
+      </label>
     </div>
   </header>
 
-  <section class="section-block" style="padding-top: 5rem;">
+  <section class="section-block" style="max-width: 800px; margin: 2rem auto;">
     <div class="player-container">
-      <!-- Пример встраивания YouTube-видео (можно заменить на <video> c MP4) -->
       <div class="video-wrapper">
-        <iframe width="560" height="315" 
-          src="https://www.youtube.com/embed/SZVYYRdwVd0" 
-          title="YouTube video player" 
-          frameborder="0" allowfullscreen>
+        <!-- Пример: встраиваем видео с YouTube (замените на нужное) -->
+        <iframe width="560" height="315"
+          src="https://www.youtube.com/embed/SZVYYRdwVd0"
+          title="YouTube video player"
+          frameborder="0"
+          allowfullscreen>
         </iframe>
       </div>
       <h3>Название аниме: Пример</h3>
-      <p>Описание: Тестовый плеер с YouTube-видео.</p>
+      <p>Описание: Тестовый плеер с YouTube-видео. Можно заменить на собственный плеер.</p>
+    </div>
+
+    <!-- Фиктивный список серий -->
+    <div class="section-block" style="background-color: transparent; margin-top: 2rem;">
+      <h4>Список серий</h4>
+      <ul style="list-style: none; margin-top: 1rem;">
+        <li><a href="player.html">Серия 1</a></li>
+        <li><a href="player.html">Серия 2</a></li>
+        <li><a href="player.html">Серия 3</a></li>
+      </ul>
     </div>
   </section>
 
