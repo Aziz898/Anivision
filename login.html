@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Anivision — Вход</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Упрощенная шапка -->
+  <header class="topbar" style="justify-content: center;">
+    <h2>Anivision — Вход</h2>
+  </header>
+
+  <section class="section-block" style="max-width: 400px; margin: 3rem auto;">
+    <h3>Авторизация</h3>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="login-email">E-mail</label>
+        <input type="email" id="login-email" required>
+      </div>
+      <div class="form-group">
+        <label for="login-password">Пароль</label>
+        <input type="password" id="login-password" required>
+      </div>
+      <button type="submit" class="btn btn-signin">Войти</button>
+    </form>
+    <p style="margin-top: 1rem;">
+      Нет аккаунта? <a href="register.html">Создать</a>
+    </p>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
