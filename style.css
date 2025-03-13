@@ -5,17 +5,17 @@
   box-sizing: border-box;
 }
 
-/* БАЗОВЫЕ СТИЛИ */
+/* БАЗОВЫЕ СТИЛИ (ночная тема по умолчанию) */
 body {
   font-family: 'Montserrat', sans-serif;
   background-color: #1c1c1e;
   color: #fff;
   display: flex; 
-  /* sidebar и main-content располагаются в одной строке */
   position: relative;
+  /* sidebar и main-content располагаются в одной строке */
 }
 
-/* ---- АНИМИРОВАННЫЙ ФОН (GIF) ---- */
+/* АНИМИРОВАННЫЙ ФОН (пример) */
 body::before {
   content: "";
   position: fixed;
@@ -23,22 +23,21 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  /* Замените на свою гифку */
   background: url("images/background.gif") no-repeat center center/cover;
   z-index: -1;
-  opacity: 0.25; /* Прозрачность, чтобы не перебивало контент */
+  opacity: 0.25; /* Прозрачность */
 }
 
-/* Стили для ссылок */
+/* ССЫЛКИ */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* ---------- SIDEBAR (левое меню) ---------- */
+/* ------ SIDEBAR ------ */
 .sidebar {
   width: 250px;
-  background-color: rgba(34, 34, 36, 0.95); /* полупрозрачный тёмный фон */
+  background-color: rgba(34, 34, 36, 0.95);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -48,15 +47,13 @@ a {
 .sidebar-header {
   margin-bottom: 2rem;
 }
-
 .logo {
   color: #fff;
   font-size: 1.5rem;
 }
 .logo span {
-  color: #a749f8; /* акцентный цвет */
+  color: #a749f8;
 }
-
 .profile-section {
   text-align: center;
   margin-bottom: 2rem;
@@ -70,7 +67,6 @@ a {
 .username {
   font-size: 1.1rem;
 }
-
 .menu ul {
   list-style: none;
 }
@@ -91,9 +87,8 @@ a {
 .menu li .icon {
   margin-right: 0.5rem;
 }
-
 .quick-filter {
-  margin-top: auto; /* чтобы блок "Быстрый фильтр" прижался к низу */
+  margin-top: auto;
 }
 .quick-filter h4 {
   margin-bottom: 0.5rem;
@@ -115,7 +110,7 @@ a {
   background-color: #2f2f33;
 }
 
-/* ---------- MAIN CONTENT (справа) ---------- */
+/* ------ MAIN CONTENT ------ */
 .main-content {
   flex: 1; 
   display: flex;
@@ -123,7 +118,7 @@ a {
   min-height: 100vh; 
 }
 
-/* Верхняя панель (topbar) */
+/* TOPBAR */
 .topbar {
   display: flex;
   align-items: center;
@@ -131,7 +126,6 @@ a {
   background-color: rgba(31, 31, 33, 0.95);
   justify-content: space-between;
 }
-
 .search-box input {
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -141,7 +135,6 @@ a {
   background-color: #2c2c2e;
   color: #fff;
 }
-
 .top-menu ul {
   list-style: none;
   display: flex;
@@ -157,22 +150,35 @@ a {
 .top-menu a:hover {
   color: #a749f8;
 }
-
-.sign-in .btn-signin {
+.btn-signin {
   background-color: #a749f8;
   color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   transition: background 0.3s;
+  margin-left: 1rem;
 }
-.sign-in .btn-signin:hover {
+.btn-signin:hover {
   background-color: #933ae0;
 }
+.btn-theme-toggle {
+  background-color: #2c2c2e;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  transition: background 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+.btn-theme-toggle:hover {
+  background-color: #3a3a3d;
+  transform: scale(1.05);
+}
 
-/* ---------- HERO BANNER ---------- */
+/* ------ HERO BANNER ------ */
 .hero-banner {
   position: relative;
-  background-color: #2c2c2e; /* fallback, если нет фонового изображения */
+  background-color: #2c2c2e;
   min-height: 300px;
   display: flex;
   align-items: center;
@@ -182,7 +188,6 @@ a {
 .banner-bg {
   position: absolute;
   inset: 0;
-  /* Замените banner-bg.jpg на свой файл, если нужно */
   background: url("images/banner-bg.jpg") no-repeat center center/cover;
   filter: brightness(0.6);
   z-index: 0;
@@ -215,11 +220,8 @@ a {
   background-color: #933ae0;
   transform: scale(1.05);
 }
-.btn-watch {
-  margin-left: 0;
-}
 
-/* ---------- CONTINUE WATCHING / LATEST RELEASES ---------- */
+/* ------ SECTION BLOCKS ------ */
 .section-block {
   padding: 2rem;
   background-color: rgba(28, 28, 30, 0.9);
@@ -231,7 +233,7 @@ a {
 .card-row {
   display: flex;
   gap: 1rem;
-  overflow-x: auto; /* горизонтальная прокрутка, если карточек много */
+  overflow-x: auto;
 }
 .card {
   min-width: 200px;
@@ -239,7 +241,7 @@ a {
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s;
-  flex-shrink: 0; /* чтобы карточка не сжималась */
+  flex-shrink: 0;
 }
 .card:hover {
   transform: scale(1.03);
@@ -261,7 +263,7 @@ a {
   color: #ccc;
 }
 
-/* ---------- FOOTER ---------- */
+/* ------ FOOTER ------ */
 .main-footer {
   background-color: rgba(31, 31, 33, 0.95);
   text-align: center;
@@ -272,10 +274,31 @@ a {
   color: #aaa;
 }
 
-/* ---------- АДАПТИВНОСТЬ ---------- */
+/* ------ ПЛЕЕР ------ */
+.player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.video-wrapper {
+  max-width: 600px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 1rem;
+}
+.video-wrapper iframe, 
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+}
+
+/* ------ АДАПТИВНОСТЬ ------ */
 @media (max-width: 900px) {
   .sidebar {
-    display: none; /* скрываем sidebar на узких экранах, по желанию */
+    display: none;
   }
   .main-content {
     margin-left: 0;
@@ -291,4 +314,41 @@ a {
   .banner-content h1 {
     font-size: 1.5rem;
   }
+}
+
+/* ========================================== */
+/*          Тема "Дневная" (light theme)      */
+/* ========================================== */
+body.light-theme {
+  background-color: #f0f0f0;
+  color: #222;
+}
+body.light-theme::before {
+  /* Отключаем или меняем gif-фон для дневной темы */
+  background: none;
+}
+body.light-theme .sidebar {
+  background-color: #e6e6e6;
+}
+body.light-theme .topbar {
+  background-color: #dcdcdc;
+}
+body.light-theme .section-block {
+  background-color: #f9f9f9;
+}
+body.light-theme .btn-theme-toggle {
+  background-color: #ccc;
+  color: #222;
+}
+body.light-theme .btn-signin {
+  background-color: #a749f8; /* можно оставить акцент */
+  color: #fff;
+}
+body.light-theme .card {
+  background-color: #ffffff;
+  color: #222;
+}
+body.light-theme .main-footer {
+  background-color: #dcdcdc;
+  color: #444;
 }
