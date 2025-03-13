@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Anivision — Настройки</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar" style="justify-content: space-between;">
+    <div style="margin-left: 1rem;">
+      <a href="index.html" class="btn btn-signin">На главную</a>
+    </div>
+    <h2>Настройки</h2>
+    <div style="margin-right: 1rem;">
+      <label class="switch">
+        <input type="checkbox" id="theme-toggle-checkbox-settings">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </header>
+
+  <section class="section-block" style="max-width: 600px; margin: 2rem auto;">
+    <h3>Параметры приложения</h3>
+
+    <div class="form-group">
+      <label>
+        <input type="checkbox" id="notif-checkbox">
+        Уведомления
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label>Размер шрифта</label>
+      <select id="font-size-select">
+        <option value="100%">Обычный</option>
+        <option value="110%">Чуть больше</option>
+        <option value="125%">Крупный</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input type="checkbox" id="chat-darkmode-checkbox">
+        Тёмная тема чата
+      </label>
+    </div>
+
+    <button class="btn btn-signin" id="save-settings-btn" style="margin-top: 1rem;">Сохранить</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
