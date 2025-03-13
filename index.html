@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Anivision — Аниме с комфортом</title>
-  <!-- Адаптивная верстка на мобильных устройствах -->
+  <!-- Адаптивная верстка -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Подключаем стили -->
   <link rel="stylesheet" href="style.css">
@@ -14,29 +14,29 @@
   <!-- Левое боковое меню -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <!-- Логотип или название -->
       <h2 class="logo">Ani<span>vision</span></h2>
     </div>
 
     <!-- Профиль пользователя -->
     <div class="profile-section">
+      <!-- Заглушка: аватар через ссылку -->
       <img 
-        src="images/avatar.png" 
+        src="https://via.placeholder.com/80x80.png?text=Avatar" 
         alt="Аватар" 
         class="avatar"
       >
-      <h3 class="username">Азиз</h3>
+      <h3 class="username" id="sidebar-username">Гость</h3>
     </div>
 
-    <!-- Основные ссылки в боковом меню -->
+    <!-- Меню -->
     <nav class="menu">
       <ul>
-        <li><a href="#" class="menu-link" data-action="my-list"><span class="icon">&#9733;</span> Мой список</a></li>
-        <li><a href="#" class="menu-link" data-action="last-watched"><span class="icon">&#128197;</span> Последнее просмотренное</a></li>
-        <li><a href="#" class="menu-link" data-action="continue"><span class="icon">&#9199;</span> Продолжить просмотр</a></li>
-        <li><a href="#" class="menu-link" data-action="favorites"><span class="icon">&#10084;</span> Избранное</a></li>
-        <li><a href="#" class="menu-link" data-action="global"><span class="icon">&#128081;</span> Глобальная оценка</a></li>
-        <li><a href="#" class="menu-link" data-action="settings"><span class="icon">&#9881;</span> Настройки</a></li>
+        <li><a href="profile.html"><span class="icon">&#9733;</span> Профиль</a></li>
+        <li><a href="#"><span class="icon">&#128197;</span> Последнее просмотренное</a></li>
+        <li><a href="#"><span class="icon">&#9199;</span> Продолжить просмотр</a></li>
+        <li><a href="#"><span class="icon">&#10084;</span> Избранное</a></li>
+        <li><a href="#"><span class="icon">&#128081;</span> Глобальная оценка</a></li>
+        <li><a href="#"><span class="icon">&#9881;</span> Настройки</a></li>
       </ul>
     </nav>
 
@@ -44,21 +44,22 @@
     <div class="quick-filter">
       <h4>Быстрый фильтр</h4>
       <ul>
-        <li><a href="#" class="filter-link" data-filter="action">Экшен</a></li>
-        <li><a href="#" class="filter-link" data-filter="romance">Романтика</a></li>
-        <li><a href="#" class="filter-link" data-filter="comedy">Комедия</a></li>
-        <li><a href="#" class="filter-link" data-filter="fantasy">Фэнтези</a></li>
+        <li><a href="#">Экшен</a></li>
+        <li><a href="#">Романтика</a></li>
+        <li><a href="#">Комедия</a></li>
+        <li><a href="#">Фэнтези</a></li>
       </ul>
     </div>
   </aside>
 
-  <!-- Основная область контента -->
+  <!-- Основная часть -->
   <div class="main-content">
-    <!-- Верхняя панель с поиском, категориями и переключением темы -->
+    <!-- Верхняя панель -->
     <header class="topbar">
       <div class="search-box">
         <input type="text" placeholder="Поиск аниме...">
       </div>
+
       <nav class="top-menu">
         <ul>
           <li><a href="#">Аниме</a></li>
@@ -66,11 +67,16 @@
           <li><a href="#">Фильмы</a></li>
         </ul>
       </nav>
+
       <div class="controls">
-        <!-- Кнопка смены темы -->
-        <button class="btn btn-theme-toggle" id="theme-toggle-btn">Сменить тему</button>
+        <!-- Слайдер-переключатель темы -->
+        <label class="switch">
+          <input type="checkbox" id="theme-toggle-checkbox">
+          <span class="slider round"></span>
+        </label>
+
         <!-- Кнопка "Войти" -->
-        <a href="#" class="btn btn-signin" id="signin-btn">Войти</a>
+        <a href="login.html" class="btn btn-signin" id="signin-btn">Войти</a>
       </div>
     </header>
 
@@ -81,22 +87,21 @@
         <h1>Магическая битва (2 сезон)</h1>
         <p>Продолжение эпической истории о чародеях, сражающихся с проклятиями.</p>
         <div class="banner-buttons">
-          <!-- Ссылка на страницу плеера -->
           <a href="player.html" class="btn btn-watch">Смотреть сейчас</a>
-          <a href="#" class="btn btn-learn" id="learn-more-btn">Подробнее</a>
+          <a href="#" class="btn btn-learn">Подробнее</a>
         </div>
       </div>
     </section>
 
-    <!-- Блок «Продолжить просмотр» -->
+    <!-- Продолжить просмотр -->
     <section class="section-block">
       <h2>Продолжить просмотр</h2>
       <div class="card-row">
-        <!-- Пример карточки 1 (ведёт на страницу плеера) -->
+        <!-- Карточка 1 -->
         <div class="card">
           <div class="card-image">
             <a href="player.html">
-              <img src="images/anime1.png" alt="Anime 1">
+              <img src="https://via.placeholder.com/200x300.png?text=Anime+1" alt="Anime 1">
             </a>
           </div>
           <div class="card-info">
@@ -104,11 +109,11 @@
             <p>Эпизод 5 из 24</p>
           </div>
         </div>
-        <!-- Пример карточки 2 -->
+        <!-- Карточка 2 -->
         <div class="card">
           <div class="card-image">
             <a href="player.html">
-              <img src="images/anime2.png" alt="Anime 2">
+              <img src="https://via.placeholder.com/200x300.png?text=Anime+2" alt="Anime 2">
             </a>
           </div>
           <div class="card-info">
@@ -116,11 +121,11 @@
             <p>Эпизод 10 из 12</p>
           </div>
         </div>
-        <!-- Пример карточки 3 -->
+        <!-- Карточка 3 -->
         <div class="card">
           <div class="card-image">
             <a href="player.html">
-              <img src="images/anime3.png" alt="Anime 3">
+              <img src="https://via.placeholder.com/200x300.png?text=Anime+3" alt="Anime 3">
             </a>
           </div>
           <div class="card-info">
@@ -131,34 +136,34 @@
       </div>
     </section>
 
-    <!-- Блок «Последние релизы» -->
+    <!-- Последние релизы -->
     <section class="section-block">
       <h2>Последние релизы</h2>
       <div class="card-row">
-        <!-- Пример карточки 1 -->
+        <!-- Карточка 4 -->
         <div class="card">
           <div class="card-image">
-            <img src="images/anime4.png" alt="Anime 4">
+            <img src="https://via.placeholder.com/200x300.png?text=Anime+4" alt="Anime 4">
           </div>
           <div class="card-info">
             <h3>Название аниме 4</h3>
             <p>Новая серия вышла</p>
           </div>
         </div>
-        <!-- Пример карточки 2 -->
+        <!-- Карточка 5 -->
         <div class="card">
           <div class="card-image">
-            <img src="images/anime1.png" alt="Anime 5">
+            <img src="https://via.placeholder.com/200x300.png?text=Anime+5" alt="Anime 5">
           </div>
           <div class="card-info">
             <h3>Название аниме 5</h3>
             <p>Новая серия вышла</p>
           </div>
         </div>
-        <!-- Пример карточки 3 -->
+        <!-- Карточка 6 -->
         <div class="card">
           <div class="card-image">
-            <img src="images/anime2.png" alt="Anime 6">
+            <img src="https://via.placeholder.com/200x300.png?text=Anime+6" alt="Anime 6">
           </div>
           <div class="card-info">
             <h3>Название аниме 6</h3>
@@ -168,13 +173,13 @@
       </div>
     </section>
 
-    <!-- Подвал (footer) -->
+    <!-- Подвал -->
     <footer class="main-footer">
       <p>&copy; 2025 Anivision. Все права защищены.</p>
     </footer>
   </div>
 
-  <!-- Подключаем скрипты -->
+  <!-- Скрипт -->
   <script src="script.js"></script>
 </body>
 </html>
