@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Anivision — Профиль</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Упрощенная шапка -->
+  <header class="topbar" style="justify-content: space-between;">
+    <div style="margin-left: 1rem;">
+      <a href="index.html" class="btn btn-signin">На главную</a>
+    </div>
+    <h2 id="profile-title">Мой профиль</h2>
+    <div style="margin-right: 1rem;">
+      <label class="switch">
+        <input type="checkbox" id="theme-toggle-checkbox-profile">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </header>
+
+  <section class="section-block" style="max-width: 600px; margin: 2rem auto;">
+    <h3 id="profile-username">Гость</h3>
+    <p>E-mail: <span id="profile-email">unknown</span></p>
+
+    <button class="btn btn-signin" id="logout-btn" style="margin-top: 1rem;">Выйти</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
