@@ -1,4 +1,16 @@
 /* Сброс стилей */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+  }
+  .nav-links {
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+}
 * {
   margin: 0;
   padding: 0;
