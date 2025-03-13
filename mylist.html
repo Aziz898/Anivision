@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Anivision — Мой список</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar" style="justify-content: space-between;">
+    <div style="margin-left: 1rem;">
+      <a href="index.html" class="btn btn-signin">На главную</a>
+    </div>
+    <h2>Мой список</h2>
+    <div style="margin-right: 1rem;">
+      <label class="switch">
+        <input type="checkbox" id="theme-toggle-checkbox-mylist">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </header>
+
+  <section class="section-block">
+    <h3>Добавить аниме в список</h3>
+    <div class="form-group" style="max-width: 400px;">
+      <input type="text" id="mylist-anime-title" placeholder="Название аниме...">
+      <button class="btn btn-signin" id="mylist-add-btn" style="margin-top: 1rem;">Добавить</button>
+    </div>
+  </section>
+
+  <section class="section-block" style="min-height: 200px;">
+    <h3>Мой список</h3>
+    <ul id="mylist-container" style="list-style: none; margin-top: 1rem;"></ul>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
