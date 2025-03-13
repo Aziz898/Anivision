@@ -2,12 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Anivision — Аниме с комфортом</title>
-  <!-- Адаптивная верстка -->
+  <title>Anivision — Главная</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключаем стили -->
   <link rel="stylesheet" href="style.css">
-  <!-- Шрифт (пример: Montserrat) -->
+  <!-- Шрифт -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -19,10 +17,9 @@
 
     <!-- Профиль пользователя -->
     <div class="profile-section">
-      <!-- Заглушка: аватар через ссылку -->
       <img 
         src="https://via.placeholder.com/80x80.png?text=Avatar" 
-        alt="Аватар" 
+        alt="Avatar" 
         class="avatar"
       >
       <h3 class="username" id="sidebar-username">Гость</h3>
@@ -32,11 +29,9 @@
     <nav class="menu">
       <ul>
         <li><a href="profile.html"><span class="icon">&#9733;</span> Профиль</a></li>
-        <li><a href="#"><span class="icon">&#128197;</span> Последнее просмотренное</a></li>
-        <li><a href="#"><span class="icon">&#9199;</span> Продолжить просмотр</a></li>
-        <li><a href="#"><span class="icon">&#10084;</span> Избранное</a></li>
-        <li><a href="#"><span class="icon">&#128081;</span> Глобальная оценка</a></li>
-        <li><a href="#"><span class="icon">&#9881;</span> Настройки</a></li>
+        <li><a href="mylist.html"><span class="icon">&#10084;</span> Мой список</a></li>
+        <li><a href="chat.html"><span class="icon">&#128172;</span> Чат</a></li>
+        <li><a href="settings.html"><span class="icon">&#9881;</span> Настройки</a></li>
       </ul>
     </nav>
 
@@ -74,13 +69,12 @@
           <input type="checkbox" id="theme-toggle-checkbox">
           <span class="slider round"></span>
         </label>
-
         <!-- Кнопка "Войти" -->
         <a href="login.html" class="btn btn-signin" id="signin-btn">Войти</a>
       </div>
     </header>
 
-    <!-- Баннер (Hero) -->
+    <!-- Баннер -->
     <section class="hero-banner">
       <div class="banner-bg"></div>
       <div class="banner-content">
@@ -88,7 +82,7 @@
         <p>Продолжение эпической истории о чародеях, сражающихся с проклятиями.</p>
         <div class="banner-buttons">
           <a href="player.html" class="btn btn-watch">Смотреть сейчас</a>
-          <a href="#" class="btn btn-learn">Подробнее</a>
+          <a href="#" class="btn btn-learn" id="banner-learn-btn">Подробнее</a>
         </div>
       </div>
     </section>
@@ -101,7 +95,7 @@
         <div class="card">
           <div class="card-image">
             <a href="player.html">
-              <img src="https://via.placeholder.com/200x300.png?text=Anime+1" alt="Anime 1">
+              <img src="https://placehold.co/200x300?text=Anime+1" alt="Anime 1">
             </a>
           </div>
           <div class="card-info">
@@ -113,24 +107,12 @@
         <div class="card">
           <div class="card-image">
             <a href="player.html">
-              <img src="https://via.placeholder.com/200x300.png?text=Anime+2" alt="Anime 2">
+              <img src="https://placehold.co/200x300?text=Anime+2" alt="Anime 2">
             </a>
           </div>
           <div class="card-info">
             <h3>Название аниме 2</h3>
             <p>Эпизод 10 из 12</p>
-          </div>
-        </div>
-        <!-- Карточка 3 -->
-        <div class="card">
-          <div class="card-image">
-            <a href="player.html">
-              <img src="https://via.placeholder.com/200x300.png?text=Anime+3" alt="Anime 3">
-            </a>
-          </div>
-          <div class="card-info">
-            <h3>Название аниме 3</h3>
-            <p>Эпизод 3 из 10</p>
           </div>
         </div>
       </div>
@@ -140,33 +122,23 @@
     <section class="section-block">
       <h2>Последние релизы</h2>
       <div class="card-row">
+        <!-- Карточка 3 -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://placehold.co/200x300?text=Anime+3" alt="Anime 3">
+          </div>
+          <div class="card-info">
+            <h3>Название аниме 3</h3>
+            <p>Новая серия вышла</p>
+          </div>
+        </div>
         <!-- Карточка 4 -->
         <div class="card">
           <div class="card-image">
-            <img src="https://via.placeholder.com/200x300.png?text=Anime+4" alt="Anime 4">
+            <img src="https://placehold.co/200x300?text=Anime+4" alt="Anime 4">
           </div>
           <div class="card-info">
             <h3>Название аниме 4</h3>
-            <p>Новая серия вышла</p>
-          </div>
-        </div>
-        <!-- Карточка 5 -->
-        <div class="card">
-          <div class="card-image">
-            <img src="https://via.placeholder.com/200x300.png?text=Anime+5" alt="Anime 5">
-          </div>
-          <div class="card-info">
-            <h3>Название аниме 5</h3>
-            <p>Новая серия вышла</p>
-          </div>
-        </div>
-        <!-- Карточка 6 -->
-        <div class="card">
-          <div class="card-image">
-            <img src="https://via.placeholder.com/200x300.png?text=Anime+6" alt="Anime 6">
-          </div>
-          <div class="card-info">
-            <h3>Название аниме 6</h3>
             <p>Новая серия вышла</p>
           </div>
         </div>
@@ -179,7 +151,6 @@
     </footer>
   </div>
 
-  <!-- Скрипт -->
   <script src="script.js"></script>
 </body>
 </html>
