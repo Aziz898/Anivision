@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Anivision — Чат</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar" style="justify-content: space-between;">
+    <div style="margin-left: 1rem;">
+      <a href="index.html" class="btn btn-signin">На главную</a>
+    </div>
+    <h2>Чат</h2>
+    <div style="margin-right: 1rem;">
+      <label class="switch">
+        <input type="checkbox" id="theme-toggle-checkbox-chat">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </header>
+
+  <section class="section-block" style="max-width: 600px; margin: 2rem auto;">
+    <div id="chat-messages" style="height: 300px; overflow-y: auto; background: rgba(28,28,30,0.8); padding: 1rem; border-radius: 8px;">
+      <!-- Сообщения чата будут добавляться скриптом -->
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <input type="text" id="chat-input" placeholder="Введите сообщение..." style="width: 70%; padding: 0.5rem;">
+      <button class="btn btn-signin" id="chat-send-btn">Отправить</button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
