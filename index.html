@@ -2,76 +2,172 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Anivision — Смотреть аниме</title>
-  <!-- Важно: мета-тег для адаптивной вёрстки -->
+  <title>Anivision — Modern Anime UI</title>
+  <!-- Обеспечиваем адаптивную верстку на мобильных устройствах -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключаем шрифт -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <!-- Стили -->
+  <!-- Подключаем стили -->
   <link rel="stylesheet" href="style.css">
+  <!-- Шрифт (пример: Montserrat) -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Шапка с навигацией -->
-  <header>
-    <nav class="navbar">
-      <div class="logo">
-        <a href="#">Anivision</a>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#">Главная</a></li>
-        <li><a href="#">Поиск</a></li>
-        <li><a href="#">Подборки</a></li>
-        <li><a href="#">О сайте</a></li>
+  <!-- Левое боковое меню (sidebar) -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <!-- Логотип или название -->
+      <h2 class="logo">Ani<span>vision</span></h2>
+    </div>
+
+    <!-- Профиль пользователя (пример) -->
+    <div class="profile-section">
+      <img 
+        src="https://via.placeholder.com/80x80.png?text=Avatar" 
+        alt="User Avatar" 
+        class="avatar"
+      >
+      <h3 class="username">Aziz</h3>
+    </div>
+
+    <!-- Основные ссылки в боковом меню -->
+    <nav class="menu">
+      <ul>
+        <li><a href="#"><span class="icon">&#9733;</span> My List</a></li>
+        <li><a href="#"><span class="icon">&#128197;</span> Last Watched</a></li>
+        <li><a href="#"><span class="icon">&#9199;</span> Continue Watching</a></li>
+        <li><a href="#"><span class="icon">&#10084;</span> Favorite</a></li>
+        <li><a href="#"><span class="icon">&#128081;</span> Global Evaluation</a></li>
+        <li><a href="#"><span class="icon">&#9881;</span> Settings</a></li>
       </ul>
     </nav>
-  </header>
 
-  <!-- Hero-секция -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Смотри аниме с комфортом</h1>
-      <p>Высокое качество, удобный интерфейс и стильный дизайн</p>
-      <a href="#" class="btn">Начать смотреть</a>
+    <!-- Быстрый фильтр (пример) -->
+    <div class="quick-filter">
+      <h4>Quick Filter</h4>
+      <ul>
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Romance</a></li>
+        <li><a href="#">Comedy</a></li>
+        <li><a href="#">Fantasy</a></li>
+      </ul>
     </div>
-  </section>
+  </aside>
 
-  <!-- Секция с карточками аниме -->
-  <section class="anime-section">
-    <div class="container">
-      <h2>Популярные аниме</h2>
-      <div class="anime-grid">
-        <!-- Пример карточки 1 -->
-        <div class="anime-card">
-          <img src="https://images.unsplash.com/photo-1587651029685-042a2f3bc7b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400&q=80" alt="Anime Poster">
-          <h3>Название аниме 1</h3>
-        </div>
-        <!-- Пример карточки 2 -->
-        <div class="anime-card">
-          <img src="https://images.unsplash.com/photo-1587614382346-4c97f81e18d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400&q=80" alt="Anime Poster">
-          <h3>Название аниме 2</h3>
-        </div>
-        <!-- Пример карточки 3 -->
-        <div class="anime-card">
-          <img src="https://via.placeholder.com/400x600?text=Anime+Poster" alt="Anime Poster">
-          <h3>Название аниме 3</h3>
-        </div>
-        <!-- Пример карточки 4 -->
-        <div class="anime-card">
-          <img src="https://via.placeholder.com/400x600?text=Anime+Poster" alt="Anime Poster">
-          <h3>Название аниме 4</h3>
+  <!-- Основная область контента -->
+  <div class="main-content">
+    <!-- Верхняя панель с поиском и категориями -->
+    <header class="topbar">
+      <div class="search-box">
+        <input type="text" placeholder="Search anime...">
+      </div>
+      <nav class="top-menu">
+        <ul>
+          <li><a href="#">Anime</a></li>
+          <li><a href="#">Manga</a></li>
+          <li><a href="#">Movies</a></li>
+        </ul>
+      </nav>
+      <div class="sign-in">
+        <a href="#" class="btn btn-signin">Sign In</a>
+      </div>
+    </header>
+
+    <!-- Баннер (Hero) -->
+    <section class="hero-banner">
+      <div class="banner-bg">
+        <!-- Фоновое изображение задается в CSS, 
+             при необходимости можно поместить img напрямую -->
+      </div>
+      <div class="banner-content">
+        <h1>Jujutsu Kaisen Season 2</h1>
+        <p>Continue the epic story of sorcerers battling curses in this action-packed sequel.</p>
+        <div class="banner-buttons">
+          <a href="#" class="btn btn-watch">In Watch Now</a>
+          <a href="#" class="btn btn-learn">Learn More</a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Подвал -->
-  <footer>
-    <div class="footer-container">
-      <p>&copy; 2025 Anivision. Все права защищены.</p>
-    </div>
-  </footer>
+    <!-- Блок «Continue Watching» -->
+    <section class="section-block">
+      <h2>Continue Watching</h2>
+      <div class="card-row">
+        <!-- Пример карточки 1 -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://via.placeholder.com/300x450.png?text=Anime+1" alt="Anime 1">
+          </div>
+          <div class="card-info">
+            <h3>Anime Title 1</h3>
+            <p>Episode 5 of 24</p>
+          </div>
+        </div>
+        <!-- Пример карточки 2 -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://via.placeholder.com/300x450.png?text=Anime+2" alt="Anime 2">
+          </div>
+          <div class="card-info">
+            <h3>Anime Title 2</h3>
+            <p>Episode 10 of 12</p>
+          </div>
+        </div>
+        <!-- Пример карточки 3 -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://via.placeholder.com/300x450.png?text=Anime+3" alt="Anime 3">
+          </div>
+          <div class="card-info">
+            <h3>Anime Title 3</h3>
+            <p>Episode 3 of 10</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Скрипты -->
+    <!-- Блок «Latest Releases» -->
+    <section class="section-block">
+      <h2>Latest Releases</h2>
+      <div class="card-row">
+        <!-- Пример карточки 1 -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://via.placeholder.com/300x450.png?text=Anime+4" alt="Anime 4">
+          </div>
+          <div class="card-info">
+            <h3>Anime Title 4</h3>
+            <p>New Episode Out</p>
+          </div>
+        </div>
+        <!-- Пример карточки 2 -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://via.placeholder.com/300x450.png?text=Anime+5" alt="Anime 5">
+          </div>
+          <div class="card-info">
+            <h3>Anime Title 5</h3>
+            <p>New Episode Out</p>
+          </div>
+        </div>
+        <!-- Пример карточки 3 -->
+        <div class="card">
+          <div class="card-image">
+            <img src="https://via.placeholder.com/300x450.png?text=Anime+6" alt="Anime 6">
+          </div>
+          <div class="card-info">
+            <h3>Anime Title 6</h3>
+            <p>New Episode Out</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Подвал (footer) -->
+    <footer class="main-footer">
+      <p>&copy; 2025 Anivision. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Подключаем скрипты -->
   <script src="script.js"></script>
 </body>
 </html>
