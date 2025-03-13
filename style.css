@@ -405,3 +405,13 @@ body.light-theme .main-footer {
   background-color: #dcdcdc;
   color: #444;
 }
+#chat-messages .chat-message {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: #2c2c2e;
+  border-radius: 4px;
+}
+#chat-messages .chat-user {
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
