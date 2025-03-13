@@ -1,30 +1,49 @@
-/* Сброс стилей */
+/* СБРОС СТИЛЕЙ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Общие стили */
+/* БАЗОВЫЕ СТИЛИ */
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #141414;
   color: #fff;
   line-height: 1.6;
+  position: relative; /* для псевдо-элемента со "звёздным" фоном */
+  /* Базовый тёмный цвет фона */
+  background-color: #141414;
 }
 
-/* ======= НАВИГАЦИЯ (шапка) ======= */
-.navbar {
-  position: fixed;       /* Фиксированная позиция */
+/* ---- ЭФФЕКТ "ЗВЁЗДНОГО" ФОНА ---- */
+body::before {
+  content: "";
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;         /* Высота шапки */
-  background: #000;
+  height: 100%;
+  /* Пример текстуры "звёзд" (прозрачная) */
+  background: url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+  z-index: -1;
+  opacity: 0.2; /* Прозрачность, чтобы не перебивало контент */
+}
+
+/* ======= ШАПКА (HEADER) ======= */
+header {
+  position: fixed; /* Фиксируем весь хедер */
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 9999;
+  background-color: #000;
+}
+
+.navbar {
+  height: 60px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 0 1.5rem;
 }
 
@@ -57,9 +76,9 @@ body {
 
 /* ======= HERO-СЕКЦИЯ ======= */
 .hero {
-  /* Вычитаем высоту шапки из 100vh */
+  /* Учитываем высоту шапки, чтобы контент не прятался под ней */
+  margin-top: 60px;
   min-height: calc(100vh - 60px);
-  margin-top: 60px;  /* чтобы контент не залезал под шапку */
   background: url('https://images.unsplash.com/photo-1590935215959-2a452ddaa6d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80')
     no-repeat center center/cover;
   position: relative;
@@ -68,7 +87,7 @@ body {
   justify-content: center;
 }
 
-/* Затемняющий оверлей поверх фонового изображения */
+/* Затемняющий оверлей для фонового изображения */
 .hero::after {
   content: "";
   position: absolute;
@@ -95,6 +114,7 @@ body {
   margin-bottom: 2rem;
 }
 
+/* Стили для кнопки */
 .btn {
   display: inline-block;
   padding: 0.8rem 1.8rem;
@@ -104,12 +124,13 @@ body {
   border-radius: 4px;
   text-decoration: none;
   font-size: 1rem;
-  transition: background 0.3s, transform 0.3s;
+  transition: background 0.3s, transform 0.3s, color 0.3s;
   cursor: pointer;
 }
 
 .btn:hover {
-  background-color: #f40612;
+  background-color: #fff;    /* Меняем цвет фона при наведении */
+  color: #e50914;           /* Меняем цвет текста */
   transform: scale(1.05);
 }
 
@@ -173,23 +194,20 @@ footer {
 
 /* ======= АДАПТИВНОСТЬ ======= */
 @media (max-width: 768px) {
-  .nav-links {
-    flex-direction: column;
-    position: absolute;
-    background: #000;
-    top: 60px;
-    right: 0;
-    width: 200px;
-    height: 0;
-    overflow: hidden;
-    transition: height 0.3s;
-  }
-  /* Можно сделать «гамбургер-меню», если нужно. Пока оставим упрощённо. */
-
   .hero-content h1 {
     font-size: 2.2rem;
   }
   .hero-content p {
     font-size: 1rem;
+  }
+  
+  /* Можно развивать идею "гамбургер-меню" здесь */
+  .nav-links {
+    flex-direction: column;
+    position: static; /* Упростим для примера */
+  }
+  
+  .nav-links li {
+    margin: 0.5rem 0;
   }
 }
