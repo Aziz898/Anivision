@@ -1,213 +1,277 @@
-/* СБРОС СТИЛЕЙ */
+/* Сброс стилей */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* БАЗОВЫЕ СТИЛИ */
+/* Базовые стили */
 body {
   font-family: 'Montserrat', sans-serif;
+  background-color: #1c1c1e; /* темный фон */
   color: #fff;
-  line-height: 1.6;
-  position: relative; /* для псевдо-элемента со "звёздным" фоном */
-  /* Базовый тёмный цвет фона */
-  background-color: #141414;
+  display: flex; 
+  /* sidebar и main-content будут располагаться в одной строке */
 }
 
-/* ---- ЭФФЕКТ "ЗВЁЗДНОГО" ФОНА ---- */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* Пример текстуры "звёзд" (прозрачная) */
-  background: url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
-  z-index: -1;
-  opacity: 0.2; /* Прозрачность, чтобы не перебивало контент */
-}
-
-/* ======= ШАПКА (HEADER) ======= */
-header {
-  position: fixed; /* Фиксируем весь хедер */
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 9999;
-  background-color: #000;
-}
-
-.navbar {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1.5rem;
-}
-
-.logo a {
+/* Стили для ссылок */
+a {
   text-decoration: none;
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #e50914;
+  color: inherit;
 }
 
-.nav-links {
-  list-style: none;
+/* ---------- SIDEBAR (левое меню) ---------- */
+.sidebar {
+  width: 250px;
+  background-color: #222224;
+  min-height: 100vh;
   display: flex;
-}
-
-.nav-links li {
-  margin-left: 2rem;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 1rem;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover {
-  color: #e50914;
-}
-
-/* ======= HERO-СЕКЦИЯ ======= */
-.hero {
-  /* Учитываем высоту шапки, чтобы контент не прятался под ней */
-  margin-top: 60px;
-  min-height: calc(100vh - 60px);
-  background: url('https://images.unsplash.com/photo-1590935215959-2a452ddaa6d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80')
-    no-repeat center center/cover;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Затемняющий оверлей для фонового изображения */
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  max-width: 800px;
+  flex-direction: column;
   padding: 1rem;
 }
 
-.hero-content h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.hero-content p {
-  font-size: 1.2rem;
+.sidebar-header {
   margin-bottom: 2rem;
 }
 
-/* Стили для кнопки */
-.btn {
-  display: inline-block;
-  padding: 0.8rem 1.8rem;
-  background-color: #e50914;
+.logo {
   color: #fff;
-  border: none;
-  border-radius: 4px;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: background 0.3s, transform 0.3s, color 0.3s;
-  cursor: pointer;
+  font-size: 1.5rem;
+}
+.logo span {
+  color: #a749f8; /* акцентный цвет */
 }
 
-.btn:hover {
-  background-color: #fff;    /* Меняем цвет фона при наведении */
-  color: #e50914;           /* Меняем цвет текста */
-  transform: scale(1.05);
-}
-
-/* ======= СЕКЦИЯ С АНИМЕ ======= */
-.anime-section {
-  padding: 4rem 2rem;
-  background-color: #141414;
-}
-
-.anime-section h2 {
+.profile-section {
   text-align: center;
   margin-bottom: 2rem;
+}
+.avatar {
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+.username {
+  font-size: 1.1rem;
+}
+
+.menu ul {
+  list-style: none;
+}
+.menu li {
+  margin: 0.7rem 0;
+}
+.menu li a {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.menu li a:hover {
+  background-color: #2f2f33;
+}
+.menu li .icon {
+  margin-right: 0.5rem;
+}
+
+.quick-filter {
+  margin-top: auto; /* чтобы блок "Quick Filter" прижался к низу */
+}
+.quick-filter h4 {
+  margin-bottom: 0.5rem;
+  color: #a749f8;
+}
+.quick-filter ul {
+  list-style: none;
+}
+.quick-filter li {
+  margin: 0.4rem 0;
+}
+.quick-filter a {
+  font-size: 0.9rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.quick-filter a:hover {
+  background-color: #2f2f33;
+}
+
+/* ---------- MAIN CONTENT (справа) ---------- */
+.main-content {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+/* Верхняя панель (topbar) */
+.topbar {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #1f1f21;
+  justify-content: space-between;
+}
+
+.search-box input {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  width: 200px;
+  outline: none;
+  background-color: #2c2c2e;
+  color: #fff;
+}
+
+.top-menu ul {
+  list-style: none;
+  display: flex;
+}
+.top-menu li {
+  margin: 0 1rem;
+}
+.top-menu a {
+  color: #fff;
+  font-size: 0.95rem;
+  transition: color 0.3s;
+}
+.top-menu a:hover {
+  color: #a749f8;
+}
+
+.sign-in .btn-signin {
+  background-color: #a749f8;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.sign-in .btn-signin:hover {
+  background-color: #933ae0;
+}
+
+/* ---------- HERO BANNER ---------- */
+.hero-banner {
+  position: relative;
+  background-color: #2c2c2e; /* fallback, если нет фонового изображения */
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  overflow: hidden;
+}
+.banner-bg {
+  position: absolute;
+  inset: 0;
+  background: url("https://images.unsplash.com/photo-1637731629106-151d73c513a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8anVqdHN1JTIwa2Fpc2VufGVufDB8fDB8fHww&auto=format&fit=crop&w=1300&q=80")
+    no-repeat center center/cover;
+  filter: brightness(0.6);
+  z-index: 0;
+}
+.banner-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+}
+.banner-content h1 {
   font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.banner-content p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #ccc;
+}
+.banner-buttons .btn {
+  display: inline-block;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  background-color: #a749f8;
+  color: #fff;
+  transition: background 0.3s, transform 0.3s;
+}
+.banner-buttons .btn:hover {
+  background-color: #933ae0;
+  transform: scale(1.05);
+}
+.btn-watch {
+  margin-left: 0;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+/* ---------- CONTINUE WATCHING / LATEST RELEASES ---------- */
+.section-block {
+  padding: 2rem;
+  background-color: #1c1c1e;
 }
-
-.anime-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 2rem;
+.section-block h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
 }
-
-.anime-card {
-  background: #1f1f1f;
+.card-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto; /* горизонтальная прокрутка, если карточек много */
+}
+.card {
+  min-width: 200px;
+  background-color: #2c2c2e;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s;
+  flex-shrink: 0; /* чтобы карточка не сжималась */
 }
-
-.anime-card img {
-  width: 100%;
+.card:hover {
+  transform: scale(1.03);
+}
+.card-image img {
   display: block;
+  width: 100%;
+  height: auto;
 }
-
-.anime-card h3 {
-  text-align: center;
-  padding: 0.8rem;
+.card-info {
+  padding: 0.5rem;
+}
+.card-info h3 {
   font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+.card-info p {
+  font-size: 0.85rem;
+  color: #ccc;
 }
 
-.anime-card:hover {
-  transform: scale(1.02);
-}
-
-/* ======= ПОДВАЛ ======= */
-footer {
-  background-color: #000;
-  padding: 1rem 2rem;
+/* ---------- FOOTER ---------- */
+.main-footer {
+  background-color: #1f1f21;
   text-align: center;
+  padding: 1rem;
 }
-
-.footer-container p {
-  margin: 0;
+.main-footer p {
   font-size: 0.9rem;
   color: #aaa;
 }
 
-/* ======= АДАПТИВНОСТЬ ======= */
-@media (max-width: 768px) {
-  .hero-content h1 {
-    font-size: 2.2rem;
+/* ---------- АДАПТИВНОСТЬ ---------- */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none; /* Пример: скрываем sidebar на узких экранах */
   }
-  .hero-content p {
-    font-size: 1rem;
+  .main-content {
+    margin-left: 0;
   }
-  
-  /* Можно развивать идею "гамбургер-меню" здесь */
-  .nav-links {
-    flex-direction: column;
-    position: static; /* Упростим для примера */
+  .topbar {
+    flex-wrap: wrap;
+    gap: 1rem;
   }
-  
-  .nav-links li {
-    margin: 0.5rem 0;
+  .search-box input {
+    width: 100%;
+    max-width: 300px;
+  }
+  .banner-content h1 {
+    font-size: 1.5rem;
   }
 }
