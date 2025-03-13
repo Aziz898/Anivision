@@ -2,40 +2,72 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Anime Mini App</title>
+  <title>Anivision — Смотреть аниме</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Подключаем шрифты Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Стили -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Шапка с навигацией -->
   <header>
-    <h1>Anime Mini App</h1>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="#">Anivision</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#">Главная</a></li>
+        <li><a href="#">Поиск</a></li>
+        <li><a href="#">Подборки</a></li>
+        <li><a href="#">О сайте</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <nav>
-    <ul>
-      <li><a href="index.html">Главная</a></li>
-      <li><a href="search.html">Поиск</a></li>
-      <li><a href="collections.html">Подборки</a></li>
-    </ul>
-  </nav>
+  <!-- Hero-секция -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Смотри аниме с комфортом</h1>
+      <p>Высокое качество, удобный интерфейс и стильный дизайн.</p>
+      <a href="#" class="btn">Начать смотреть</a>
+    </div>
+  </section>
 
-  <main>
-    <h2>Добро пожаловать!</h2>
-    <p>Здесь можно смотреть аниме прямо в Telegram.</p>
-    <div id="anime-list">
-      <!-- Пример карточки аниме -->
-      <div class="anime-card">
-        <img src="https://via.placeholder.com/150" alt="Anime Poster">
-        <h3>Название аниме</h3>
-        <a href="video.html?id=1" class="watch-btn">Смотреть</a>
+  <!-- Секция с карточками аниме -->
+  <section class="anime-section">
+    <div class="container">
+      <h2>Популярные аниме</h2>
+      <div class="anime-grid">
+        <!-- Пример карточки -->
+        <div class="anime-card">
+          <img src="https://via.placeholder.com/300x450" alt="Anime Poster">
+          <h3>Название аниме 1</h3>
+        </div>
+        <div class="anime-card">
+          <img src="https://via.placeholder.com/300x450" alt="Anime Poster">
+          <h3>Название аниме 2</h3>
+        </div>
+        <div class="anime-card">
+          <img src="https://via.placeholder.com/300x450" alt="Anime Poster">
+          <h3>Название аниме 3</h3>
+        </div>
+        <div class="anime-card">
+          <img src="https://via.placeholder.com/300x450" alt="Anime Poster">
+          <h3>Название аниме 4</h3>
+        </div>
       </div>
     </div>
-  </main>
+  </section>
 
+  <!-- Подвал -->
   <footer>
-    <p>&copy; 2025 Anime Mini App</p>
+    <div class="footer-container">
+      <p>&copy; 2025 Anivision. Все права защищены.</p>
+    </div>
   </footer>
 
+  <!-- Подключаем скрипты -->
   <script src="script.js"></script>
 </body>
 </html>
