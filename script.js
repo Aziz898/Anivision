@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("AniVision final (Anime Track style) with auto-rotating trending carousel");
+  console.log("AniVision final version with single wide banner, 2x Continue Watching, Recommendations, 4 tabs");
 
   // SPLASH SCREEN
   const splashScreen = document.getElementById('splash-screen');
@@ -10,39 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 700);
   }, 2000);
 
+  // Языковая кнопка (заглушка)
+  const langBtn = document.querySelector('.lang-btn');
+  langBtn?.addEventListener('click', () => {
+    alert("Выбор языка: RU / EN (в разработке)");
+  });
+
   // Уведомления
   const notifBtn = document.querySelector('.notif-btn');
   notifBtn?.addEventListener('click', () => {
     alert("Уведомления пока не реализованы!");
   });
-
-  // AUTO-ROTATING TRENDING CAROUSEL
-  const carousel = document.getElementById('trending-carousel');
-  const slides = carousel.querySelectorAll('.trending-slide');
-  let currentIndex = 0;
-
-  // Изначально показываем первый слайд
-  slides[currentIndex].classList.add('active');
-
-  // Функция переключения слайда
-  function nextSlide() {
-    // Текущий слайд
-    const currentSlide = slides[currentIndex];
-    currentSlide.classList.remove('active');
-    currentSlide.classList.add('prev');
-
-    // Вычисляем следующий индекс
-    currentIndex = (currentIndex + 1) % slides.length;
-    const newSlide = slides[currentIndex];
-    newSlide.classList.remove('next', 'prev');
-    newSlide.classList.add('active');
-
-    // Через 800ms убираем классы у старого слайда
-    setTimeout(() => {
-      currentSlide.classList.remove('prev');
-    }, 800);
-  }
-
-  // Запускаем авто-переключение каждые 5 секунд
-  setInterval(nextSlide, 5000);
 });
