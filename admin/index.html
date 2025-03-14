@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <title>AniVision Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключаем стили (можно вынести в отдельный admin.css) -->
+  <!-- Подключаем стили (можно вынести в admin.css) -->
   <link rel="stylesheet" href="admin.css">
   <!-- Иконки FontAwesome -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
   <style>
-    /* Общие стили */
+    /* Общие стили админ-панели */
     body {
       margin: 0;
       padding: 0;
@@ -183,7 +183,7 @@
       <button class="nav-btn" data-section="carousel">
         <i class="fas fa-images"></i> Карусель
       </button>
-      <!-- Можно добавить другие секции -->
+      <!-- Дополнительные секции можно добавить -->
     </nav>
   </aside>
 
@@ -194,7 +194,7 @@
       <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
     </header>
 
-    <!-- Секция: Управление аниме -->
+    <!-- Section: Управление аниме -->
     <section class="section active" id="anime-section">
       <h2>Управление аниме</h2>
       <form class="anime-form" id="anime-form">
@@ -225,9 +225,9 @@
           <label>Ссылка на плеер</label>
           <input type="url" id="anime-player" placeholder="https://player.site/watch?id=...">
         </div>
-        <!-- Чекбоксы для выбора разделов, если нужно -->
+        <!-- Чекбоксы для выбора разделов (если хотите назначать сразу) -->
         <div class="form-row">
-          <label>Разделы (при создании можно оставить пустым, редактировать позже)</label>
+          <label>Разделы</label>
           <div class="checkbox-group">
             <div>
               <input type="checkbox" id="section-trending" value="trending">
@@ -263,13 +263,13 @@
             </tr>
           </thead>
           <tbody id="anime-table-body">
-            <!-- Строки добавляются через JS -->
+            <!-- Данные подгружаются через JS -->
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- Секция: Управление каруселью -->
+    <!-- Section: Управление каруселью -->
     <section class="section" id="carousel-section">
       <h2>Управление каруселью</h2>
       <form class="carousel-form" id="carousel-form">
@@ -295,7 +295,7 @@
             </tr>
           </thead>
           <tbody id="carousel-table-body">
-            <!-- Строки добавляются через JS -->
+            <!-- Баннеры подгружаются через JS -->
           </tbody>
         </table>
       </div>
@@ -304,12 +304,13 @@
 </div>
 
 <script type="module">
-  // Импорт Firebase (версия 11.4.0)
+  // Импорт необходимых функций Firebase (v.11.4.0)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } 
+    from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-  // Конфигурация Firebase (убедитесь, что storageBucket указан корректно)
+  // Конфигурация Firebase (убедитесь, что поля корректны)
   const firebaseConfig = {
     apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
     authDomain: "anivision-194f5.firebaseapp.com",
@@ -325,15 +326,14 @@
   const analytics = getAnalytics(appFirebase);
   const db = getFirestore(appFirebase);
 
-  // Коллекция для аниме
+  // Коллекции
   const animeCollection = collection(db, "anime");
-  // Коллекция для баннеров карусели
   const carouselCollection = collection(db, "carouselBanners");
 
   // Режим редактирования для аниме (если понадобится)
   let editingAnimeId = null;
 
-  // Функция загрузки списка аниме
+  // Загрузка списка аниме
   async function loadAnimeList() {
     const tableBody = document.getElementById("anime-table-body");
     tableBody.innerHTML = "";
@@ -370,7 +370,7 @@
 
     const tdActions = document.createElement("td");
 
-    // Кнопка "Редактировать" – переходит на anime.html с параметром animeId
+    // Единственная кнопка "Редактировать" – переходит на anime.html с параметром animeId
     const btnEdit = document.createElement("button");
     btnEdit.textContent = "Редактировать";
     btnEdit.classList.add("btn-action");
@@ -392,7 +392,7 @@
           loadAnimeList();
         } catch (error) {
           console.error("Ошибка при удалении аниме:", error);
-          alert("Ошибка при удалении аниме.");
+          alert("Ошибка при удалении!");
         }
       }
     });
@@ -402,7 +402,7 @@
     document.getElementById("anime-table-body").appendChild(tr);
   }
 
-  // Обработчик формы для аниме
+  // Обработчик формы для добавления/обновления аниме
   document.getElementById("anime-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const title = document.getElementById("anime-title").value.trim();
@@ -412,7 +412,6 @@
     const rating = document.getElementById("anime-rating").value;
     const playerLink = document.getElementById("anime-player").value.trim();
 
-    // Собираем выбранные разделы
     const sections = [];
     document.querySelectorAll('input[type="checkbox"][id^="section-"]').forEach(chk => {
       if (chk.checked) sections.push(chk.value);
@@ -453,7 +452,7 @@
     });
   });
 
-  // Функция загрузки списка баннеров карусели
+  // Загрузка баннеров для карусели
   async function loadCarouselBanners() {
     const tableBody = document.getElementById("carousel-table-body");
     tableBody.innerHTML = "";
@@ -502,7 +501,7 @@
     document.getElementById("carousel-table-body").appendChild(tr);
   }
 
-  // Обработчик формы для карусели
+  // Обработчик формы для добавления баннера карусели
   document.getElementById("carousel-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const bannerImage = document.getElementById("banner-image").value.trim();
