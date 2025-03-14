@@ -505,3 +505,16 @@ body.light-theme .btn-learn {
 body.light-theme .btn-learn:hover {
   background-color: #777;
 }
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Пример гифки (звёздное небо/абстрактная аниме-стилистика) */
+  background: url("https://media.giphy.com/media/B6odR0DhsStfW/giphy.gif") 
+              no-repeat center center/cover;
+  z-index: -1;
+  opacity: 0.2;
+}
