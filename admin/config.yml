@@ -1,0 +1,21 @@
+backend:
+  name: git-gateway
+  branch: main  # либо master – в зависимости от вашей настройки репозитория
+
+media_folder: "static/img"     # Папка для загруженных изображений
+public_folder: "/img"          # Публичный URL к изображениям
+
+collections:
+  - name: "anime"
+    label: "Аниме"
+    folder: "content/anime"    # Папка, где будут храниться файлы (Markdown или JSON)
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Название", name: "title", widget: "string" }
+      - { label: "Обложка", name: "cover", widget: "image" }
+      - { label: "Ссылка на плеер", name: "playerLink", widget: "string" }
+      - { label: "Описание", name: "description", widget: "text" }
+      - { label: "Тип", name: "type", widget: "select", options: ["TV", "Manga"] }
+      - { label: "Эпизод/Глава", name: "episode", widget: "string" }
+      - { label: "Рейтинг", name: "rating", widget: "number" }
