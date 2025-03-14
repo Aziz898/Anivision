@@ -9,148 +9,37 @@
   <!-- Иконки FontAwesome -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
   <style>
-    /* Пример встроенных стилей для админ-панели */
-    body {
-      margin: 0;
-      padding: 0;
-      background: #141414;
-      color: #fff;
-      font-family: sans-serif;
-    }
-    .admin-container {
-      display: flex;
-      min-height: 100vh;
-    }
-    /* Sidebar */
-    .sidebar {
-      width: 220px;
-      background: #1f1f1f;
-      padding: 1rem;
-    }
-    .sidebar-logo {
-      font-size: 1.6rem;
-      font-weight: bold;
-      color: #a749f8;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-    .sidebar-nav {
-      display: flex;
-      flex-direction: column;
-    }
-    .nav-btn {
-      background: none;
-      border: none;
-      color: #ccc;
-      text-align: left;
-      padding: 0.8rem;
-      font-size: 1rem;
-      cursor: pointer;
-      border-left: 4px solid transparent;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .nav-btn:hover {
-      color: #fff;
-      background: #2a2a2a;
-    }
-    .nav-btn.active {
-      color: #fff;
-      background: #2a2a2a;
-      border-left: 4px solid #a749f8;
-    }
-    /* Main content */
-    .main-content {
-      flex: 1;
-      background: #141414;
-      padding: 1rem;
-    }
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #000;
-      padding: 1rem;
-    }
-    .admin-header h1 {
-      margin: 0;
-      color: #a749f8;
-    }
-    .logout-btn {
-      background: none;
-      border: 1px solid #a749f8;
-      color: #a749f8;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .logout-btn:hover {
-      background: #a749f8;
-      color: #fff;
-    }
-    .section {
-      display: none;
-      padding: 1rem;
-    }
-    .section.active {
-      display: block;
-    }
-    .anime-form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      background: #1f1f1f;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-    }
-    .form-row {
-      display: flex;
-      flex-direction: column;
-    }
-    .form-row label {
-      margin-bottom: 0.3rem;
-      font-size: 0.9rem;
-      color: #ccc;
-    }
+    /* Пример встроенных стилей (оставьте свои, если они уже есть) */
+    body { margin: 0; padding: 0; background: #141414; color: #fff; font-family: sans-serif; }
+    .admin-container { display: flex; min-height: 100vh; }
+    .sidebar { width: 220px; background: #1f1f1f; padding: 1rem; }
+    .sidebar-logo { font-size: 1.6rem; font-weight: bold; color: #a749f8; margin-bottom: 2rem; text-align: center; }
+    .sidebar-nav { display: flex; flex-direction: column; }
+    .nav-btn { background: none; border: none; color: #ccc; text-align: left; padding: 0.8rem; font-size: 1rem; cursor: pointer; border-left: 4px solid transparent; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-btn:hover { color: #fff; background: #2a2a2a; }
+    .nav-btn.active { color: #fff; background: #2a2a2a; border-left: 4px solid #a749f8; }
+    .main-content { flex: 1; background: #141414; padding: 1rem; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 1rem; }
+    .admin-header h1 { margin: 0; color: #a749f8; }
+    .logout-btn { background: none; border: 1px solid #a749f8; color: #a749f8; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
+    .logout-btn:hover { background: #a749f8; color: #fff; }
+    .section { display: none; padding: 1rem; }
+    .section.active { display: block; }
+    .anime-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; background: #1f1f1f; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; }
+    .form-row { display: flex; flex-direction: column; }
+    .form-row label { margin-bottom: 0.3rem; font-size: 0.9rem; color: #ccc; }
     .form-row input,
     .form-row textarea,
-    .form-row select {
-      background: #2a2a2a;
-      border: none;
-      border-radius: 4px;
-      padding: 0.5rem;
-      color: #fff;
-    }
-    .btn-save {
-      grid-column: 1 / 3;
-      background: #a749f8;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 0.7rem 1rem;
-      cursor: pointer;
-    }
-    .btn-save:hover {
-      background: #933ae0;
-    }
-    .anime-list table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .anime-list th,
-    .anime-list td {
-      padding: 0.8rem;
-      border-bottom: 1px solid #333;
-    }
-    .anime-list th {
-      background: #2a2a2a;
-      text-align: left;
-    }
-    .anime-list tr:hover td {
-      background: #2a2a2a;
-    }
+    .form-row select { background: #2a2a2a; border: none; border-radius: 4px; padding: 0.5rem; color: #fff; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .btn-save { grid-column: 1 / 3; background: #a749f8; color: #fff; border: none; border-radius: 4px; padding: 0.7rem 1rem; cursor: pointer; }
+    .btn-save:hover { background: #933ae0; }
+    .anime-list table { width: 100%; border-collapse: collapse; }
+    .anime-list th, .anime-list td { padding: 0.8rem; border-bottom: 1px solid #333; }
+    .anime-list th { background: #2a2a2a; text-align: left; }
+    .anime-list tr:hover td { background: #2a2a2a; }
+    .btn-action { background: none; border: none; color: #a749f8; cursor: pointer; margin-right: 0.5rem; }
+    .btn-action:hover { color: #fff; }
   </style>
 </head>
 <body>
@@ -184,7 +73,7 @@
     <!-- Section: Anime -->
     <section class="section active" id="anime-section">
       <h2>Управление аниме</h2>
-      <!-- Форма добавления аниме -->
+      <!-- Форма добавления/редактирования аниме -->
       <form class="anime-form" id="anime-form">
         <div class="form-row">
           <label>Название аниме</label>
@@ -213,24 +102,26 @@
           <label>Ссылка на плеер</label>
           <input type="url" id="anime-player" placeholder="https://player.site/watch?id=...">
         </div>
-        <!-- Новое поле: выбор разделов (чекбоксы) -->
+        <!-- Чекбоксы для выбора разделов -->
         <div class="form-row">
           <label>Разделы</label>
-          <div>
-            <input type="checkbox" id="section-trending" value="trending">
-            <label for="section-trending">Trending</label>
-          </div>
-          <div>
-            <input type="checkbox" id="section-recommendations" value="recommendations">
-            <label for="section-recommendations">Recommendations</label>
-          </div>
-          <div>
-            <input type="checkbox" id="section-upcoming" value="upcoming">
-            <label for="section-upcoming">Upcoming</label>
-          </div>
-          <div>
-            <input type="checkbox" id="section-continue_watching" value="continue_watching">
-            <label for="section-continue_watching">Continue Watching</label>
+          <div class="checkbox-group">
+            <div>
+              <input type="checkbox" id="section-trending" value="trending">
+              <label for="section-trending">Trending</label>
+            </div>
+            <div>
+              <input type="checkbox" id="section-recommendations" value="recommendations">
+              <label for="section-recommendations">Recommendations</label>
+            </div>
+            <div>
+              <input type="checkbox" id="section-upcoming" value="upcoming">
+              <label for="section-upcoming">Upcoming</label>
+            </div>
+            <div>
+              <input type="checkbox" id="section-continue_watching" value="continue_watching">
+              <label for="section-continue_watching">Continue Watching</label>
+            </div>
           </div>
         </div>
         <button type="submit" class="btn-save">Сохранить</button>
@@ -250,23 +141,22 @@
             </tr>
           </thead>
           <tbody id="anime-table-body">
-            <!-- Строки будут добавляться через JavaScript -->
+            <!-- Строки добавляются через JavaScript -->
           </tbody>
         </table>
       </div>
     </section>
-    <!-- Другие секции (рекомендации, trending, upcoming) можно добавить по аналогии -->
   </main>
 </div>
 
 <script type="module">
-  // Импорт модулей Firebase (версия 11.4.0)
+  // Импорт Firebase (v.11.4.0)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } 
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } 
     from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-  // Конфигурация Firebase – убедитесь, что storageBucket указан корректно (обычно "anivision-194f5.appspot.com")
+  // Конфигурация Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
     authDomain: "anivision-194f5.firebaseapp.com",
@@ -284,6 +174,9 @@
 
   // Коллекция "anime"
   const animeCollection = collection(db, "anime");
+
+  // Режим: добавление или редактирование
+  let editingAnimeId = null; // если null – добавление, иначе редактирование
 
   // Функция загрузки списка аниме
   async function loadAnimeList() {
@@ -317,25 +210,36 @@
     tdRating.textContent = data.rating || "";
     tr.appendChild(tdRating);
 
-    // Выводим разделы как список через запятую
     const tdSections = document.createElement("td");
     tdSections.textContent = data.sections ? data.sections.join(", ") : "";
     tr.appendChild(tdSections);
 
     const tdActions = document.createElement("td");
 
-    // Кнопка "Эпизоды" – переход на страницу anime.html с параметром animeId
+    // Кнопка "Эпизоды"
     const btnEpisodes = document.createElement("button");
     btnEpisodes.textContent = "Эпизоды";
+    btnEpisodes.classList.add("btn-action");
     btnEpisodes.style.marginRight = "0.5rem";
     btnEpisodes.addEventListener("click", () => {
       window.location.href = "anime.html?animeId=" + docId;
     });
     tdActions.appendChild(btnEpisodes);
 
+    // Кнопка "Редактировать"
+    const btnEdit = document.createElement("button");
+    btnEdit.textContent = "Редактировать";
+    btnEdit.classList.add("btn-action");
+    btnEdit.style.marginRight = "0.5rem";
+    btnEdit.addEventListener("click", () => {
+      populateFormForEdit(docId);
+    });
+    tdActions.appendChild(btnEdit);
+
     // Кнопка "Удалить"
     const btnDelete = document.createElement("button");
     btnDelete.textContent = "Удалить";
+    btnDelete.classList.add("btn-action");
     btnDelete.addEventListener("click", async () => {
       if (confirm("Удалить это аниме?")) {
         try {
@@ -354,7 +258,33 @@
     document.getElementById("anime-table-body").appendChild(tr);
   }
 
-  // Обработчик формы для добавления нового аниме
+  // Функция, которая заполняет форму данными для редактирования
+  async function populateFormForEdit(docId) {
+    editingAnimeId = docId;
+    try {
+      const docRef = doc(db, "anime", docId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        document.getElementById("anime-title").value = data.title || "";
+        document.getElementById("anime-desc").value = data.desc || "";
+        document.getElementById("anime-cover").value = data.cover || "";
+        document.getElementById("anime-category").value = data.category || "TV";
+        document.getElementById("anime-rating").value = data.rating || "";
+        document.getElementById("anime-player").value = data.playerLink || "";
+        // Заполнение чекбоксов
+        document.querySelectorAll('input[type="checkbox"][id^="section-"]').forEach(chk => {
+          chk.checked = data.sections && data.sections.includes(chk.value);
+        });
+        // Меняем текст кнопки на "Обновить"
+        document.querySelector(".btn-save").textContent = "Обновить";
+      }
+    } catch (error) {
+      console.error("Ошибка при загрузке для редактирования:", error);
+    }
+  }
+
+  // Обработчик формы: если editingAnimeId установлен – обновляем, иначе добавляем
   document.getElementById("anime-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const title = document.getElementById("anime-title").value.trim();
@@ -367,9 +297,7 @@
     // Собираем выбранные разделы
     const sections = [];
     document.querySelectorAll('input[type="checkbox"][id^="section-"]').forEach(chk => {
-      if (chk.checked) {
-        sections.push(chk.value);
-      }
+      if (chk.checked) sections.push(chk.value);
     });
 
     if (!title) {
@@ -378,17 +306,26 @@
     }
 
     try {
-      await addDoc(animeCollection, { title, desc, cover, category, rating, playerLink, sections });
-      alert("Аниме успешно добавлено!");
+      if (editingAnimeId) {
+        // Режим редактирования – обновляем документ
+        await updateDoc(doc(db, "anime", editingAnimeId), { title, desc, cover, category, rating, playerLink, sections });
+        alert("Аниме обновлено!");
+        editingAnimeId = null;
+        document.querySelector(".btn-save").textContent = "Сохранить";
+      } else {
+        // Режим добавления – создаём новый документ
+        await addDoc(animeCollection, { title, desc, cover, category, rating, playerLink, sections });
+        alert("Аниме успешно добавлено!");
+      }
       document.getElementById("anime-form").reset();
       loadAnimeList();
     } catch (error) {
-      console.error("Ошибка при добавлении:", error);
-      alert("Ошибка при добавлении аниме.");
+      console.error("Ошибка при сохранении:", error);
+      alert("Ошибка при сохранении аниме.");
     }
   });
 
-  // Обработка навигации в sidebar (оставляем как есть)
+  // Обработка навигации в sidebar
   const navBtns = document.querySelectorAll(".nav-btn");
   const sectionsDOM = document.querySelectorAll(".section");
   navBtns.forEach(btn => {
