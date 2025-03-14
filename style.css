@@ -1,52 +1,60 @@
-/* СБРОС СТИЛЕЙ */
-* {
+/* -------------------------
+   RESET / BASE
+-------------------------- */
+html, body {
+  /* Задаём высоту и разрешаем вертикальную прокрутку */
+  height: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
 
-/* ПЕРЕМЕННЫЕ */
-:root {
-  --accent-color: #a749f8;
-  --bg-color: #141414;
-  --card-bg: #1f1f1f;
-  --text-color: #fff;
-}
+  /* Разрешаем прокрутку по вертикали, отключаем по горизонтали */
+  overflow-x: hidden;
+  overflow-y: auto;
 
-/* ОСНОВА */
-body {
-  font-family: 'Montserrat', sans-serif;
+  /* iOS плавный скролл */
+  -webkit-overflow-scrolling: touch;
+
+  /* Safe area insets для iPhone (чтобы контент не прятался за вырезами) */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+
+  /* Базовые цвета и шрифт */
   background: #141414;
   color: #fff;
-  display: flex;
+  font-family: 'Montserrat', sans-serif;
+
+  display: flex;        /* позволяем верхней панели, контенту и нижней панели располагаться в столбик */
   flex-direction: column;
-  min-height: 100vh;
-  /* overflow: hidden; <-- УДАЛЕНО */
   position: relative;
 }
 
-/* SPLASH SCREEN */
+/* -------------------------
+   SPLASH SCREEN
+-------------------------- */
 .splash-screen {
   position: fixed;
-  inset: 0; /* top: 0; left: 0; right: 0; bottom: 0; */
+  inset: 0; /* top:0, right:0, bottom:0, left:0 */
   background: #000;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+
+  /* Анимация появления */
   animation: fadeIn 0.5s ease forwards;
 }
+
 .splash-logo {
   text-align: center;
 }
 .splash-text {
   font-size: 2rem;
   font-weight: 600;
-  color: var(--accent-color);
+  color: #a749f8;
+  /* Анимация переливания цвета, если нужно */
   animation: colorFlow 2s infinite alternate;
 }
 
-/* АНИМАЦИИ */
 @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
@@ -56,11 +64,13 @@ body {
   100% { opacity: 0; }
 }
 @keyframes colorFlow {
-  0% { color: var(--accent-color); }
+  0% { color: #a749f8; }
   100% { color: #fff; }
 }
 
-/* ВЕРХНЯЯ ПАНЕЛЬ */
+/* -------------------------
+   HEADER (ВЕРХНЯЯ ПАНЕЛЬ)
+-------------------------- */
 .header {
   background-color: #000;
   padding: 1rem;
@@ -68,18 +78,24 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+
 .app-title {
   font-size: 1.3rem;
   font-weight: 600;
   display: flex;
   align-items: center;
 }
+
+/* Логотип: Ani (белый), Vision (фиолетовый) */
 .logo-part1 {
-  color: #fff;
+  color: #fff; /* Ani */
 }
 .logo-part2 {
-  color: var(--accent-color);
+  color: #a749f8; /* Vision */
+  text-transform: capitalize; /* Делает V заглавной */
+  margin-left: 2px;
 }
+
 .menu-btn {
   font-size: 1.3rem;
   background: none;
@@ -87,39 +103,52 @@ body {
   color: #fff;
 }
 
-/* ОСНОВНОЙ КОНТЕНТ */
+/* -------------------------
+   MAIN CONTENT
+-------------------------- */
 .content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 0.5rem 1rem 5rem; /* отступ снизу под нижнюю навигацию */
+  /* Можно задать дополнительный нижний отступ,
+     чтобы контент не прятался за нижней панелью */
+  padding-bottom: 5rem; 
+  /* -webkit-overflow-scrolling: touch; <-- не нужно, если scroll на body */
 }
+
+/* Секция (например, "Рекомендации", "Рекомендуемое") */
 .section {
   margin-bottom: 1.5rem;
+  padding: 0 1rem;
 }
+
+/* Заголовок секции */
 .section-title {
   font-size: 1rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
 
-/* КАРУСЕЛЬ */
+/* -------------------------
+   CAROUSEL
+-------------------------- */
 .carousel-section {
   margin-bottom: 1.5rem;
+  padding: 0 1rem;
 }
 .carousel-container {
   display: flex;
   overflow-x: auto;
   gap: 0.8rem;
   padding-bottom: 0.5rem;
+
   scrollbar-width: none; /* Firefox */
 }
 .carousel-container::-webkit-scrollbar {
   display: none; /* Chrome/Safari */
 }
+
 .carousel-item {
   min-width: 140px;
   flex-shrink: 0;
-  background: var(--card-bg);
+  background: #1f1f1f;
   border-radius: 8px;
   overflow: hidden;
   text-align: center;
@@ -135,14 +164,16 @@ body {
   padding: 0.3rem;
 }
 
-/* СПИСОК АНИМЕ */
+/* -------------------------
+   ANIME LIST (РЕКОМЕНДУЕМОЕ)
+-------------------------- */
 .anime-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 .anime-card {
-  background: var(--card-bg);
+  background: #1f1f1f;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
@@ -172,22 +203,9 @@ body {
   font-size: 0.85rem;
 }
 
-/* КНОПКИ */
-.btn {
-  display: inline-block;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  background: var(--accent-color);
-  color: #fff;
-  text-decoration: none;
-  transition: background 0.3s, transform 0.3s;
-}
-.btn:hover {
-  background: #933ae0;
-  transform: scale(1.05);
-}
-
-/* ЖАНРЫ */
+/* -------------------------
+   GENRE LIST
+-------------------------- */
 .genre-list {
   display: flex;
   flex-wrap: wrap;
@@ -203,10 +221,29 @@ body {
   transition: background 0.3s;
 }
 .genre-btn:hover {
-  background: var(--accent-color);
+  background: #a749f8;
 }
 
-/* НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (5 ВКЛАДОК) */
+/* -------------------------
+   BUTTONS (общий стиль)
+-------------------------- */
+.btn {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  background: #a749f8;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
+}
+.btn:hover {
+  background: #933ae0;
+  transform: scale(1.05);
+}
+
+/* -------------------------
+   BOTTOM NAVIGATION
+-------------------------- */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0;
@@ -216,8 +253,13 @@ body {
   justify-content: space-around;
   align-items: center;
   padding: 0.5rem 0;
+
   z-index: 999;
+
+  /* safe area inset снизу */
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
 }
+
 .nav-link {
   display: flex;
   flex-direction: column;
@@ -234,10 +276,12 @@ body {
 }
 .nav-link.active,
 .nav-link:hover {
-  color: var(--accent-color);
+  color: #a749f8;
 }
 
-/* АДАПТИВНОСТЬ */
+/* -------------------------
+   MEDIA QUERIES
+-------------------------- */
 @media (min-width: 768px) {
   .anime-card img {
     width: 140px;
@@ -246,49 +290,4 @@ body {
   .carousel-item {
     min-width: 160px;
   }
-}
-
-/* ЛОГО AniVision: Ani (white), Vision (фиолетовый, c заглавной V) */
-.logo-part1 {
-  color: #fff; /* Ani белым */
-}
-.logo-part2 {
-  color: #a749f8; /* Vision фиолетовым */
-  text-transform: capitalize; /* делает V заглавной */
-  margin-left: 2px;
-  /* при желании можно добавить font-size: 1.2rem; */
-}
-
-/* И т.д. (остальные стили из предыдущего кода) */
-/* ... остальное из предыдущего кода ... */
-
-/* Нижняя панель - изменены названия вкладок и иконки */
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0;
-  width: 100%;
-  background: #000;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.5rem 0;
-  z-index: 999;
-}
-.nav-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #fff;
-  font-size: 1.2rem; /* размер иконки */
-  text-decoration: none;
-  padding: 0.3rem;
-  transition: color 0.3s;
-}
-.nav-label {
-  font-size: 0.7rem;
-  margin-top: 0.2rem;
-}
-.nav-link.active,
-.nav-link:hover {
-  color: var(--accent-color);
 }
