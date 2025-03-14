@@ -43,16 +43,19 @@
 
   <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main class="content">
-    <!-- ПЕРВЫЙ БЛОК: Несколько широких баннеров (auto-rotate) -->
+    <!-- ПЕРВЫЙ БЛОК: Hero Carousel -->
     <section class="hero-carousel" id="hero-carousel">
       <!-- Слайд 1 -->
       <div class="hero-slide">
-        <div class="hero-slide-bg" style="background-image: url('https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=1000');">
+        <div class="hero-slide-bg" 
+             style="background-image: url('https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=1000');">
           <div class="hero-overlay">
-            <img class="banner-poster" src="https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=200" alt="Hero Poster 1">
+            <img class="banner-poster" 
+                 src="https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=200" 
+                 alt="Hero Poster 1">
             <div class="banner-info">
-              <h2 class="banner-title">Название аниме #1</h2>
-              <p class="banner-desc">Описание аниме, жанры, сезон и т.д.</p>
+              <h2 class="banner-title">Spy x Family</h2>
+              <p class="banner-desc">Комедийный шпионский экшен.</p>
               <button class="btn-banner">Смотреть</button>
             </div>
           </div>
@@ -60,12 +63,15 @@
       </div>
       <!-- Слайд 2 -->
       <div class="hero-slide">
-        <div class="hero-slide-bg" style="background-image: url('https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=1000');">
+        <div class="hero-slide-bg" 
+             style="background-image: url('https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=1000');">
           <div class="hero-overlay">
-            <img class="banner-poster" src="https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=200" alt="Hero Poster 2">
+            <img class="banner-poster" 
+                 src="https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=200" 
+                 alt="Hero Poster 2">
             <div class="banner-info">
-              <h2 class="banner-title">Название аниме #2</h2>
-              <p class="banner-desc">Описание второго аниме.</p>
+              <h2 class="banner-title">Jujutsu Kaisen</h2>
+              <p class="banner-desc">Маги против проклятий. Экшен, мистика.</p>
               <button class="btn-banner">Смотреть</button>
             </div>
           </div>
@@ -73,12 +79,15 @@
       </div>
       <!-- Слайд 3 -->
       <div class="hero-slide">
-        <div class="hero-slide-bg" style="background-image: url('https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=1000');">
+        <div class="hero-slide-bg" 
+             style="background-image: url('https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=1000');">
           <div class="hero-overlay">
-            <img class="banner-poster" src="https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=200" alt="Hero Poster 3">
+            <img class="banner-poster" 
+                 src="https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=200" 
+                 alt="Hero Poster 3">
             <div class="banner-info">
-              <h2 class="banner-title">Название аниме #3</h2>
-              <p class="banner-desc">Описание третьего аниме.</p>
+              <h2 class="banner-title">Demon Slayer</h2>
+              <p class="banner-desc">Охотники на демонов, боевое фэнтези.</p>
               <button class="btn-banner">Смотреть</button>
             </div>
           </div>
@@ -86,23 +95,109 @@
       </div>
     </section>
 
-    <!-- ВТОРОЙ БЛОК: Continue Watching -->
+    <!-- ВТОРОЙ БЛОК: Trending -->
+    <section class="section-row">
+      <div class="section-header">
+        <h3 class="section-title" id="trending-title">
+          Trending
+        </h3>
+        <button class="btn-more">See All</button>
+      </div>
+      <div class="row-container">
+        <!-- Карточка 1 -->
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809377/pexels-photo-5809377.jpeg?w=300" alt="Trend 1">
+          <div class="row-info-overlay">
+            <div class="row-type">TV</div>
+            <div class="row-episode">Ep. 05</div>
+            <div class="row-rating"><i class="fas fa-star"></i> 8.9</div>
+          </div>
+        </div>
+        <!-- Карточка 2 -->
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809375/pexels-photo-5809375.jpeg?w=300" alt="Trend 2">
+          <div class="row-info-overlay">
+            <div class="row-type">TV</div>
+            <div class="row-episode">Ep. 746</div>
+            <div class="row-rating"><i class="fas fa-star"></i> 9.2</div>
+          </div>
+        </div>
+        <!-- Карточка 3 -->
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809374/pexels-photo-5809374.jpeg?w=300" alt="Trend 3">
+          <div class="row-info-overlay">
+            <div class="row-type">TV</div>
+            <div class="row-episode">Ep. 13</div>
+            <div class="row-rating"><i class="fas fa-star"></i> 8.7</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ТРЕТИЙ БЛОК: Continue Watching -->
     <section class="section-row">
       <div class="section-header">
         <h3 class="section-title" id="continue-watching-title">
-          <!-- Заменяется при смене языка -->
           Continue Watching
         </h3>
         <button class="btn-more">See All</button>
       </div>
       <div class="row-container">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809377/pexels-photo-5809377.jpeg?w=300" alt="CW 1">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809375/pexels-photo-5809375.jpeg?w=300" alt="CW 2">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809374/pexels-photo-5809374.jpeg?w=300" alt="CW 3">
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="CW 1">
+          <div class="row-info-overlay">
+            <div class="row-type">TV</div>
+            <div class="row-episode">Ep. 04</div>
+            <div class="row-rating"><i class="fas fa-star"></i> 8.1</div>
+          </div>
+        </div>
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="CW 2">
+          <div class="row-info-overlay">
+            <div class="row-type">TV</div>
+            <div class="row-episode">Ep. 22</div>
+            <div class="row-rating"><i class="fas fa-star"></i> 7.9</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ЧЕТВЕРТЫЙ БЛОК: Recommendations -->
+    <!-- ЧЕТВЁРТЫЙ БЛОК: Upcoming -->
+    <section class="section-row">
+      <div class="section-header">
+        <h3 class="section-title" id="upcoming-title">
+          Upcoming
+        </h3>
+        <button class="btn-more">See All</button>
+      </div>
+      <div class="row-container">
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Upcoming 1">
+          <div class="row-info-overlay">
+            <div class="row-type">TV</div>
+            <div class="row-episode">N/A</div>
+            <div class="row-rating"><i class="fas fa-star"></i> -</div>
+          </div>
+        </div>
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809415/pexels-photo-5809415.jpeg?w=300" alt="Upcoming 2">
+          <div class="row-info-overlay">
+            <div class="row-type">TV</div>
+            <div class="row-episode">N/A</div>
+            <div class="row-rating"><i class="fas fa-star"></i> -</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ПЯТЫЙ БЛОК: Recommendations -->
     <section class="section-row">
       <div class="section-header">
         <h3 class="section-title" id="recommendations-title">
@@ -111,24 +206,54 @@
         <button class="btn-more">See All</button>
       </div>
       <div class="row-container">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="Rec 1">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Rec 2">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809415/pexels-photo-5809415.jpeg?w=300" alt="Rec 3">
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="Rec 1">
+          <div class="row-info-overlay">
+            <div class="row-type">TV</div>
+            <div class="row-episode">Ep. 10</div>
+            <div class="row-rating"><i class="fas fa-star"></i> 9.0</div>
+          </div>
+        </div>
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Rec 2">
+          <div class="row-info-overlay">
+            <div class="row-type">TV</div>
+            <div class="row-episode">Ep. 13</div>
+            <div class="row-rating"><i class="fas fa-star"></i> 8.8</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ПЯТЫЙ БЛОК: Another Continue Watching -->
+    <!-- ШЕСТОЙ БЛОК: Continue Reading (манга) -->
     <section class="section-row">
       <div class="section-header">
-        <h3 class="section-title" id="continue-watching-2-title">
-          Continue Watching
+        <h3 class="section-title" id="continue-reading-title">
+          Continue Reading
         </h3>
         <button class="btn-more">See All</button>
       </div>
       <div class="row-container">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="CW 4">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="CW 5">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="CW 6">
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="CR 1">
+          <div class="row-info-overlay">
+            <div class="row-type">Manga</div>
+            <div class="row-episode">Ch. 32</div>
+            <div class="row-rating"><i class="fas fa-star"></i> 8.5</div>
+          </div>
+        </div>
+        <div class="row-item">
+          <img class="row-poster" 
+               src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="CR 2">
+          <div class="row-info-overlay">
+            <div class="row-type">Manga</div>
+            <div class="row-episode">Ch. 120</div>
+            <div class="row-rating"><i class="fas fa-star"></i> 9.1</div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -153,6 +278,7 @@
     </a>
   </nav>
 
+  <!-- Подключаем скрипт -->
   <script src="script.js"></script>
 </body>
 </html>
