@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>AniVision MiniApp</title>
-  <!-- Мобильная адаптация + Safe Area для iOS -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* Safe Area */
+    /* Сохранённый дизайн оригинальной страницы, с splash screen, header, hero-карусель, секциями, нижней панелью */
     html, body {
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
     }
-    /* Общие стили */
     body {
       margin: 0;
       background: #141414;
@@ -21,7 +22,7 @@
     /* Splash Screen */
     .splash-screen {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       background: #000;
       display: flex;
       justify-content: center;
@@ -58,7 +59,7 @@
     .logo-part2 { color: #a749f8; margin-left: 4px; }
     /* Main Content */
     .content {
-      padding-bottom: 5rem; /* для нижней панели */
+      padding-bottom: 5rem;
     }
     /* Hero Carousel */
     .hero-carousel {
@@ -76,7 +77,6 @@
       transition: left 0.8s ease;
     }
     .hero-slide.active { left: 0; }
-    .hero-slide.prev { left: -100%; }
     .hero-slide-bg {
       width: 100%;
       height: 100%;
@@ -111,10 +111,7 @@
       align-items: center;
       margin: 0 1rem 0.5rem;
     }
-    .section-title {
-      font-size: 1rem;
-      font-weight: 600;
-    }
+    .section-title { font-size: 1rem; font-weight: 600; }
     .btn-more {
       background: none;
       border: none;
@@ -147,7 +144,7 @@
       height: 100%;
       object-fit: cover;
     }
-    /* Нижняя панель (Tab Bar) */
+    /* Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -178,9 +175,7 @@
 <body>
   <!-- SPLASH SCREEN -->
   <div class="splash-screen" id="splash-screen">
-    <div class="splash-logo">
-      <span class="splash-text">AniVision</span>
-    </div>
+    <div class="splash-logo"><span class="splash-text">AniVision</span></div>
   </div>
 
   <!-- HEADER -->
@@ -194,10 +189,10 @@
   <main class="content">
     <!-- HERO-КАРУСЕЛЬ -->
     <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайды подгружаются динамически -->
+      <!-- Слайды будут подгружаться динамически -->
     </section>
 
-    <!-- Секция: Trending (горизонтальный ряд) -->
+    <!-- Секция: Trending -->
     <section class="section-row">
       <div class="section-header">
         <h3 class="section-title" id="trending-title">Trending</h3>
@@ -208,10 +203,10 @@
       </div>
     </section>
 
-    <!-- Дополнительные секции можно добавить аналогично -->
+    <!-- Можно добавить другие секции аналогично -->
   </main>
 
-  <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar) -->
+  <!-- Нижняя панель -->
   <nav class="bottom-nav">
     <a href="#" class="nav-link active">
       <i class="fas fa-home"></i>
@@ -233,9 +228,9 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-    // Конфигурация Firebase
+    // Конфигурация Firebase (та же, что и в админке)
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
@@ -246,11 +241,10 @@
       measurementId: "G-JGNDHJT219"
     };
 
-    // Инициализация Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Функция для плавного исчезновения splash screen через 2 сек
+    // Функция для fadeOut splash screen
     window.addEventListener("load", () => {
       setTimeout(() => {
         const splash = document.getElementById("splash-screen");
@@ -261,29 +255,21 @@
 
     // Языковой переключатель
     const translations = {
-      en: {
-        trending: "Trending",
-        seeAll: "See All"
-      },
-      ru: {
-        trending: "Популярное",
-        seeAll: "Ещё"
-      }
+      en: { trending: "Trending", seeAll: "See All" },
+      ru: { trending: "Популярное", seeAll: "Ещё" }
     };
     let currentLang = 'en';
     document.getElementById("lang-btn").addEventListener("click", () => {
       currentLang = (currentLang === 'en') ? 'ru' : 'en';
-      // Обновляем текст заголовка секции Trending
       document.getElementById("trending-title").textContent = translations[currentLang].trending;
       document.getElementById("trending-more").textContent = translations[currentLang].seeAll;
       alert("Язык переключен на " + (currentLang === 'en' ? "English" : "Русский"));
     });
-    // Заглушка для уведомлений
     document.getElementById("notif-btn").addEventListener("click", () => {
       alert("Уведомления пока не реализованы!");
     });
 
-    // Загрузка данных для HERO-карусели (баннеры)
+    // Загрузка баннеров для HERO-карусели
     async function loadCarousel() {
       const carousel = document.getElementById("hero-carousel");
       carousel.innerHTML = "";
@@ -322,7 +308,7 @@
       }, 5000);
     }
 
-    // Функция для загрузки аниме для раздела (например, Trending)
+    // Загрузка секции Trending
     async function loadSection(sectionName, containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -336,7 +322,9 @@
           const card = document.createElement("div");
           card.classList.add("row-item");
           card.innerHTML = `
-            <img class="row-poster" src="${data.cover ? data.cover : 'https://via.placeholder.com/200x300?text=No+Image'}" alt="${data.title}">
+            <img class="row-poster"
+                 src="${data.cover ? data.cover : 'https://via.placeholder.com/200x300?text=No+Image'}"
+                 alt="${data.title}">
           `;
           container.appendChild(card);
         });
@@ -348,7 +336,6 @@
     // Загружаем контент
     loadCarousel();
     loadSection("trending", "trending-container");
-    // Дополнительные секции можно загрузить аналогично, если их настроите
   </script>
 </body>
 </html>
