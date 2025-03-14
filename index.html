@@ -1,284 +1,244 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>AniVision MiniApp</title>
-  <!-- Мобильная адаптация -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <!-- Подключаем style.css -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Font Awesome (иконки) -->
-  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-
-  <!-- Шрифт Montserrat -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <title>AniVision - Главная</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Базовые стили для главной страницы */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #141414;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    header {
+      background: #000;
+      padding: 1rem;
+      text-align: center;
+      color: #a749f8;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    /* Стили для динамичной карусели */
+    .hero-carousel {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .hero-slide {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100%;
+      transition: left 0.8s ease;
+    }
+    .hero-slide.active {
+      left: 0;
+    }
+    .hero-slide-bg {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-slide a {
+      background: #a749f8;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .hero-slide a:hover {
+      background: #933ae0;
+    }
+    /* Остальные блоки (Trending, Recommendations и т.д.) – пример разметки */
+    .section-row {
+      margin-bottom: 1rem;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 1rem 0.5rem;
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .btn-more {
+      background: none;
+      border: none;
+      color: #a749f8;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .btn-more:hover {
+      color: #fff;
+    }
+    .row-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 0.5rem;
+      padding: 0 1rem 1rem;
+    }
+    .row-container::-webkit-scrollbar {
+      display: none;
+    }
+    .row-item {
+      position: relative;
+      flex-shrink: 0;
+      width: 140px;
+      background: #333;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .row-poster {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <!-- SPLASH SCREEN -->
-  <div class="splash-screen" id="splash-screen">
-    <div class="splash-logo">
-      <span class="splash-text">AniVision</span>
+  <header>
+    <h1>AniVision</h1>
+    <p>Ваши любимые аниме в одном месте</p>
+  </header>
+  <div class="container">
+    <!-- Динамичная карусель -->
+    <div class="hero-carousel" id="hero-carousel">
+      <!-- Баннеры будут загружены динамически -->
     </div>
+
+    <!-- Пример блока Trending -->
+    <section class="section-row">
+      <div class="section-header">
+        <h3 class="section-title">Trending</h3>
+        <button class="btn-more">See All</button>
+      </div>
+      <div class="row-container" id="trending-container">
+        <!-- Карточки Trending будут добавлены сюда -->
+      </div>
+    </section>
+
+    <!-- Другие секции (Recommendations, Upcoming, Continue Watching) можно добавить аналогично -->
   </div>
 
-  <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
-  <header class="header">
-    <!-- Слева: кнопка языка -->
-    <button class="lang-btn">
-      <i class="fas fa-flag"></i>
-    </button>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-    <!-- По центру: AniVision -->
-    <h1 class="app-title">
-      <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
-    </h1>
+    // Конфигурация Firebase (та же, что и в админке)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
+      authDomain: "anivision-194f5.firebaseapp.com",
+      projectId: "anivision-194f5",
+      storageBucket: "anivision-194f5.appspot.com",
+      messagingSenderId: "793506779659",
+      appId: "1:793506779659:web:b391b63343af935afbed0e",
+      measurementId: "G-JGNDHJT219"
+    };
 
-    <!-- Справа: уведомления -->
-    <button class="notif-btn">
-      <i class="fas fa-bell"></i>
-    </button>
-  </header>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  <!-- ОСНОВНОЙ КОНТЕНТ -->
-  <main class="content">
-    <!-- ПЕРВЫЙ БЛОК: Hero Carousel -->
-    <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайд 1 -->
-      <div class="hero-slide">
-        <div class="hero-slide-bg" 
-             style="background-image: url('https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=1000');">
-          <div class="hero-overlay">
-            <img class="banner-poster" 
-                 src="https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=200" 
-                 alt="Hero Poster 1">
-            <div class="banner-info">
-              <h2 class="banner-title">Spy x Family</h2>
-              <p class="banner-desc">Комедийный шпионский экшен.</p>
-              <button class="btn-banner">Смотреть</button>
+    // Функция загрузки баннеров для карусели
+    async function loadCarousel() {
+      const carousel = document.getElementById("hero-carousel");
+      carousel.innerHTML = "";
+      try {
+        const carouselCollection = collection(db, "carouselBanners");
+        const querySnapshot = await getDocs(carouselCollection);
+        const banners = [];
+        querySnapshot.forEach(docSnap => {
+          banners.push(docSnap.data());
+        });
+        if (banners.length === 0) {
+          carousel.innerHTML = `<p>Нет баннеров для карусели.</p>`;
+          return;
+        }
+        // Создаем слайды
+        banners.forEach((banner, index) => {
+          const slide = document.createElement("div");
+          slide.classList.add("hero-slide");
+          if (index === 0) slide.classList.add("active");
+          slide.style.backgroundImage = `url('${banner.image}')`;
+          slide.innerHTML = `
+            <div class="hero-overlay">
+              <a href="${banner.link}" target="_blank">Перейти</a>
             </div>
-          </div>
-        </div>
-      </div>
-      <!-- Слайд 2 -->
-      <div class="hero-slide">
-        <div class="hero-slide-bg" 
-             style="background-image: url('https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=1000');">
-          <div class="hero-overlay">
-            <img class="banner-poster" 
-                 src="https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=200" 
-                 alt="Hero Poster 2">
-            <div class="banner-info">
-              <h2 class="banner-title">Jujutsu Kaisen</h2>
-              <p class="banner-desc">Маги против проклятий. Экшен, мистика.</p>
-              <button class="btn-banner">Смотреть</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Слайд 3 -->
-      <div class="hero-slide">
-        <div class="hero-slide-bg" 
-             style="background-image: url('https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=1000');">
-          <div class="hero-overlay">
-            <img class="banner-poster" 
-                 src="https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=200" 
-                 alt="Hero Poster 3">
-            <div class="banner-info">
-              <h2 class="banner-title">Demon Slayer</h2>
-              <p class="banner-desc">Охотники на демонов, боевое фэнтези.</p>
-              <button class="btn-banner">Смотреть</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+          `;
+          carousel.appendChild(slide);
+        });
+        startCarousel();
+      } catch (error) {
+        console.error("Ошибка при загрузке баннеров карусели:", error);
+      }
+    }
 
-    <!-- ВТОРОЙ БЛОК: Trending -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title" id="trending-title">
-          Trending
-        </h3>
-        <button class="btn-more">See All</button>
-      </div>
-      <div class="row-container">
-        <!-- Карточка 1 -->
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809377/pexels-photo-5809377.jpeg?w=300" alt="Trend 1">
-          <div class="row-info-overlay">
-            <div class="row-type">TV</div>
-            <div class="row-episode">Ep. 05</div>
-            <div class="row-rating"><i class="fas fa-star"></i> 8.9</div>
-          </div>
-        </div>
-        <!-- Карточка 2 -->
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809375/pexels-photo-5809375.jpeg?w=300" alt="Trend 2">
-          <div class="row-info-overlay">
-            <div class="row-type">TV</div>
-            <div class="row-episode">Ep. 746</div>
-            <div class="row-rating"><i class="fas fa-star"></i> 9.2</div>
-          </div>
-        </div>
-        <!-- Карточка 3 -->
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809374/pexels-photo-5809374.jpeg?w=300" alt="Trend 3">
-          <div class="row-info-overlay">
-            <div class="row-type">TV</div>
-            <div class="row-episode">Ep. 13</div>
-            <div class="row-rating"><i class="fas fa-star"></i> 8.7</div>
-          </div>
-        </div>
-      </div>
-    </section>
+    // Функция для автопрокрутки карусели
+    function startCarousel() {
+      const slides = document.querySelectorAll(".hero-slide");
+      let currentIndex = 0;
+      setInterval(() => {
+        slides[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add("active");
+      }, 5000);
+    }
 
-    <!-- ТРЕТИЙ БЛОК: Continue Watching -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title" id="continue-watching-title">
-          Continue Watching
-        </h3>
-        <button class="btn-more">See All</button>
-      </div>
-      <div class="row-container">
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="CW 1">
-          <div class="row-info-overlay">
-            <div class="row-type">TV</div>
-            <div class="row-episode">Ep. 04</div>
-            <div class="row-rating"><i class="fas fa-star"></i> 8.1</div>
-          </div>
-        </div>
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="CW 2">
-          <div class="row-info-overlay">
-            <div class="row-type">TV</div>
-            <div class="row-episode">Ep. 22</div>
-            <div class="row-rating"><i class="fas fa-star"></i> 7.9</div>
-          </div>
-        </div>
-      </div>
-    </section>
+    // Функция для загрузки секции по фильтру (например, Trending)
+    async function loadSection(sectionName, containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = "";
+      try {
+        const animeRef = collection(db, "anime");
+        const q = query(animeRef, where("sections", "array-contains", sectionName));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          const card = document.createElement("div");
+          card.classList.add("row-item");
+          card.innerHTML = `
+            <img class="row-poster"
+                 src="${data.cover ? data.cover : 'https://via.placeholder.com/200x300?text=No+Image'}"
+                 alt="${data.title}">
+          `;
+          container.appendChild(card);
+        });
+      } catch (error) {
+        console.error(`Ошибка при загрузке раздела [${sectionName}]:`, error);
+      }
+    }
 
-    <!-- ЧЕТВЁРТЫЙ БЛОК: Upcoming -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title" id="upcoming-title">
-          Upcoming
-        </h3>
-        <button class="btn-more">See All</button>
-      </div>
-      <div class="row-container">
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Upcoming 1">
-          <div class="row-info-overlay">
-            <div class="row-type">TV</div>
-            <div class="row-episode">N/A</div>
-            <div class="row-rating"><i class="fas fa-star"></i> -</div>
-          </div>
-        </div>
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809415/pexels-photo-5809415.jpeg?w=300" alt="Upcoming 2">
-          <div class="row-info-overlay">
-            <div class="row-type">TV</div>
-            <div class="row-episode">N/A</div>
-            <div class="row-rating"><i class="fas fa-star"></i> -</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ПЯТЫЙ БЛОК: Recommendations -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title" id="recommendations-title">
-          Recommendations
-        </h3>
-        <button class="btn-more">See All</button>
-      </div>
-      <div class="row-container">
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="Rec 1">
-          <div class="row-info-overlay">
-            <div class="row-type">TV</div>
-            <div class="row-episode">Ep. 10</div>
-            <div class="row-rating"><i class="fas fa-star"></i> 9.0</div>
-          </div>
-        </div>
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Rec 2">
-          <div class="row-info-overlay">
-            <div class="row-type">TV</div>
-            <div class="row-episode">Ep. 13</div>
-            <div class="row-rating"><i class="fas fa-star"></i> 8.8</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ШЕСТОЙ БЛОК: Continue Reading (манга) -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title" id="continue-reading-title">
-          Continue Reading
-        </h3>
-        <button class="btn-more">See All</button>
-      </div>
-      <div class="row-container">
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="CR 1">
-          <div class="row-info-overlay">
-            <div class="row-type">Manga</div>
-            <div class="row-episode">Ch. 32</div>
-            <div class="row-rating"><i class="fas fa-star"></i> 8.5</div>
-          </div>
-        </div>
-        <div class="row-item">
-          <img class="row-poster" 
-               src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="CR 2">
-          <div class="row-info-overlay">
-            <div class="row-type">Manga</div>
-            <div class="row-episode">Ch. 120</div>
-            <div class="row-rating"><i class="fas fa-star"></i> 9.1</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- НИЖНЯЯ ПАНЕЛЬ (4 вкладки) -->
-  <nav class="bottom-nav">
-    <a href="#" class="nav-link active">
-      <i class="fas fa-home"></i>
-      <span class="nav-label">Главная</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-film"></i>
-      <span class="nav-label">Аниме</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-book"></i>
-      <span class="nav-label">Манга</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-user"></i>
-      <span class="nav-label">Профиль</span>
-    </a>
-  </nav>
-
-  <!-- Подключаем скрипт -->
-  <script src="script.js"></script>
+    // Вызываем функции для загрузки контента
+    loadCarousel();
+    loadSection("trending", "trending-container");
+    // Можно добавить вызовы для других секций, если их добавите:
+    // loadSection("recommendations", "recommendations-container");
+    // loadSection("upcoming", "upcoming-container");
+    // loadSection("continue_watching", "continue-watching-container");
+  </script>
 </body>
 </html>
