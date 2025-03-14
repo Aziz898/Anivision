@@ -11,7 +11,35 @@
     .container { max-width: 800px; margin: 0 auto; padding: 1rem; background: #1f1f1f; border-radius: 8px; }
     .anime-details { text-align: center; margin-bottom: 1.5rem; }
     .anime-details img { max-width: 100%; border-radius: 4px; margin-bottom: 1rem; }
-    .episode-form { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1.5rem; background: #2a2a2a; padding: 1rem; border-radius: 8px; }
+    .edit-btn { background: #a749f8; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; color: #fff; }
+    .edit-btn:hover { background: #933ae0; }
+    .anime-form, .edit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 1.5rem;
+      background: #2a2a2a;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .anime-form label, .edit-form label { font-size: 0.9rem; color: #ccc; }
+    .anime-form input, .anime-form textarea,
+    .edit-form input, .edit-form textarea {
+      background: #1f1f1f;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem;
+      color: #fff;
+    }
+    .episode-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 1.5rem;
+      background: #2a2a2a;
+      padding: 1rem;
+      border-radius: 8px;
+    }
     .episode-form label { font-size: 0.9rem; color: #ccc; }
     .episode-form input { background: #1f1f1f; border: none; border-radius: 4px; padding: 0.5rem; color: #fff; }
     .episode-form input[type="submit"] { background: #a749f8; color: #fff; border: none; border-radius: 4px; padding: 0.7rem 1rem; cursor: pointer; }
@@ -30,6 +58,20 @@
     <div class="anime-details" id="anime-details">
       <!-- Здесь выводятся обложка, название и описание аниме -->
     </div>
+    <button id="edit-details-btn" class="edit-btn">Редактировать детали</button>
+    <!-- Форма редактирования деталей аниме (изначально скрыта) -->
+    <form id="edit-form" class="edit-form" style="display: none;">
+      <label>Название аниме</label>
+      <input type="text" id="edit-title" required>
+      <label>Описание</label>
+      <textarea id="edit-desc" rows="3"></textarea>
+      <label>URL обложки</label>
+      <input type="url" id="edit-cover">
+      <label>Ссылка на плеер</label>
+      <input type="url" id="edit-player">
+      <input type="submit" value="Сохранить изменения">
+      <button type="button" id="cancel-edit-btn" class="edit-btn" style="background: #555;">Отмена</button>
+    </form>
     <h2>Добавить эпизод</h2>
     <form id="episode-form" class="episode-form">
       <label for="episode-number">Номер эпизода</label>
@@ -58,7 +100,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-    import { getFirestore, doc, getDoc, collection, addDoc, getDocs, deleteDoc } 
+    import { getFirestore, doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } 
       from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -81,6 +123,7 @@
       alert("Не указан идентификатор аниме!");
     }
 
+    // Функция для загрузки деталей аниме
     async function loadAnimeDetails() {
       const animeDocRef = doc(db, "anime", animeId);
       try {
@@ -93,6 +136,11 @@
             <h2>${data.title}</h2>
             <p>${data.desc ? data.desc : ""}</p>
           `;
+          // Заполняем форму редактирования
+          document.getElementById("edit-title").value = data.title || "";
+          document.getElementById("edit-desc").value = data.desc || "";
+          document.getElementById("edit-cover").value = data.cover || "";
+          document.getElementById("edit-player").value = data.playerLink || "";
         } else {
           alert("Аниме не найдено!");
         }
@@ -103,6 +151,47 @@
 
     loadAnimeDetails();
 
+    // Режим редактирования деталей
+    const editBtn = document.getElementById("edit-details-btn");
+    const editForm = document.getElementById("edit-form");
+    const cancelEditBtn = document.getElementById("cancel-edit-btn");
+
+    editBtn.addEventListener("click", () => {
+      editForm.style.display = "block";
+      editBtn.style.display = "none";
+    });
+
+    cancelEditBtn.addEventListener("click", () => {
+      editForm.style.display = "none";
+      editBtn.style.display = "inline-block";
+    });
+
+    // Обработчик формы редактирования деталей аниме
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const newTitle = document.getElementById("edit-title").value.trim();
+      const newDesc = document.getElementById("edit-desc").value.trim();
+      const newCover = document.getElementById("edit-cover").value.trim();
+      const newPlayer = document.getElementById("edit-player").value.trim();
+
+      try {
+        await updateDoc(doc(db, "anime", animeId), {
+          title: newTitle,
+          desc: newDesc,
+          cover: newCover,
+          playerLink: newPlayer
+        });
+        alert("Данные аниме обновлены!");
+        editForm.style.display = "none";
+        editBtn.style.display = "inline-block";
+        loadAnimeDetails();
+      } catch (error) {
+        console.error("Ошибка при обновлении аниме:", error);
+        alert("Ошибка при обновлении аниме.");
+      }
+    });
+
+    // Работа с подколлекцией "episodes" для данного аниме
     const episodesCollection = collection(db, "anime", animeId, "episodes");
 
     async function loadEpisodes() {
