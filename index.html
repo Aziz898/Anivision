@@ -2,138 +2,60 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Anivision — Netflix-Style Slider</title>
-  <!-- Мобильная адаптация -->
+  <title>Anivision — Netflix-Style Anime Streaming</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <!-- Подключаем стили -->
+  <meta name="telegram-web-app-title" content="Anivision">
+  <meta property="og:image" content="https://example.com/preview.jpg">
+  
+  <!-- Стили -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- Font Awesome (иконки) -->
+  
+  <!-- Иконки -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-
-  <!-- Шрифт -->
+  
+  <!-- Шрифты -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <!-- SPLASH SCREEN -->
+  <!-- Splash Screen -->
   <div class="splash-screen" id="splash-screen">
     <div class="splash-logo">
       <span class="splash-text">Anivision</span>
     </div>
   </div>
 
-  <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
-  <header class="header">
-    <h1 class="app-title">
-      <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
-    </h1>
-    <!-- Кнопка меню (опционально) -->
-    <button class="menu-btn">
-      <i class="fas fa-ellipsis-v"></i>
-    </button>
-  </header>
+  <!-- Основной контент -->
+  <div class="app-container">
+    <!-- Шапка -->
+    <header class="header">
+      <h1 class="app-title">
+        <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
+      </h1>
+      <button class="menu-btn" aria-label="Открыть меню">
+        <i class="fas fa-ellipsis-v"></i>
+      </button>
+    </header>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ -->
-  <main class="content">
+    <!-- Основной контент -->
+    <main class="content" id="main-content">
+      <!-- Секции будут загружены динамически -->
+    </main>
 
-    <!-- СЕКЦИЯ 1: РЕКОМЕНДАЦИИ -->
-    <section class="section">
-      <h2 class="section-title">Рекомендации</h2>
-      <div class="row-container">
-        <!-- Пример постеров (горизонтальный скролл) -->
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=300" 
-             alt="Магическая битва Poster">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/5063436/pexels-photo-5063436.jpeg?w=300" 
-             alt="One Piece Poster">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=300" 
-             alt="Атака Титанов Poster">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=300" 
-             alt="Демон Казановы Poster">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/5063572/pexels-photo-5063572.jpeg?w=300" 
-             alt="Летописи Тьмы Poster">
-      </div>
-    </section>
+    <!-- Нижняя навигация -->
+    <nav class="bottom-nav">
+      <!-- Навигационные ссылки -->
+    </nav>
+  </div>
 
-    <!-- СЕКЦИЯ 2: РЕКОМЕНДУЕМОЕ -->
-    <section class="section">
-      <h2 class="section-title">Рекомендуемое</h2>
-      <div class="row-container">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435662/pexels-photo-8435662.jpeg?w=300" 
-             alt="Anime Poster 1">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435661/pexels-photo-8435661.jpeg?w=300" 
-             alt="Anime Poster 2">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435663/pexels-photo-8435663.jpeg?w=300" 
-             alt="Anime Poster 3">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435664/pexels-photo-8435664.jpeg?w=300" 
-             alt="Anime Poster 4">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435665/pexels-photo-8435665.jpeg?w=300" 
-             alt="Anime Poster 5">
-      </div>
-    </section>
+  <!-- Видео плеер -->
+  <div class="video-player" id="video-player" hidden>
+    <button class="close-player" aria-label="Закрыть плеер">×</button>
+    <iframe class="video-iframe" allowfullscreen></iframe>
+  </div>
 
-    <!-- СЕКЦИЯ 3: ПО ЖАНРАМ -->
-    <section class="section">
-      <h2 class="section-title">По жанрам</h2>
-      <div class="row-container">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435666/pexels-photo-8435666.jpeg?w=300" 
-             alt="Экшен Poster">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435667/pexels-photo-8435667.jpeg?w=300" 
-             alt="Романтика Poster">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435668/pexels-photo-8435668.jpeg?w=300" 
-             alt="Комедия Poster">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435669/pexels-photo-8435669.jpeg?w=300" 
-             alt="Фэнтези Poster">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435670/pexels-photo-8435670.jpeg?w=300" 
-             alt="Ужасы Poster">
-        <img class="row-poster" 
-             src="https://images.pexels.com/photos/8435671/pexels-photo-8435671.jpeg?w=300" 
-             alt="Драма Poster">
-      </div>
-    </section>
-
-  </main>
-
-  <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
-  <nav class="bottom-nav">
-    <a href="#" class="nav-link active">
-      <i class="fas fa-home"></i>
-      <span class="nav-label">Главная</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-book"></i>
-      <span class="nav-label">Манга</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-film"></i>
-      <span class="nav-label">Аниме</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-bookmark"></i>
-      <span class="nav-label">Моё</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-user"></i>
-      <span class="nav-label">Профиль</span>
-    </a>
-  </nav>
-
-  <!-- Подключаем скрипт -->
+  <!-- Скрипты -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
