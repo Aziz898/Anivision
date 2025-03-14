@@ -14,8 +14,6 @@ html, body {
   display: flex;
   flex-direction: column;
   position: relative;
-
-  /* Safe area (iPhone вырезы) */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -68,6 +66,15 @@ html, body {
 .app-title {
   font-size: 1.3rem;
   font-weight: 600;
+  /* Здесь используем текст напрямую – больше никаких псевдоэлементов */
+}
+.app-title span.logo-part1 {
+  color: #fff;
+}
+.app-title span.logo-part2 {
+  color: #a749f8;
+  text-transform: capitalize;
+  margin-left: 4px;
 }
 .menu-btn {
   font-size: 1.3rem;
@@ -81,11 +88,12 @@ html, body {
 ============================== */
 .content {
   flex: 1;
-  padding-bottom: 5rem; /* отступ под нижнюю навигацию */
+  padding: 1rem;
+  padding-bottom: 5rem;
 }
 
 /* ==============================
-   HERO SECTION
+   HERO SECTION (АФИША)
 ============================== */
 .hero-section {
   margin-bottom: 1rem;
@@ -93,8 +101,8 @@ html, body {
 .hero-poster {
   position: relative;
   width: 100%;
-  max-width: 100%;
   overflow: hidden;
+  border-radius: 8px;
 }
 .hero-poster img {
   width: 100%;
@@ -107,15 +115,15 @@ html, body {
   left: 0;
   right: 0;
   padding: 1rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 }
 .hero-title {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin-bottom: 0.3rem;
   font-weight: 600;
 }
 .hero-desc {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #ccc;
   margin-bottom: 0.5rem;
 }
@@ -125,7 +133,7 @@ html, body {
   border: none;
   border-radius: 20px;
   padding: 0.5rem 1rem;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   transition: background 0.3s, transform 0.3s;
 }
 .btn-hero:hover {
@@ -140,13 +148,13 @@ html, body {
   margin-bottom: 1rem;
 }
 .section-title {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
   margin: 0.5rem 1rem;
 }
 
 /* ==============================
-   NETFLIX-STYLE ROWS
+   ROW CONTAINER (ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ)
 ============================== */
 .row-container {
   display: flex;
@@ -160,7 +168,7 @@ html, body {
 }
 .row-poster {
   width: 120px;
-  height: 180px; /* 2:3 соотношение */
+  height: 180px; /* Соотношение 2:3 */
   object-fit: cover;
   border-radius: 4px;
   flex-shrink: 0;
@@ -172,13 +180,15 @@ html, body {
 }
 
 /* ==============================
-   BOTTOM NAV
+   BOTTOM NAVIGATION (с эффектом размытия)
 ============================== */
 .bottom-nav {
   position: fixed;
-  bottom: 0; left: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  background: #000;
+  background: rgba(0,0,0,0.6); /* Полупрозрачный фон */
+  backdrop-filter: blur(10px);  /* Эффект размытия */
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -212,10 +222,4 @@ html, body {
     width: 160px;
     height: 240px;
   }
-}
-
-/* АНИМАЦИИ (splash) */
-@keyframes colorFlow {
-  0% { color: #a749f8; }
-  100% { color: #fff; }
 }
