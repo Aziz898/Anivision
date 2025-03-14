@@ -2,21 +2,18 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>AniVision MiniApp</title>
-  <!-- Мобильная адаптация -->
+  <title>AniVision — MiniApp</title>
+  <!-- Мобильная адаптация (учёт безопасных зон) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <!-- Подключаем стили -->
+  <!-- Подключение внешнего файла стилей -->
   <link rel="stylesheet" href="style.css">
-
   <!-- Font Awesome для иконок -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-
   <!-- Шрифт Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- SPLASH SCREEN -->
+  <!-- SPLASH SCREEN (Заставка) -->
   <div class="splash-screen" id="splash-screen">
     <div class="splash-logo">
       <span class="splash-text">AniVision</span>
@@ -26,71 +23,86 @@
   <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
   <header class="header">
     <h1 class="app-title">AniVision</h1>
-    <button class="menu-btn">
-      <i class="fas fa-ellipsis-v"></i>
-    </button>
+    <button class="menu-btn"><i class="fas fa-ellipsis-v"></i></button>
   </header>
 
   <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main class="content">
-    <!-- БОЛЬШОЙ ПОСТЕР (как в референсе) -->
+    <!-- HERO-блок: Большая афиша -->
     <section class="hero-section">
       <div class="hero-poster">
-        <img src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=700" alt="Главный постер">
+        <!-- Фоновое изображение афиши -->
+        <img src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=1000" alt="Главная афиша">
         <div class="hero-overlay">
           <h2 class="hero-title">Последние хиты</h2>
           <p class="hero-desc">Смотрите самые новые аниме и сериалы!</p>
-          <button class="btn-hero">Смотреть</button>
+          <button class="btn btn-hero">Смотреть</button>
         </div>
       </div>
     </section>
 
-    <!-- Горизонтальная карусель 1 -->
-    <section class="section">
-      <h3 class="section-title">Новинки</h3>
+    <!-- Горизонтальная карусель: Новинки -->
+    <section class="carousel-section">
+      <h2 class="section-title">Новинки</h2>
       <div class="row-container">
-        <img class="row-poster" src="https://images.pexels.com/photos/8435662/pexels-photo-8435662.jpeg?w=300" alt="Anime Poster 1">
-        <img class="row-poster" src="https://images.pexels.com/photos/8435661/pexels-photo-8435661.jpeg?w=300" alt="Anime Poster 2">
-        <img class="row-poster" src="https://images.pexels.com/photos/8435663/pexels-photo-8435663.jpeg?w=300" alt="Anime Poster 3">
-        <img class="row-poster" src="https://images.pexels.com/photos/8435664/pexels-photo-8435664.jpeg?w=300" alt="Anime Poster 4">
-        <img class="row-poster" src="https://images.pexels.com/photos/8435665/pexels-photo-8435665.jpeg?w=300" alt="Anime Poster 5">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435662/pexels-photo-8435662.jpeg?w=300" alt="Новинка 1">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435661/pexels-photo-8435661.jpeg?w=300" alt="Новинка 2">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435663/pexels-photo-8435663.jpeg?w=300" alt="Новинка 3">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435664/pexels-photo-8435664.jpeg?w=300" alt="Новинка 4">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435665/pexels-photo-8435665.jpeg?w=300" alt="Новинка 5">
       </div>
     </section>
 
-    <!-- Горизонтальная карусель 2 -->
-    <section class="section">
-      <h3 class="section-title">Популярное</h3>
+    <!-- Горизонтальная карусель: Популярное -->
+    <section class="carousel-section">
+      <h2 class="section-title">Популярное</h2>
       <div class="row-container">
-        <img class="row-poster" src="https://images.pexels.com/photos/5063436/pexels-photo-5063436.jpeg?w=300" alt="One Piece Poster">
-        <img class="row-poster" src="https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=300" alt="Attack on Titan Poster">
-        <img class="row-poster" src="https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=300" alt="Demon Poster">
-        <img class="row-poster" src="https://images.pexels.com/photos/5063572/pexels-photo-5063572.jpeg?w=300" alt="Dark Chronicles Poster">
-        <img class="row-poster" src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=300" alt="Another Poster">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063436/pexels-photo-5063436.jpeg?w=300" alt="Популярное 1">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=300" alt="Популярное 2">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=300" alt="Популярное 3">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063572/pexels-photo-5063572.jpeg?w=300" alt="Популярное 4">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=300" alt="Популярное 5">
+      </div>
+    </section>
+
+    <!-- Горизонтальная карусель: По жанрам -->
+    <section class="carousel-section">
+      <h2 class="section-title">По жанрам</h2>
+      <div class="row-container">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435666/pexels-photo-8435666.jpeg?w=300" alt="Экшен">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435667/pexels-photo-8435667.jpeg?w=300" alt="Романтика">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435668/pexels-photo-8435668.jpeg?w=300" alt="Комедия">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435669/pexels-photo-8435669.jpeg?w=300" alt="Фэнтези">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435670/pexels-photo-8435670.jpeg?w=300" alt="Ужасы">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435671/pexels-photo-8435671.jpeg?w=300" alt="Драма">
       </div>
     </section>
   </main>
 
-  <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+  <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (с эффектом размытия) -->
   <nav class="bottom-nav">
-    <a href="#" class="nav-link active">
+    <a href="index.html" class="nav-link active">
       <i class="fas fa-home"></i>
       <span class="nav-label">Главная</span>
     </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-search"></i>
-      <span class="nav-label">Поиск</span>
+    <a href="manga.html" class="nav-link">
+      <i class="fas fa-book"></i>
+      <span class="nav-label">Манга</span>
     </a>
-    <a href="#" class="nav-link">
+    <a href="anime.html" class="nav-link">
+      <i class="fas fa-film"></i>
+      <span class="nav-label">Аниме</span>
+    </a>
+    <a href="my.html" class="nav-link">
       <i class="fas fa-bookmark"></i>
       <span class="nav-label">Моё</span>
     </a>
-    <a href="#" class="nav-link">
+    <a href="profile.html" class="nav-link">
       <i class="fas fa-user"></i>
       <span class="nav-label">Профиль</span>
     </a>
   </nav>
 
-  <!-- Скрипт -->
   <script src="script.js"></script>
 </body>
 </html>
