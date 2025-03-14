@@ -292,3 +292,76 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+document.addEventListener("DOMContentLoaded", () => {
+  // ... остальной код ...
+
+  // ============================
+  // HERO-КАРУСЕЛЬ
+  // ============================
+  const heroSlides = document.querySelectorAll('.hero-slide');
+  const heroLeftArrow = document.getElementById('hero-arrow-left');
+  const heroRightArrow = document.getElementById('hero-arrow-right');
+  let heroCurrentSlide = 0;
+  let heroAutoSlideInterval;
+
+  function showHeroSlide(index) {
+    heroSlides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      if (i === index) {
+        slide.classList.add('active');
+      }
+    });
+  }
+
+  function nextHeroSlide() {
+    heroCurrentSlide = (heroCurrentSlide + 1) % heroSlides.length;
+    showHeroSlide(heroCurrentSlide);
+  }
+  function prevHeroSlide() {
+    heroCurrentSlide = (heroCurrentSlide - 1 + heroSlides.length) % heroSlides.length;
+    showHeroSlide(heroCurrentSlide);
+  }
+
+  if (heroLeftArrow && heroRightArrow && heroSlides.length > 0) {
+    heroLeftArrow.addEventListener('click', prevHeroSlide);
+    heroRightArrow.addEventListener('click', nextHeroSlide);
+    // Запускаем авто-прокрутку каждые 5 секунд
+    heroAutoSlideInterval = setInterval(nextHeroSlide, 5000);
+    // Начально показываем первый слайд
+    showHeroSlide(heroCurrentSlide);
+  }
+
+  // ============================
+  // КАРУСЕЛЬ "ТОПОВЫЕ АНИМЕ"
+  // ============================
+  const topAnimeCarousel = document.getElementById('top-anime-carousel');
+  const topAnimeLeft = document.getElementById('top-anime-left');
+  const topAnimeRight = document.getElementById('top-anime-right');
+
+  if (topAnimeCarousel && topAnimeLeft && topAnimeRight) {
+    topAnimeLeft.addEventListener('click', () => {
+      topAnimeCarousel.scrollBy({ left: -220, behavior: 'smooth' });
+    });
+    topAnimeRight.addEventListener('click', () => {
+      topAnimeCarousel.scrollBy({ left: 220, behavior: 'smooth' });
+    });
+  }
+
+  // ============================
+  // КАРУСЕЛЬ "ПОДБОРКИ"
+  // ============================
+  const collectionsCarousel = document.getElementById('collections-carousel');
+  const collectionsLeft = document.getElementById('collections-left');
+  const collectionsRight = document.getElementById('collections-right');
+
+  if (collectionsCarousel && collectionsLeft && collectionsRight) {
+    collectionsLeft.addEventListener('click', () => {
+      collectionsCarousel.scrollBy({ left: -220, behavior: 'smooth' });
+    });
+    collectionsRight.addEventListener('click', () => {
+      collectionsCarousel.scrollBy({ left: 220, behavior: 'smooth' });
+    });
+  }
+
+  // ... остальная логика (тема, авторизация и т.д.) ...
+});
