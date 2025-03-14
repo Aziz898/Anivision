@@ -6,81 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     /* Стили для страницы anime.html */
-    body {
-      margin: 0;
-      padding: 0;
-      background: #141414;
-      color: #fff;
-      font-family: sans-serif;
-    }
-    header {
-      background: #000;
-      padding: 1rem;
-      text-align: center;
-      color: #a749f8;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 1rem;
-      background: #1f1f1f;
-      border-radius: 8px;
-    }
-    .anime-details {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    .anime-details img {
-      max-width: 100%;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-    }
-    .episode-form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
-      margin-bottom: 1.5rem;
-      background: #2a2a2a;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-    .episode-form label {
-      font-size: 0.9rem;
-      color: #ccc;
-    }
-    .episode-form input {
-      background: #1f1f1f;
-      border: none;
-      border-radius: 4px;
-      padding: 0.5rem;
-      color: #fff;
-    }
-    .episode-form input[type="submit"] {
-      background: #a749f8;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 0.7rem 1rem;
-      cursor: pointer;
-    }
-    .episode-form input[type="submit"]:hover {
-      background: #933ae0;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 0.6rem;
-      border-bottom: 1px solid #333;
-    }
-    th {
-      background: #2a2a2a;
-      text-align: left;
-    }
-    tr:hover td {
-      background: #2a2a2a;
-    }
+    body { margin: 0; padding: 0; background: #141414; color: #fff; font-family: sans-serif; }
+    header { background: #000; padding: 1rem; text-align: center; color: #a749f8; }
+    .container { max-width: 800px; margin: 0 auto; padding: 1rem; background: #1f1f1f; border-radius: 8px; }
+    .anime-details { text-align: center; margin-bottom: 1.5rem; }
+    .anime-details img { max-width: 100%; border-radius: 4px; margin-bottom: 1rem; }
+    .episode-form { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1.5rem; background: #2a2a2a; padding: 1rem; border-radius: 8px; }
+    .episode-form label { font-size: 0.9rem; color: #ccc; }
+    .episode-form input { background: #1f1f1f; border: none; border-radius: 4px; padding: 0.5rem; color: #fff; }
+    .episode-form input[type="submit"] { background: #a749f8; color: #fff; border: none; border-radius: 4px; padding: 0.7rem 1rem; cursor: pointer; }
+    .episode-form input[type="submit"]:hover { background: #933ae0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.6rem; border-bottom: 1px solid #333; }
+    th { background: #2a2a2a; text-align: left; }
+    tr:hover td { background: #2a2a2a; }
   </style>
 </head>
 <body>
@@ -112,7 +51,7 @@
         </tr>
       </thead>
       <tbody id="episode-table-body">
-        <!-- Эпизоды будут добавлены здесь -->
+        <!-- Эпизоды будут добавляться здесь -->
       </tbody>
     </table>
   </div>
@@ -140,10 +79,8 @@
     const animeId = urlParams.get("animeId");
     if (!animeId) {
       alert("Не указан идентификатор аниме!");
-      // Можно добавить редирект на главную или админку
     }
 
-    // Загрузка деталей аниме
     async function loadAnimeDetails() {
       const animeDocRef = doc(db, "anime", animeId);
       try {
@@ -166,7 +103,6 @@
 
     loadAnimeDetails();
 
-    // Работа с подколлекцией "episodes" для данного аниме
     const episodesCollection = collection(db, "anime", animeId, "episodes");
 
     async function loadEpisodes() {
