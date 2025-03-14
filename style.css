@@ -1,102 +1,219 @@
-:root {
-  --primary-color: #a749f8;
-  --background-dark: #141414;
-  --background-black: #000000;
-  --text-primary: #ffffff;
-  --safe-area-top: env(safe-area-inset-top);
-  --safe-area-bottom: env(safe-area-inset-bottom);
-}
-
-/* Базовые стили */
-html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
-}
-
-body {
-  background: var(--background-dark);
-  color: var(--text-primary);
+/* ==============================
+   RESET / BASE
+============================== */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #141414;
+  color: #fff;
   font-family: 'Montserrat', sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  padding: var(--safe-area-top) 0 var(--safe-area-bottom) 0;
+  position: relative;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Стили для телеграм мини-приложения */
-#webapp-body {
-  background: var(--background-dark);
+/* ==============================
+   SPLASH SCREEN
+============================== */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.5s ease forwards;
+}
+.splash-logo {
+  text-align: center;
+}
+.splash-text {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #a749f8;
+  animation: colorFlow 2s infinite alternate;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes colorFlow {
+  0% { color: #a749f8; }
+  100% { color: #fff; }
 }
 
-/* Сетка приложения */
-.app-container {
+/* ==============================
+   HEADER
+============================== */
+.header {
+  background-color: #000;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.app-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.logo-part1 {
+  color: #fff;
+}
+.logo-part2 {
+  color: #a749f8;
+  text-transform: capitalize;
+  margin-left: 4px;
+}
+.menu-btn {
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  color: #fff;
+}
+
+/* ==============================
+   CONTENT
+============================== */
+.content {
   flex: 1;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
+  padding-bottom: 5rem;
 }
 
-/* Улучшенная карусель */
-.row-container {
+/* ==============================
+   SECTION TITLES
+============================== */
+.section {
+  margin-bottom: 1.5rem;
+}
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0.5rem 1rem;
+}
+
+/* ==============================
+   NETFLIX-STYLE ROWS (Wide Carousel)
+============================== */
+.wide-carousel-container {
   display: flex;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: 0 1rem 1rem;
   gap: 1rem;
+  padding: 0 1rem 1rem;
   scrollbar-width: none;
 }
-
-.row-poster {
-  scroll-snap-align: start;
-  width: 45vw;
-  height: 67.5vw;
-  max-width: 160px;
-  max-height: 240px;
-  border-radius: 8px;
-  object-fit: cover;
-  transition: transform 0.2s ease;
+.wide-carousel-container::-webkit-scrollbar {
+  display: none;
+}
+.wide-carousel-slide {
   position: relative;
-  cursor: pointer;
+  min-width: 90vw;
+  height: calc(90vw * 9/16);
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
-
-.row-poster:hover,
-.row-poster:focus {
+.wide-carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+.poster-vertical {
+  width: 100px;
+  height: calc(100px * 16/9);
+  object-fit: cover;
+  border-radius: 4px;
+}
+.slide-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-width: 50%;
+}
+.slide-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.slide-desc {
+  font-size: 0.85rem;
+  color: #ccc;
+}
+.btn-watch-wide {
+  background: #a749f8;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  transition: background 0.3s, transform 0.3s;
+}
+.btn-watch-wide:hover {
+  background: #933ae0;
   transform: scale(1.05);
-  z-index: 2;
 }
 
-/* Адаптивная нижняя навигация */
+/* ==============================
+   BOTTOM NAVIGATION
+============================== */
 .bottom-nav {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 0.5rem 0 calc(0.5rem + var(--safe-area-bottom)) 0;
-  background: var(--background-black);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 0;
+  z-index: 999;
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
 }
-
 .nav-link {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5rem;
-  color: var(--text-primary);
-  transition: color 0.2s ease;
+  color: #fff;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-label {
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
+}
+.nav-link.active,
+.nav-link:hover {
+  color: #a749f8;
 }
 
-/* Видео плеер */
-.video-player {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--safe-area-top) var(--safe-area-bottom);
-}
-
-.video-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+/* ==============================
+   MEDIA QUERIES
+============================== */
+@media (min-width: 768px) {
+  .wide-carousel-slide {
+    min-width: 500px;
+    height: calc(500px * 9/16);
+  }
+  .poster-vertical {
+    width: 120px;
+    height: calc(120px * 16/9);
+  }
 }
