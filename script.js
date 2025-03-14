@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Anivision new style - reference-based");
+  console.log("AniVision MiniApp loaded");
 
   const splashScreen = document.getElementById('splash-screen');
 
-  // Показываем splash screen 2 секунды, затем плавно скрываем
+  // Показываем splash screen 2 секунды, затем плавно скрываем его
   setTimeout(() => {
     splashScreen.style.animation = "fadeOut 0.7s forwards";
     setTimeout(() => {
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 700);
   }, 2000);
 
-  // Кнопка меню
+  // Обработка клика по кнопке меню
   const menuBtn = document.querySelector(".menu-btn");
   menuBtn?.addEventListener("click", () => {
     alert("Меню в разработке...");
