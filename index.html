@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>AniVision MiniApp</title>
+  <title>Anivision MiniApp</title>
   <!-- Мобильная адаптация -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- Стили -->
@@ -16,7 +16,7 @@
   <!-- SPLASH SCREEN -->
   <div class="splash-screen" id="splash-screen">
     <div class="splash-logo">
-      <span class="splash-text">AniVision</span>
+      <span class="splash-text">Anivision</span>
     </div>
   </div>
 
@@ -32,59 +32,105 @@
 
   <!-- Основной контент -->
   <main class="content">
+    <!-- Карусель «Рекомендации» -->
     <section class="carousel-section">
       <h2 class="section-title">Рекомендации</h2>
-      <div class="carousel-container" id="recommend-carousel">
-        <div class="carousel-item">
-          <img src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=600" alt="Магическая битва (Poster)">
-          <p class="carousel-title">Магическая битва</p>
+      <div class="wide-carousel-container">
+        <!-- Слайд 1 (16:9) -->
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <!-- Постер 9:16 -->
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=200" alt="Магическая битва Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Магическая битва</h3>
+              <p class="slide-desc">Новая экшен-комедия с элементами фэнтези...</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
+          </div>
         </div>
-        <div class="carousel-item">
-          <img src="https://images.pexels.com/photos/5063436/pexels-photo-5063436.jpeg?w=600" alt="One Piece (Poster)">
-          <p class="carousel-title">One Piece</p>
+        <!-- Слайд 2 -->
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063436/pexels-photo-5063436.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063436/pexels-photo-5063436.jpeg?w=200" alt="One Piece Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">One Piece</h3>
+              <p class="slide-desc">Пираты, приключения и море!</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
+          </div>
         </div>
-        <div class="carousel-item">
-          <img src="https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=600" alt="Атака Титанов (Poster)">
-          <p class="carousel-title">Атака Титанов</p>
+        <!-- Слайд 3 -->
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=200" alt="Атака Титанов Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Атака Титанов</h3>
+              <p class="slide-desc">Человечество на грани вымирания.</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <!-- Карусель «Рекомендуемое» -->
+    <section class="carousel-section">
       <h2 class="section-title">Рекомендуемое</h2>
-      <div class="anime-list">
-        <div class="anime-card">
-          <img src="https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=500" alt="Демон Казановы (Poster)">
-          <div class="anime-info">
-            <h3 class="anime-title">Демон Казановы</h3>
-            <p class="anime-desc">Новая экшен-комедия с элементами фэнтези...</p>
-            <a href="#" class="btn btn-watch">Смотреть</a>
+      <div class="wide-carousel-container">
+        <!-- Пример ещё слайдов -->
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=200" alt="Демон Казановы Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Демон Казановы</h3>
+              <p class="slide-desc">Новая экшен-комедия...</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
           </div>
         </div>
-        <div class="anime-card">
-          <img src="https://images.pexels.com/photos/5063572/pexels-photo-5063572.jpeg?w=500" alt="Летописи Тьмы (Poster)">
-          <div class="anime-info">
-            <h3 class="anime-title">Летописи Тьмы</h3>
-            <p class="anime-desc">Сражения с монстрами в мире вечной ночи.</p>
-            <a href="#" class="btn btn-watch">Смотреть</a>
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063572/pexels-photo-5063572.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063572/pexels-photo-5063572.jpeg?w=200" alt="Летописи Тьмы Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Летописи Тьмы</h3>
+              <p class="slide-desc">Сражения с монстрами...</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <!-- Карусель «По жанрам» -->
+    <section class="carousel-section">
       <h2 class="section-title">По жанрам</h2>
-      <div class="genre-list">
-        <button class="genre-btn">Экшен</button>
-        <button class="genre-btn">Романтика</button>
-        <button class="genre-btn">Комедия</button>
-        <button class="genre-btn">Фэнтези</button>
-        <button class="genre-btn">Ужасы</button>
-        <button class="genre-btn">Драма</button>
+      <div class="wide-carousel-container">
+        <!-- Пример жанров (каждый - 16:9, внутри постер и кнопка "Открыть") -->
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=200" alt="Экшен Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Экшен</h3>
+              <p class="slide-desc">Захватывающие битвы и сражения!</p>
+              <button class="btn-watch-wide">Открыть</button>
+            </div>
+          </div>
+        </div>
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=200" alt="Романтика Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Романтика</h3>
+              <p class="slide-desc">Истории любви и драмы.</p>
+              <button class="btn-watch-wide">Открыть</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
+  <!-- Нижняя панель навигации -->
   <nav class="bottom-nav">
     <a href="#" class="nav-link active">
       <i class="fas fa-home"></i>
