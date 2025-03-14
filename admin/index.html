@@ -1,1 +1,40 @@
-
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Админ-панель AniVision</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Подключаем шрифт Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+      /* Базовые стили для админки */
+      body {
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        background: #141414;
+        color: #fff;
+      }
+      .header {
+        padding: 1rem;
+        background: #000;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #a749f8;
+      }
+      /* Контейнер для CMS, чтобы отступ был комфортным */
+      .cms-container {
+        margin: 1rem;
+      }
+      /* Дополнительные стили можно добавить по желанию */
+    </style>
+  </head>
+  <body>
+    <!-- Заголовок админ-панели -->
+    <div class="header">Админ-панель AniVision</div>
+    <!-- Контейнер для Netlify CMS -->
+    <div class="cms-container">
+      <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    </div>
+  </body>
+</html>
