@@ -1,10 +1,9 @@
-/* ===============================
+/* ==============================
    RESET / BASE
 ============================== */
 html, body {
   height: 100%;
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -14,6 +13,8 @@ html, body {
   display: flex;
   flex-direction: column;
   position: relative;
+
+  /* Safe area (iOS) */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -23,7 +24,7 @@ html, body {
   position: fixed;
   inset: 0;
   background: #000;
-  display: flex;
+  display: flex; 
   justify-content: center;
   align-items: center;
   z-index: 9999;
@@ -36,15 +37,15 @@ html, body {
   animation: colorFlow 2s infinite alternate;
 }
 @keyframes fadeIn {
-  0% { opacity: 0; }
+  0%   { opacity: 0; }
   100% { opacity: 1; }
 }
 @keyframes fadeOut {
-  0% { opacity: 1; }
+  0%   { opacity: 1; }
   100% { opacity: 0; }
 }
 @keyframes colorFlow {
-  0% { color: #a749f8; }
+  0%   { color: #a749f8; }
   100% { color: #fff; }
 }
 
@@ -57,99 +58,82 @@ html, body {
   justify-content: space-between;
 }
 .app-title {
-  display: flex;
-  align-items: center;
   font-size: 1.3rem;
   font-weight: 600;
 }
-.logo-part1 {
-  color: #fff;
-}
-.logo-part2 {
-  color: #a749f8;
-  margin-left: 4px;
-  text-transform: capitalize;
-}
 .notif-btn {
-  font-size: 1.3rem;
   background: none;
   border: none;
   color: #fff;
+  font-size: 1.3rem;
 }
 
 /* CONTENT */
 .content {
   flex: 1;
-  padding-bottom: 5rem;
+  padding-bottom: 5rem; 
 }
 
-/* HERO CAROUSEL (слайдер) */
-.hero-carousel {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  padding: 1rem;
-  scrollbar-width: none;
+/* TRENDING SECTION (авто-карусель) */
+.trending-section {
+  margin: 1rem 0;
+  padding: 0 1rem;
 }
-.hero-carousel::-webkit-scrollbar {
-  display: none;
-}
-.hero-slide {
-  position: relative;
-  min-width: 100vw;
-  height: 250px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-}
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.7), transparent);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-}
-.banner-poster {
-  width: 120px;
-  height: calc(120px * 16/9); /* 9:16 */
-  object-fit: cover;
-  border-radius: 8px;
-}
-.banner-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 50%;
-}
-.banner-title {
-  font-size: 1.1rem;
+.section-title {
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 0.3rem;
-}
-.banner-desc {
-  font-size: 0.85rem;
-  color: #ccc;
   margin-bottom: 0.5rem;
 }
-.btn-banner {
-  background: #a749f8;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  transition: background 0.3s, transform 0.3s;
+.trending-carousel {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
 }
-.btn-banner:hover {
-  background: #933ae0;
-  transform: scale(1.05);
+.trending-slide {
+  position: absolute;
+  top: 0; left: 100%;
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.8s ease;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.trending-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.trending-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  padding: 0.5rem;
+}
+.trend-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.trend-details {
+  font-size: 0.85rem;
+  color: #ccc;
 }
 
-/* SECTION-ROW (Смотреть сейчас, Популярное, По жанрам) */
+/* HIDE THE SLIDES EXCEPT CURRENT */
+.trending-slide.active {
+  left: 0; /* current slide */
+}
+.trending-slide.prev {
+  left: -100%;
+}
+.trending-slide.next {
+  left: 100%;
+}
+
+/* SECTION-ROW */
 .section-row {
   margin-bottom: 1rem;
 }
@@ -158,10 +142,6 @@ html, body {
   align-items: center;
   justify-content: space-between;
   margin: 0 1rem 0.5rem;
-}
-.section-title {
-  font-size: 1rem;
-  font-weight: 600;
 }
 .btn-more {
   background: none;
@@ -189,7 +169,7 @@ html, body {
 }
 .row-poster {
   width: 120px;
-  height: 180px; /* 2:3 */
+  height: 180px;
   object-fit: cover;
   border-radius: 4px;
   flex-shrink: 0;
@@ -200,7 +180,7 @@ html, body {
   transform: scale(1.08);
 }
 
-/* BOTTOM NAV (полупрозрачная, размытая) */
+/* BOTTOM NAV (frosted glass) */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0;
@@ -234,12 +214,11 @@ html, body {
 
 /* MEDIA QUERIES */
 @media (min-width: 768px) {
-  .hero-slide {
+  .trending-section {
     height: 300px;
   }
-  .banner-poster {
-    width: 140px;
-    height: calc(140px * 16/9);
+  .trending-carousel {
+    height: 300px;
   }
   .row-poster {
     width: 140px;
