@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("AniVision with single auto-rotating carousel, language switch, top bar icons");
+  console.log("AniVision with extended sections, overlays, language switch, top bar icons");
 
   // SPLASH SCREEN
   const splashScreen = document.getElementById('splash-screen');
@@ -35,34 +35,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setInterval(nextHeroSlide, 5000);
 
-  // Кнопка языка (RU/EN) - заглушка
+  // Кнопка языка (RU/EN)
   const langBtn = document.querySelector('.lang-btn');
-  // Пример простого словаря
   const translations = {
     en: {
+      trending: "Trending",
       continueWatching: "Continue Watching",
-      recommendations: "Recommendations"
+      upcoming: "Upcoming",
+      recommendations: "Recommendations",
+      continueReading: "Continue Reading"
     },
     ru: {
+      trending: "В тренде",
       continueWatching: "Продолжить просмотр",
-      recommendations: "Рекомендации"
+      upcoming: "Скоро выйдет",
+      recommendations: "Рекомендации",
+      continueReading: "Продолжить чтение"
     }
   };
   let currentLang = 'en'; // по умолчанию
+
+  // Элементы, которые будем переводить
+  const trendingTitle       = document.getElementById('trending-title');
+  const cwTitle1           = document.getElementById('continue-watching-title');
+  const upcomingTitle      = document.getElementById('upcoming-title');
+  const recTitle           = document.getElementById('recommendations-title');
+  const continueReadingTitle = document.getElementById('continue-reading-title');
 
   langBtn?.addEventListener('click', () => {
     // Переключаем язык
     currentLang = (currentLang === 'en') ? 'ru' : 'en';
 
     // Меняем текст в нужных элементах
-    const cwTitle1 = document.getElementById('continue-watching-title');
+    if(trendingTitle) trendingTitle.textContent = translations[currentLang].trending;
     if(cwTitle1) cwTitle1.textContent = translations[currentLang].continueWatching;
-
-    const cwTitle2 = document.getElementById('continue-watching-2-title');
-    if(cwTitle2) cwTitle2.textContent = translations[currentLang].continueWatching;
-
-    const recTitle = document.getElementById('recommendations-title');
+    if(upcomingTitle) upcomingTitle.textContent = translations[currentLang].upcoming;
     if(recTitle) recTitle.textContent = translations[currentLang].recommendations;
+    if(continueReadingTitle) continueReadingTitle.textContent = translations[currentLang].continueReading;
 
     alert("Язык переключен на " + (currentLang === 'en' ? "English" : "Русский"));
   });
