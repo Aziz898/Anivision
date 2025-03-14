@@ -1,38 +1,34 @@
-/* ==============================
+/* ===============================
    RESET / BASE
-============================== */
-
-/* Устанавливаем на html, body высоту 100%, разрешаем вертикальную прокрутку */
+=============================== */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-
-  /* Вертикальная прокрутка, плавная на iOS */
+  /* Разрешаем вертикальный скролл, отключаем горизонтальный */
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 
-  /* Фон и шрифт */
+  /* Тёмная гамма в стиле Netflix */
   background: #141414;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
-
   display: flex;
   flex-direction: column;
   position: relative;
 
-  /* Safe area insets для iPhone (вырезы) */
+  /* Safe area insets (iPhone вырезы) */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* ==============================
-   SPLASH SCREEN (АНИМАЦИЯ)
-============================== */
+/* ===============================
+   SPLASH SCREEN
+=============================== */
 .splash-screen {
   position: fixed;
-  inset: 0; /* top:0, right:0, bottom:0, left:0 */
+  inset: 0;
   background: #000;
   display: flex;
   justify-content: center;
@@ -40,33 +36,30 @@ html, body {
   z-index: 9999;
   animation: fadeIn 0.5s ease forwards;
 }
-.splash-logo {
-  text-align: center;
-}
 .splash-text {
   font-size: 2rem;
   font-weight: 600;
-  color: #a749f8;
+  color: #e50914; /* Netflix-красный, если хотите. Или фиолетовый (#a749f8). */
   animation: colorFlow 2s infinite alternate;
 }
 
-/* Анимации */
+/* Анимации splash */
 @keyframes fadeIn {
-  0% { opacity: 0; }
+  0%   { opacity: 0; }
   100% { opacity: 1; }
 }
 @keyframes fadeOut {
-  0% { opacity: 1; }
+  0%   { opacity: 1; }
   100% { opacity: 0; }
 }
 @keyframes colorFlow {
-  0% { color: #a749f8; }
+  0%   { color: #e50914; }
   100% { color: #fff; }
 }
 
-/* ==============================
+/* ===============================
    HEADER (ВЕРХНЯЯ ПАНЕЛЬ)
-============================== */
+=============================== */
 .header {
   background-color: #000;
   padding: 1rem;
@@ -81,12 +74,12 @@ html, body {
   align-items: center;
 }
 .logo-part1 {
-  color: #fff; /* Ani */
+  color: #fff;    /* Ani */
 }
 .logo-part2 {
   color: #a749f8; /* Vision */
-  text-transform: capitalize; /* делает V заглавной, если в HTML «vision» */
-  margin-left: 2px;
+  margin-left: 4px;
+  text-transform: capitalize;
 }
 .menu-btn {
   font-size: 1.3rem;
@@ -95,100 +88,61 @@ html, body {
   color: #fff;
 }
 
-/* ==============================
-   CONTENT (MAIN)
-============================== */
+/* ===============================
+   CONTENT
+=============================== */
 .content {
-  /* отступ снизу под нижнюю навигацию */
-  padding-bottom: 5rem;
   flex: 1;
+  padding-bottom: 5rem; /* отступ под нижнюю навигацию */
 }
 
-/* ==============================
-   КАРУСЕЛИ (16:9)
-============================== */
-.carousel-section {
+/* ===============================
+   SECTION / ROW HEADING
+=============================== */
+.section {
   margin-bottom: 1.5rem;
 }
-/* Заголовок секции (Рекомендации, Рекомендуемое, По жанрам) */
 .section-title {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   margin: 0.5rem 1rem;
-  font-weight: 600;
-}
-/* Контейнер для широких слайдов */
-.wide-carousel-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  padding: 0 1rem 1rem;
-  scrollbar-width: none; /* Firefox */
-}
-.wide-carousel-container::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
-}
-/* Каждый слайд (16:9) */
-.wide-carousel-slide {
-  position: relative;
-  min-width: 90vw;  /* почти вся ширина экрана */
-  height: calc(90vw * 9/16); /* соотношение 16:9 */
-  background-color: #1f1f1f;
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-/* Полупрозрачный оверлей */
-.wide-carousel-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-}
-/* Постер 9:16 внутри слайда */
-.poster-vertical {
-  width: 100px;
-  height: calc(100px * 16/9); /* 9:16 */
-  object-fit: cover;
-  border-radius: 4px;
-}
-/* Информация о слайде (название, описание, кнопка) */
-.slide-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  max-width: 50%;
-}
-.slide-title {
-  font-size: 1rem;
-  font-weight: 600;
-}
-.slide-desc {
-  font-size: 0.85rem;
-  color: #ccc;
-}
-.btn-watch-wide {
-  background: #a749f8;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  transition: background 0.3s, transform 0.3s;
-}
-.btn-watch-wide:hover {
-  background: #933ae0;
-  transform: scale(1.05);
 }
 
-/* ==============================
-   BOTTOM NAVIGATION
-============================== */
+/* ===============================
+   NETFLIX-STYLE ROW (карусель)
+=============================== */
+/* Родительский контейнер ряда (горизонтальная прокрутка) */
+.row-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.5rem;
+  padding: 0 1rem 1rem;
+  scrollbar-width: none; /* Firefox скрыть скролл */
+}
+.row-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari скрыть скролл */
+}
+
+/* Каждый постер (обычно 2:3 или 27:40 соотношение) */
+.row-poster {
+  width: 120px;    /* можно менять под нужный размер */
+  height: 180px;   /* 2:3 соотношение */
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: #333;
+}
+
+/* Если хотите hover-эффект, как Netflix */
+.row-poster:hover {
+  transform: scale(1.08);
+  transition: transform 0.3s;
+  z-index: 2;
+}
+
+/* ===============================
+   BOTTOM NAV (5 вкладок)
+=============================== */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0;
@@ -198,10 +152,9 @@ html, body {
   justify-content: space-around;
   align-items: center;
   padding: 0.5rem 0;
-
   z-index: 999;
 
-  /* safe area inset снизу */
+  /* Safe area inset снизу */
   padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
 }
 .nav-link {
@@ -219,39 +172,32 @@ html, body {
 }
 .nav-link.active,
 .nav-link:hover {
-  color: #a749f8;
+  color: #a749f8; /* акцент */
 }
 
-/* ==============================
-   ANIMATIONS
-============================== */
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+/* ===============================
+   BUTTONS (пример)
+=============================== */
+.btn {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  background: #a749f8;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
 }
-@keyframes fadeOut {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes colorFlow {
-  0% { color: #a749f8; }
-  100% { color: #fff; }
+.btn:hover {
+  background: #933ae0;
+  transform: scale(1.05);
 }
 
-/* (Дублирование некоторых анимаций, если нужно, 
-   либо удалите их, если уже описаны выше) */
-
-/* ==============================
+/* ===============================
    MEDIA QUERIES
-============================== */
+=============================== */
 @media (min-width: 768px) {
-  /* При более широком экране можно увеличить слайды */
-  .wide-carousel-slide {
-    min-width: 500px;
-    height: calc(500px * 9/16);
-  }
-  .poster-vertical {
-    width: 120px;
-    height: calc(120px * 16/9);
+  .row-poster {
+    width: 160px;
+    height: 240px;
   }
 }
