@@ -5,49 +5,208 @@
   <title>Детали аниме</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* Стили для страницы anime.html */
-    body { margin: 0; padding: 0; background: #141414; color: #fff; font-family: sans-serif; }
-    header { background: #000; padding: 1rem; text-align: center; color: #a749f8; }
-    .container { max-width: 800px; margin: 0 auto; padding: 1rem; background: #1f1f1f; border-radius: 8px; }
-    .anime-details { text-align: center; margin-bottom: 1.5rem; }
-    .anime-details img { max-width: 100%; border-radius: 4px; margin-bottom: 1rem; }
-    .edit-btn { background: #a749f8; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; color: #fff; }
-    .edit-btn:hover { background: #933ae0; }
-    .anime-form, .edit-form {
+    /* Базовые стили */
+    body {
+      margin: 0; 
+      padding: 0;
+      background: #141414;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    header {
+      background: #000;
+      padding: 1rem;
+      text-align: center;
+      color: #a749f8;
+    }
+
+    /* Контейнер для всей страницы */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Карточка с информацией об аниме */
+    .anime-card {
+      background: #1f1f1f;
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .anime-poster {
+      max-width: 300px;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+    .anime-title {
+      font-size: 1.5rem;
+      margin: 0.5rem 0;
+      color: #fff;
+    }
+    .anime-desc {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 1rem;
+    }
+    .edit-btn {
+      background: #a749f8;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    .edit-btn:hover {
+      background: #933ae0;
+    }
+
+    /* Модальное окно для редактирования */
+    .modal-overlay {
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none; /* по умолчанию скрыто */
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #2a2a2a;
+      padding: 1.5rem;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .modal-content h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    .modal-form {
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
-      margin-bottom: 1.5rem;
-      background: #2a2a2a;
-      padding: 1rem;
-      border-radius: 8px;
     }
-    .anime-form label, .edit-form label { font-size: 0.9rem; color: #ccc; }
-    .anime-form input, .anime-form textarea,
-    .edit-form input, .edit-form textarea {
+    .modal-form label {
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+    .modal-form input,
+    .modal-form textarea {
       background: #1f1f1f;
       border: none;
       border-radius: 4px;
       padding: 0.5rem;
       color: #fff;
+      font-size: 0.9rem;
+    }
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+      gap: 0.5rem;
+    }
+    .modal-btn {
+      background: #a749f8;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.3s;
+      font-size: 0.9rem;
+    }
+    .modal-btn:hover {
+      background: #933ae0;
+    }
+    .modal-btn.cancel {
+      background: #555;
+    }
+    .modal-btn.cancel:hover {
+      background: #444;
+    }
+
+    /* Форма добавления эпизода */
+    .episode-section {
+      background: #1f1f1f;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .episode-section h2 {
+      margin-top: 0;
     }
     .episode-form {
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
-      margin-bottom: 1.5rem;
-      background: #2a2a2a;
-      padding: 1rem;
-      border-radius: 8px;
     }
-    .episode-form label { font-size: 0.9rem; color: #ccc; }
-    .episode-form input { background: #1f1f1f; border: none; border-radius: 4px; padding: 0.5rem; color: #fff; }
-    .episode-form input[type="submit"] { background: #a749f8; color: #fff; border: none; border-radius: 4px; padding: 0.7rem 1rem; cursor: pointer; }
-    .episode-form input[type="submit"]:hover { background: #933ae0; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 0.6rem; border-bottom: 1px solid #333; }
-    th { background: #2a2a2a; text-align: left; }
-    tr:hover td { background: #2a2a2a; }
+    .episode-form label {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .episode-form input {
+      background: #2a2a2a;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem;
+      color: #fff;
+    }
+    .episode-form input[type="submit"] {
+      background: #a749f8;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.7rem 1rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .episode-form input[type="submit"]:hover {
+      background: #933ae0;
+    }
+
+    /* Таблица эпизодов */
+    .episode-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .episode-table th,
+    .episode-table td {
+      padding: 0.6rem;
+      border-bottom: 1px solid #333;
+    }
+    .episode-table th {
+      background: #2a2a2a;
+      text-align: left;
+    }
+    .episode-table tr:hover td {
+      background: #2a2a2a;
+    }
+    .btn-delete-episode {
+      background: none;
+      border: none;
+      color: #a749f8;
+      cursor: pointer;
+      font-size: 0.85rem;
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+    }
+    .btn-delete-episode:hover {
+      background: #933ae0;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -55,35 +214,52 @@
     <h1>Детали аниме</h1>
   </header>
   <div class="container">
-    <div class="anime-details" id="anime-details">
-      <!-- Здесь выводятся обложка, название и описание аниме -->
+    <!-- Карточка аниме -->
+    <div class="anime-card" id="anime-card">
+      <!-- Здесь будет постер, название, описание и кнопка "Редактировать" -->
+      <img class="anime-poster" id="anime-poster" src="" alt="Poster">
+      <h2 class="anime-title" id="anime-title-display">...</h2>
+      <p class="anime-desc" id="anime-desc-display">...</p>
+      <button class="edit-btn" id="edit-btn">Редактировать детали</button>
     </div>
-    <button id="edit-details-btn" class="edit-btn">Редактировать детали</button>
-    <!-- Форма редактирования деталей аниме (изначально скрыта) -->
-    <form id="edit-form" class="edit-form" style="display: none;">
-      <label>Название аниме</label>
-      <input type="text" id="edit-title" required>
-      <label>Описание</label>
-      <textarea id="edit-desc" rows="3"></textarea>
-      <label>URL обложки</label>
-      <input type="url" id="edit-cover">
-      <label>Ссылка на плеер</label>
-      <input type="url" id="edit-player">
-      <input type="submit" value="Сохранить изменения">
-      <button type="button" id="cancel-edit-btn" class="edit-btn" style="background: #555;">Отмена</button>
-    </form>
-    <h2>Добавить эпизод</h2>
-    <form id="episode-form" class="episode-form">
-      <label for="episode-number">Номер эпизода</label>
-      <input type="number" id="episode-number" required>
-      <label for="episode-title">Название эпизода</label>
-      <input type="text" id="episode-title" required>
-      <label for="episode-player">Ссылка на плеер</label>
-      <input type="url" id="episode-player" required>
-      <input type="submit" value="Добавить эпизод">
-    </form>
-    <h2>Список эпизодов</h2>
-    <table>
+
+    <!-- Модальное окно -->
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal-content">
+        <h2>Редактирование аниме</h2>
+        <form class="modal-form" id="edit-form">
+          <label>Название аниме</label>
+          <input type="text" id="edit-title" required>
+          <label>Описание</label>
+          <textarea id="edit-desc" rows="3"></textarea>
+          <label>URL обложки</label>
+          <input type="url" id="edit-cover">
+          <label>Ссылка на плеер</label>
+          <input type="url" id="edit-player">
+          <div class="modal-buttons">
+            <button type="button" class="modal-btn cancel" id="cancel-edit">Отмена</button>
+            <button type="submit" class="modal-btn">Сохранить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- СЕКЦИЯ: Добавление эпизодов -->
+    <div class="episode-section">
+      <h2>Добавить эпизод</h2>
+      <form id="episode-form" class="episode-form">
+        <label for="episode-number">Номер эпизода</label>
+        <input type="number" id="episode-number" required>
+        <label for="episode-title">Название эпизода</label>
+        <input type="text" id="episode-title" required>
+        <label for="episode-player">Ссылка на плеер</label>
+        <input type="url" id="episode-player" required>
+        <input type="submit" value="Добавить эпизод">
+      </form>
+    </div>
+
+    <!-- СЕКЦИЯ: Список эпизодов -->
+    <table class="episode-table">
       <thead>
         <tr>
           <th>Номер</th>
@@ -93,7 +269,7 @@
         </tr>
       </thead>
       <tbody id="episode-table-body">
-        <!-- Эпизоды будут добавляться здесь -->
+        <!-- Эпизоды добавляются здесь -->
       </tbody>
     </table>
   </div>
@@ -103,6 +279,7 @@
     import { getFirestore, doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } 
       from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
+    // Конфиг Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
@@ -112,7 +289,7 @@
       appId: "1:793506779659:web:b391b63343af935afbed0e",
       measurementId: "G-JGNDHJT219"
     };
-
+    
     const appFirebase = initializeApp(firebaseConfig);
     const db = getFirestore(appFirebase);
 
@@ -123,24 +300,38 @@
       alert("Не указан идентификатор аниме!");
     }
 
-    // Функция для загрузки деталей аниме
+    const animeDocRef = doc(db, "anime", animeId);
+
+    // Элементы DOM
+    const animePosterEl = document.getElementById("anime-poster");
+    const animeTitleEl = document.getElementById("anime-title-display");
+    const animeDescEl = document.getElementById("anime-desc-display");
+
+    const editBtn = document.getElementById("edit-btn");
+    const modalOverlay = document.getElementById("modal-overlay");
+    const editForm = document.getElementById("edit-form");
+    const cancelEditBtn = document.getElementById("cancel-edit");
+
+    const editTitleEl = document.getElementById("edit-title");
+    const editDescEl = document.getElementById("edit-desc");
+    const editCoverEl = document.getElementById("edit-cover");
+    const editPlayerEl = document.getElementById("edit-player");
+
+    // Загрузка деталей аниме
     async function loadAnimeDetails() {
-      const animeDocRef = doc(db, "anime", animeId);
       try {
         const animeDoc = await getDoc(animeDocRef);
         if (animeDoc.exists()) {
           const data = animeDoc.data();
-          const detailsDiv = document.getElementById("anime-details");
-          detailsDiv.innerHTML = `
-            <img src="${data.cover ? data.cover : 'https://via.placeholder.com/400x600?text=No+Image'}" alt="${data.title}">
-            <h2>${data.title}</h2>
-            <p>${data.desc ? data.desc : ""}</p>
-          `;
-          // Заполняем форму редактирования
-          document.getElementById("edit-title").value = data.title || "";
-          document.getElementById("edit-desc").value = data.desc || "";
-          document.getElementById("edit-cover").value = data.cover || "";
-          document.getElementById("edit-player").value = data.playerLink || "";
+          animePosterEl.src = data.cover ? data.cover : 'https://via.placeholder.com/400x600?text=No+Image';
+          animeTitleEl.textContent = data.title || "";
+          animeDescEl.textContent = data.desc || "";
+
+          // Заполняем форму редактирования (модалка)
+          editTitleEl.value = data.title || "";
+          editDescEl.value = data.desc || "";
+          editCoverEl.value = data.cover || "";
+          editPlayerEl.value = data.playerLink || "";
         } else {
           alert("Аниме не найдено!");
         }
@@ -151,39 +342,33 @@
 
     loadAnimeDetails();
 
-    // Режим редактирования деталей
-    const editBtn = document.getElementById("edit-details-btn");
-    const editForm = document.getElementById("edit-form");
-    const cancelEditBtn = document.getElementById("cancel-edit-btn");
-
+    // Модальное окно: показать
     editBtn.addEventListener("click", () => {
-      editForm.style.display = "block";
-      editBtn.style.display = "none";
+      modalOverlay.classList.add("active");
     });
 
+    // Модальное окно: скрыть (отмена)
     cancelEditBtn.addEventListener("click", () => {
-      editForm.style.display = "none";
-      editBtn.style.display = "inline-block";
+      modalOverlay.classList.remove("active");
     });
 
-    // Обработчик формы редактирования деталей аниме
+    // Сохранение изменений в аниме (submit формы в модалке)
     editForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const newTitle = document.getElementById("edit-title").value.trim();
-      const newDesc = document.getElementById("edit-desc").value.trim();
-      const newCover = document.getElementById("edit-cover").value.trim();
-      const newPlayer = document.getElementById("edit-player").value.trim();
+      const newTitle = editTitleEl.value.trim();
+      const newDesc = editDescEl.value.trim();
+      const newCover = editCoverEl.value.trim();
+      const newPlayer = editPlayerEl.value.trim();
 
       try {
-        await updateDoc(doc(db, "anime", animeId), {
+        await updateDoc(animeDocRef, {
           title: newTitle,
           desc: newDesc,
           cover: newCover,
           playerLink: newPlayer
         });
         alert("Данные аниме обновлены!");
-        editForm.style.display = "none";
-        editBtn.style.display = "inline-block";
+        modalOverlay.classList.remove("active");
         loadAnimeDetails();
       } catch (error) {
         console.error("Ошибка при обновлении аниме:", error);
@@ -191,12 +376,13 @@
       }
     });
 
-    // Работа с подколлекцией "episodes" для данного аниме
+    // Работа с эпизодами
     const episodesCollection = collection(db, "anime", animeId, "episodes");
+    const episodeTableBody = document.getElementById("episode-table-body");
+    const episodeForm = document.getElementById("episode-form");
 
     async function loadEpisodes() {
-      const tableBody = document.getElementById("episode-table-body");
-      tableBody.innerHTML = "";
+      episodeTableBody.innerHTML = "";
       try {
         const querySnapshot = await getDocs(episodesCollection);
         querySnapshot.forEach(docSnap => {
@@ -210,7 +396,6 @@
     }
 
     function renderEpisodeRow(docId, data) {
-      const tableBody = document.getElementById("episode-table-body");
       const tr = document.createElement("tr");
 
       const tdNumber = document.createElement("td");
@@ -230,9 +415,10 @@
       tr.appendChild(tdPlayer);
 
       const tdActions = document.createElement("td");
-      const btnDelete = document.createElement("button");
-      btnDelete.textContent = "Удалить";
-      btnDelete.addEventListener("click", async () => {
+      const btnDeleteEpisode = document.createElement("button");
+      btnDeleteEpisode.textContent = "Удалить";
+      btnDeleteEpisode.classList.add("btn-delete-episode");
+      btnDeleteEpisode.addEventListener("click", async () => {
         if (confirm("Удалить этот эпизод?")) {
           try {
             await deleteDoc(doc(db, "anime", animeId, "episodes", docId));
@@ -244,17 +430,21 @@
           }
         }
       });
-      tdActions.appendChild(btnDelete);
+      tdActions.appendChild(btnDeleteEpisode);
       tr.appendChild(tdActions);
 
-      tableBody.appendChild(tr);
+      episodeTableBody.appendChild(tr);
     }
 
-    document.getElementById("episode-form").addEventListener("submit", async (e) => {
+    episodeForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const episodeNumber = document.getElementById("episode-number").value;
-      const episodeTitle = document.getElementById("episode-title").value.trim();
-      const episodePlayer = document.getElementById("episode-player").value.trim();
+      const numberEl = document.getElementById("episode-number");
+      const titleEl = document.getElementById("episode-title");
+      const playerEl = document.getElementById("episode-player");
+
+      const episodeNumber = numberEl.value;
+      const episodeTitle = titleEl.value.trim();
+      const episodePlayer = playerEl.value.trim();
 
       if (!episodeNumber || !episodeTitle || !episodePlayer) {
         alert("Заполните все поля!");
@@ -268,7 +458,7 @@
           playerLink: episodePlayer
         });
         alert("Эпизод успешно добавлен!");
-        document.getElementById("episode-form").reset();
+        episodeForm.reset();
         loadEpisodes();
       } catch (error) {
         console.error("Ошибка при добавлении эпизода:", error);
