@@ -1,6 +1,6 @@
-/* ==============================
+/* ===============================
    RESET / BASE
-============================== */
+=============================== */
 html, body {
   height: 100%;
   margin: 0;
@@ -18,9 +18,7 @@ html, body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* ==============================
-   SPLASH SCREEN
-============================== */
+/* SPLASH SCREEN */
 .splash-screen {
   position: fixed;
   inset: 0;
@@ -30,9 +28,6 @@ html, body {
   align-items: center;
   z-index: 9999;
   animation: fadeIn 0.5s ease forwards;
-}
-.splash-logo {
-  text-align: center;
 }
 .splash-text {
   font-size: 2rem;
@@ -53,9 +48,7 @@ html, body {
   100% { color: #fff; }
 }
 
-/* ==============================
-   HEADER
-============================== */
+/* HEADER */
 .header {
   background-color: #000;
   padding: 1rem;
@@ -64,66 +57,71 @@ html, body {
   justify-content: space-between;
 }
 .app-title {
+  display: flex;
+  align-items: center;
   font-size: 1.3rem;
   font-weight: 600;
-  /* Здесь используем текст напрямую – больше никаких псевдоэлементов */
 }
-.app-title span.logo-part1 {
+.logo-part1 {
   color: #fff;
 }
-.app-title span.logo-part2 {
+.logo-part2 {
   color: #a749f8;
-  text-transform: capitalize;
   margin-left: 4px;
+  text-transform: capitalize;
 }
-.menu-btn {
+.notif-btn {
   font-size: 1.3rem;
   background: none;
   border: none;
   color: #fff;
 }
 
-/* ==============================
-   CONTENT
-============================== */
+/* CONTENT */
 .content {
   flex: 1;
-  padding: 1rem;
   padding-bottom: 5rem;
 }
 
-/* ==============================
-   HERO SECTION (АФИША)
-============================== */
-.hero-section {
-  margin-bottom: 1rem;
+/* HERO CAROUSEL (горизонтальная) */
+.hero-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem;
+  scrollbar-width: none;
+}
+.hero-carousel::-webkit-scrollbar {
+  display: none;
+}
+.hero-slide {
+  min-width: 100vw;
+  height: 250px;
+  display: flex;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #1f1f1f;
+  overflow: hidden;
 }
 .hero-poster {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 8px;
-}
-.hero-poster img {
-  width: 100%;
-  height: auto;
+  width: 40%;
+  object-fit: cover;
   display: block;
 }
-.hero-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.hero-info {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 1rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 }
 .hero-title {
-  font-size: 1.4rem;
-  margin-bottom: 0.3rem;
+  font-size: 1.1rem;
   font-weight: 600;
+  margin-bottom: 0.3rem;
 }
 .hero-desc {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #ccc;
   margin-bottom: 0.5rem;
 }
@@ -133,7 +131,7 @@ html, body {
   border: none;
   border-radius: 20px;
   padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   transition: background 0.3s, transform 0.3s;
 }
 .btn-hero:hover {
@@ -141,21 +139,34 @@ html, body {
   transform: scale(1.05);
 }
 
-/* ==============================
-   SECTION TITLES
-============================== */
-.section {
+/* SECTION-ROW (Смотреть сейчас, По жанрам) */
+.section-row {
   margin-bottom: 1rem;
 }
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 1rem 0.5rem;
+}
 .section-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin: 0.5rem 1rem;
+}
+.btn-more {
+  background: none;
+  border: none;
+  color: #a749f8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn-more:hover {
+  color: #fff;
 }
 
-/* ==============================
-   ROW CONTAINER (ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ)
-============================== */
+/* ROW-CONTAINER (горизонтальный скролл) */
 .row-container {
   display: flex;
   overflow-x: auto;
@@ -168,27 +179,23 @@ html, body {
 }
 .row-poster {
   width: 120px;
-  height: 180px; /* Соотношение 2:3 */
+  height: 180px;
   object-fit: cover;
   border-radius: 4px;
   flex-shrink: 0;
-  background: #333;
   transition: transform 0.3s;
 }
 .row-poster:hover {
   transform: scale(1.08);
 }
 
-/* ==============================
-   BOTTOM NAVIGATION (с эффектом размытия)
-============================== */
+/* BOTTOM NAV (полупрозрачная с размытием) */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
-  left: 0;
+  bottom: 0; left: 0;
   width: 100%;
-  background: rgba(0,0,0,0.6); /* Полупрозрачный фон */
-  backdrop-filter: blur(10px);  /* Эффект размытия */
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -214,12 +221,16 @@ html, body {
   color: #a749f8;
 }
 
-/* ==============================
-   MEDIA QUERIES
-============================== */
+/* MEDIA QUERIES */
 @media (min-width: 768px) {
+  .hero-slide {
+    height: 300px;
+  }
+  .hero-poster {
+    width: 35%;
+  }
   .row-poster {
-    width: 160px;
-    height: 240px;
+    width: 140px;
+    height: 210px;
   }
 }
