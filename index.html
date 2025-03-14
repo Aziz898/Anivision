@@ -3,16 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Anivision MiniApp</title>
-  <!-- Адаптив для мобильных -->
+  <!-- Мобильная адаптация -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <!-- Подключаем стили -->
+  <!-- Стили -->
   <link rel="stylesheet" href="style.css">
-  <!-- Подключаем Font Awesome для иконок -->
+  <!-- Font Awesome (иконки) -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
   <!-- Шрифт -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- SPLASH SCREEN (анимация входа) -->
+  <div class="splash-screen" id="splash-screen">
+    <div class="splash-logo">
+      <span class="splash-text">Anivision</span>
+    </div>
+  </div>
+
   <!-- Верхняя панель -->
   <header class="header">
     <h1 class="app-title">
@@ -84,11 +91,28 @@
     </section>
   </main>
 
-  <!-- Нижняя панель навигации -->
+  <!-- Нижняя панель навигации (5 вкладок) -->
   <nav class="bottom-nav">
-    <a href="#" class="nav-link active"><i class="fas fa-home"></i></a>
-    <a href="#" class="nav-link"><i class="fas fa-search"></i></a>
-    <a href="#" class="nav-link"><i class="fas fa-user"></i></a>
+    <a href="#" class="nav-link active">
+      <i class="fas fa-home"></i>
+      <span class="nav-label">Главная</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-tv"></i>
+      <span class="nav-label">Онлайн ТВ</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-search"></i>
+      <span class="nav-label">Поиск</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-bookmark"></i>
+      <span class="nav-label">Моё</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-user"></i>
+      <span class="nav-label">Профиль</span>
+    </a>
   </nav>
 
   <!-- Скрипты -->
