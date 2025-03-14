@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Anivision — Админ-панель</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Упрощённая шапка -->
+  <header class="topbar" style="justify-content: space-between;">
+    <div style="margin-left: 1rem;">
+      <a href="index.html" class="btn btn-signin">На главную</a>
+    </div>
+    <h2>Админ-панель</h2>
+    <div style="margin-right: 1rem;">
+      <!-- Слайдер-переключатель темы (по желанию) -->
+      <label class="switch">
+        <input type="checkbox" id="theme-toggle-checkbox-admin">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </header>
+
+  <section class="section-block" style="max-width: 800px; margin: 2rem auto;">
+    <h3>Добавить / изменить аниме</h3>
+    <form id="admin-anime-form">
+      <div class="form-group">
+        <label for="anime-title">Название аниме</label>
+        <input type="text" id="anime-title" required>
+      </div>
+      <div class="form-group">
+        <label for="anime-desc">Описание</label>
+        <textarea id="anime-desc" rows="3" style="width: 100%;"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="anime-image">URL обложки</label>
+        <input type="text" id="anime-image" placeholder="https://images.unsplash.com/..." required>
+      </div>
+      <div class="form-group">
+        <label for="anime-category">Категория</label>
+        <select id="anime-category">
+          <option value="">(не выбрано)</option>
+          <option value="top">Топ аниме</option>
+          <option value="collections">Подборки</option>
+          <!-- Можно добавить другие категории -->
+        </select>
+      </div>
+
+      <!-- Скрытое поле для ID (чтобы понимать, редактируем или добавляем) -->
+      <input type="hidden" id="anime-id">
+
+      <button type="submit" class="btn btn-signin" id="admin-save-btn" style="margin-top: 1rem;">
+        Сохранить
+      </button>
+      <button type="button" class="btn btn-learn" id="admin-cancel-btn" style="margin-top: 1rem; margin-left: 1rem;">
+        Отмена
+      </button>
+    </form>
+  </section>
+
+  <section class="section-block" style="max-width: 800px; margin: 2rem auto;">
+    <h3>Список аниме</h3>
+    <table id="admin-anime-table" style="width: 100%; margin-top: 1rem;">
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Категория</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Здесь скрипт добавит строки с аниме -->
+      </tbody>
+    </table>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
