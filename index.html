@@ -3,14 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <title>AniVision MiniApp</title>
-  <!-- Мобильная адаптация -->
+  <!-- Мобильная адаптация + Safe Area для iOS -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <!-- Подключаем style.css (оставляем оригинальный дизайн) -->
-  <link rel="stylesheet" href="style.css">
-  <!-- Font Awesome (иконки) -->
-  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-  <!-- Шрифт Montserrat -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Safe Area */
+    html, body {
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    /* Общие стили */
+    body {
+      margin: 0;
+      background: #141414;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+    }
+    /* Splash Screen */
+    .splash-screen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.7s ease;
+    }
+    .splash-logo {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #a749f8;
+    }
+    /* Header */
+    .header {
+      background: #000;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .lang-btn, .notif-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.3rem;
+    }
+    .app-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .logo-part1 { color: #fff; }
+    .logo-part2 { color: #a749f8; margin-left: 4px; }
+    /* Main Content */
+    .content {
+      padding-bottom: 5rem; /* для нижней панели */
+    }
+    /* Hero Carousel */
+    .hero-carousel {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+    }
+    .hero-slide {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      height: 100%;
+      transition: left 0.8s ease;
+    }
+    .hero-slide.active { left: 0; }
+    .hero-slide.prev { left: -100%; }
+    .hero-slide-bg {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-overlay a {
+      background: #a749f8;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .hero-overlay a:hover { background: #933ae0; }
+    /* Секции с горизонтальными каруселями */
+    .section-row {
+      margin-bottom: 1rem;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 1rem 0.5rem;
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .btn-more {
+      background: none;
+      border: none;
+      color: #a749f8;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .btn-more:hover { color: #fff; }
+    .row-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 0.5rem;
+      padding: 0 1rem 1rem;
+      scrollbar-width: none;
+    }
+    .row-container::-webkit-scrollbar { display: none; }
+    .row-item {
+      flex-shrink: 0;
+      width: 140px;
+      height: 210px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #333;
+      transition: transform 0.3s;
+    }
+    .row-item:hover { transform: scale(1.08); }
+    .row-poster {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    /* Нижняя панель (Tab Bar) */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.5rem 0;
+      padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+      z-index: 100;
+    }
+    .nav-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #fff;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-label { font-size: 0.7rem; margin-top: 0.2rem; }
+    .nav-link.active, .nav-link:hover { color: #a749f8; }
+  </style>
 </head>
 <body>
   <!-- SPLASH SCREEN -->
@@ -20,43 +183,35 @@
     </div>
   </div>
 
-  <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+  <!-- HEADER -->
   <header class="header">
-    <!-- Слева: кнопка языка -->
-    <button class="lang-btn">
-      <i class="fas fa-flag"></i>
-    </button>
-    <!-- По центру: AniVision -->
-    <h1 class="app-title">
-      <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
-    </h1>
-    <!-- Справа: уведомления -->
-    <button class="notif-btn">
-      <i class="fas fa-bell"></i>
-    </button>
+    <button class="lang-btn" id="lang-btn"><i class="fas fa-flag"></i></button>
+    <h1 class="app-title"><span class="logo-part1">Ani</span><span class="logo-part2">Vision</span></h1>
+    <button class="notif-btn" id="notif-btn"><i class="fas fa-bell"></i></button>
   </header>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <!-- MAIN CONTENT -->
   <main class="content">
     <!-- HERO-КАРУСЕЛЬ -->
     <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайды будут подгружаться динамически из коллекции "carouselBanners" -->
+      <!-- Слайды подгружаются динамически -->
     </section>
 
-    <!-- Секции с горизонтальными каруселями -->
+    <!-- Секция: Trending (горизонтальный ряд) -->
     <section class="section-row">
       <div class="section-header">
-        <h3 class="section-title">Trending</h3>
-        <button class="btn-more">See All</button>
+        <h3 class="section-title" id="trending-title">Trending</h3>
+        <button class="btn-more" id="trending-more">See All</button>
       </div>
       <div class="row-container" id="trending-container">
-        <!-- Карточки Trending будут подгружаться динамически -->
+        <!-- Карточки Trending подгружаются динамически -->
       </div>
     </section>
-    <!-- Здесь можно добавить и другие секции аналогично -->
+
+    <!-- Дополнительные секции можно добавить аналогично -->
   </main>
 
-  <!-- НИЖНЯЯ ПАНЕЛЬ -->
+  <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar) -->
   <nav class="bottom-nav">
     <a href="#" class="nav-link active">
       <i class="fas fa-home"></i>
@@ -80,7 +235,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
     import { getFirestore, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-    // Конфигурация Firebase (та же, что и в admin.html)
+    // Конфигурация Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
@@ -91,10 +246,44 @@
       measurementId: "G-JGNDHJT219"
     };
 
+    // Инициализация Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Функция для загрузки слайдов карусели из коллекции "carouselBanners"
+    // Функция для плавного исчезновения splash screen через 2 сек
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        const splash = document.getElementById("splash-screen");
+        splash.style.opacity = 0;
+        setTimeout(() => { splash.style.display = "none"; }, 700);
+      }, 2000);
+    });
+
+    // Языковой переключатель
+    const translations = {
+      en: {
+        trending: "Trending",
+        seeAll: "See All"
+      },
+      ru: {
+        trending: "Популярное",
+        seeAll: "Ещё"
+      }
+    };
+    let currentLang = 'en';
+    document.getElementById("lang-btn").addEventListener("click", () => {
+      currentLang = (currentLang === 'en') ? 'ru' : 'en';
+      // Обновляем текст заголовка секции Trending
+      document.getElementById("trending-title").textContent = translations[currentLang].trending;
+      document.getElementById("trending-more").textContent = translations[currentLang].seeAll;
+      alert("Язык переключен на " + (currentLang === 'en' ? "English" : "Русский"));
+    });
+    // Заглушка для уведомлений
+    document.getElementById("notif-btn").addEventListener("click", () => {
+      alert("Уведомления пока не реализованы!");
+    });
+
+    // Загрузка данных для HERO-карусели (баннеры)
     async function loadCarousel() {
       const carousel = document.getElementById("hero-carousel");
       carousel.innerHTML = "";
@@ -109,7 +298,7 @@
           slide.style.backgroundImage = `url('${data.image}')`;
           slide.innerHTML = `
             <div class="hero-overlay">
-              <a href="${data.link}" target="_blank">Перейти</a>
+              <a href="${data.link}" target="_blank">Смотреть</a>
             </div>
           `;
           slides.push(slide);
@@ -133,7 +322,7 @@
       }, 5000);
     }
 
-    // Функция для загрузки аниме для конкретного раздела (например, Trending)
+    // Функция для загрузки аниме для раздела (например, Trending)
     async function loadSection(sectionName, containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -147,9 +336,7 @@
           const card = document.createElement("div");
           card.classList.add("row-item");
           card.innerHTML = `
-            <img class="row-poster"
-                 src="${data.cover ? data.cover : 'https://via.placeholder.com/200x300?text=No+Image'}"
-                 alt="${data.title}">
+            <img class="row-poster" src="${data.cover ? data.cover : 'https://via.placeholder.com/200x300?text=No+Image'}" alt="${data.title}">
           `;
           container.appendChild(card);
         });
@@ -158,10 +345,10 @@
       }
     }
 
-    // Загрузка контента
+    // Загружаем контент
     loadCarousel();
     loadSection("trending", "trending-container");
-    // Если есть другие секции, вызывайте loadSection() с соответствующими параметрами
+    // Дополнительные секции можно загрузить аналогично, если их настроите
   </script>
 </body>
 </html>
