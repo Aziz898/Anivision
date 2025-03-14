@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>AniVision Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключаем стили (можно вынести в отдельный admin.css) -->
+  <!-- Подключаем стили (можно вынести в admin.css) -->
   <link rel="stylesheet" href="admin.css">
   <!-- Иконки FontAwesome -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
@@ -213,6 +213,26 @@
           <label>Ссылка на плеер</label>
           <input type="url" id="anime-player" placeholder="https://player.site/watch?id=...">
         </div>
+        <!-- Новое поле: выбор разделов (чекбоксы) -->
+        <div class="form-row">
+          <label>Разделы</label>
+          <div>
+            <input type="checkbox" id="section-trending" value="trending">
+            <label for="section-trending">Trending</label>
+          </div>
+          <div>
+            <input type="checkbox" id="section-recommendations" value="recommendations">
+            <label for="section-recommendations">Recommendations</label>
+          </div>
+          <div>
+            <input type="checkbox" id="section-upcoming" value="upcoming">
+            <label for="section-upcoming">Upcoming</label>
+          </div>
+          <div>
+            <input type="checkbox" id="section-continue_watching" value="continue_watching">
+            <label for="section-continue_watching">Continue Watching</label>
+          </div>
+        </div>
         <button type="submit" class="btn-save">Сохранить</button>
       </form>
 
@@ -225,28 +245,28 @@
               <th>Название</th>
               <th>Категория</th>
               <th>Рейтинг</th>
+              <th>Разделы</th>
               <th>Действия</th>
             </tr>
           </thead>
           <tbody id="anime-table-body">
-            <!-- Строки добавляются через JavaScript -->
+            <!-- Строки будут добавляться через JavaScript -->
           </tbody>
         </table>
       </div>
     </section>
-
-    <!-- Другие секции (рекомендации, trending, upcoming) можно реализовать аналогично -->
+    <!-- Другие секции (рекомендации, trending, upcoming) можно добавить по аналогии -->
   </main>
 </div>
 
 <script type="module">
-  // Импорт Firebase (версия 11.4.0)
+  // Импорт модулей Firebase (версия 11.4.0)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
   import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } 
     from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-  // Конфигурация Firebase – обратите внимание на storageBucket (указан корректно, если ваш проект использует .appspot.com)
+  // Конфигурация Firebase – убедитесь, что storageBucket указан корректно (обычно "anivision-194f5.appspot.com")
   const firebaseConfig = {
     apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
     authDomain: "anivision-194f5.firebaseapp.com",
@@ -281,7 +301,7 @@
     }
   }
 
-  // Функция отрисовки строки таблицы для одного аниме
+  // Функция отрисовки строки для одного аниме
   function renderAnimeRow(docId, data) {
     const tr = document.createElement("tr");
 
@@ -296,6 +316,11 @@
     const tdRating = document.createElement("td");
     tdRating.textContent = data.rating || "";
     tr.appendChild(tdRating);
+
+    // Выводим разделы как список через запятую
+    const tdSections = document.createElement("td");
+    tdSections.textContent = data.sections ? data.sections.join(", ") : "";
+    tr.appendChild(tdSections);
 
     const tdActions = document.createElement("td");
 
@@ -339,13 +364,21 @@
     const rating = document.getElementById("anime-rating").value;
     const playerLink = document.getElementById("anime-player").value.trim();
 
+    // Собираем выбранные разделы
+    const sections = [];
+    document.querySelectorAll('input[type="checkbox"][id^="section-"]').forEach(chk => {
+      if (chk.checked) {
+        sections.push(chk.value);
+      }
+    });
+
     if (!title) {
       alert("Название аниме обязательно!");
       return;
     }
 
     try {
-      await addDoc(animeCollection, { title, desc, cover, category, rating, playerLink });
+      await addDoc(animeCollection, { title, desc, cover, category, rating, playerLink, sections });
       alert("Аниме успешно добавлено!");
       document.getElementById("anime-form").reset();
       loadAnimeList();
@@ -355,20 +388,20 @@
     }
   });
 
-  // Обработка навигации в sidebar
+  // Обработка навигации в sidebar (оставляем как есть)
   const navBtns = document.querySelectorAll(".nav-btn");
-  const sections = document.querySelectorAll(".section");
+  const sectionsDOM = document.querySelectorAll(".section");
   navBtns.forEach(btn => {
     btn.addEventListener("click", () => {
       navBtns.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
-      sections.forEach(sec => sec.classList.remove("active"));
+      sectionsDOM.forEach(sec => sec.classList.remove("active"));
       const sectionId = btn.getAttribute("data-section") + "-section";
       document.getElementById(sectionId).classList.add("active");
     });
   });
 
-  // Начальная загрузка
+  // Первоначальная загрузка
   loadAnimeList();
 </script>
 </body>
