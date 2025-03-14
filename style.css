@@ -1,40 +1,42 @@
-/* СБРОС СТИЛЕЙ */
+/* =========================
+   СБРОС СТИЛЕЙ И БАЗА
+========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ШРИФТ И ТЕМНАЯ ТЕМА ПО УМОЛЧАНИЮ */
+/* Тёмная тема по умолчанию */
 body {
   font-family: 'Montserrat', sans-serif;
   background-color: #1c1c1e;
   color: #fff;
-  display: flex;
+  display: flex; 
   position: relative;
   min-height: 100vh;
 }
 
-/* ФОН (GIF) */
+/* Фон (GIF) — при желании можно отключить */
 body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: url("https://media.giphy.com/media/5xtDarzqClIMoNYxKRi/giphy.gif") no-repeat center center/cover;
   z-index: -1;
   opacity: 0.2;
 }
 
-/* ССЫЛКИ */
+/* Ссылки по умолчанию */
 a {
   text-decoration: none;
   color: inherit;
 }
 
-/* SIDEBAR */
+/* =========================
+   БОКОВОЕ МЕНЮ (SIDEBAR)
+========================= */
 .sidebar {
   width: 250px;
   background-color: rgba(34, 34, 36, 0.95);
@@ -86,30 +88,10 @@ a {
 .menu li .icon {
   margin-right: 0.5rem;
 }
-.quick-filter {
-  margin-top: auto;
-}
-.quick-filter h4 {
-  margin-bottom: 0.5rem;
-  color: #a749f8;
-}
-.quick-filter ul {
-  list-style: none;
-}
-.quick-filter li {
-  margin: 0.4rem 0;
-}
-.quick-filter a {
-  font-size: 0.9rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  transition: background 0.3s;
-}
-.quick-filter a:hover {
-  background-color: #2f2f33;
-}
 
-/* MAIN CONTENT */
+/* =========================
+   ВЕРХНЯЯ ПАНЕЛЬ (TOPBAR)
+========================= */
 .main-content {
   flex: 1;
   display: flex;
@@ -146,16 +128,14 @@ a {
 .top-menu a:hover {
   color: #a749f8;
 }
-.controls {
-  display: flex;
-  align-items: center;
-}
 
-/* Кнопки */
+/* =========================
+   КНОПКИ (ПОЛУКРУГЛЫЕ)
+========================= */
 .btn {
   display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  padding: 0.6rem 1.4rem;
+  border-radius: 20px; /* полукруг */
   transition: background 0.3s, transform 0.3s;
   cursor: pointer;
 }
@@ -174,18 +154,20 @@ a {
   background-color: #a749f8;
   color: #fff;
 }
+.btn-watch:hover {
+  background-color: #933ae0;
+}
 .btn-learn {
   background-color: #444;
   color: #fff;
-}
-.btn-watch:hover {
-  background-color: #933ae0;
 }
 .btn-learn:hover {
   background-color: #666;
 }
 
-/* Слайдер-переключатель (switch) */
+/* =========================
+   СЛАЙДЕР-ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ
+========================= */
 .switch {
   position: relative;
   display: inline-block;
@@ -194,8 +176,7 @@ a {
 }
 .switch input {
   opacity: 0;
-  width: 0;
-  height: 0;
+  width: 0; height: 0;
 }
 .slider {
   position: absolute;
@@ -208,11 +189,9 @@ a {
 .slider:before {
   position: absolute;
   content: "";
-  height: 20px;
-  width: 20px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
+  height: 20px; width: 20px;
+  left: 3px; bottom: 3px;
+  background-color: #fff;
   transition: .4s;
   border-radius: 50%;
 }
@@ -229,44 +208,72 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/* HERO BANNER */
-.hero-banner {
+/* =========================
+   HERO-КАРУСЕЛЬ (ГЛАВНЫЙ БАННЕР)
+========================= */
+.hero-carousel {
   position: relative;
-  background-color: #2c2c2e;
-  min-height: 300px;
+  width: 100%;
+  height: 400px; /* примерная высота */
+  overflow: hidden;
+  background-color: #000;
+}
+.hero-slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s;
   display: flex;
   align-items: center;
-  padding: 2rem;
-  overflow: hidden;
+  justify-content: center;
 }
-.banner-bg {
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hero-slide-content {
   position: absolute;
-  inset: 0;
-  background: url("https://images.unsplash.com/photo-1637731629106-151d73c513a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1300&q=80") 
-    no-repeat center center/cover;
-  filter: brightness(0.6);
-  z-index: 0;
+  color: #fff;
+  text-align: left;
+  max-width: 600px;
+  left: 5%;
+  bottom: 10%;
 }
-.banner-content {
-  position: relative;
+.hero-slide.active {
+  opacity: 1;
   z-index: 1;
-  max-width: 700px;
 }
-.banner-content h1 {
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 2rem;
-  margin-bottom: 1rem;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px; 
+  height: 40px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
-.banner-content p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  color: #ccc;
+.hero-arrow:hover {
+  background: rgba(255,255,255,0.3);
 }
-.banner-buttons .btn {
-  margin-right: 1rem;
-  margin-bottom: 1rem;
+.hero-arrow.left {
+  left: 10px;
+}
+.hero-arrow.right {
+  right: 10px;
 }
 
-/* СЕКЦИИ (Продолжить просмотр, Последние релизы) */
+/* =========================
+   ГОРИЗОНТАЛЬНЫЕ КАРУСЕЛИ
+========================= */
 .section-block {
   padding: 2rem;
   background-color: rgba(28, 28, 30, 0.9);
@@ -275,40 +282,47 @@ input:checked + .slider:before {
   font-size: 1.3rem;
   margin-bottom: 1rem;
 }
-.card-row {
+.carousel-container {
   display: flex;
-  gap: 1rem;
-  overflow-x: auto;
+  overflow: hidden; 
+  scroll-behavior: smooth; 
 }
-.card {
+.carousel-item {
   min-width: 200px;
-  background-color: #2c2c2e;
-  border-radius: 8px;
-  overflow: hidden;
-  flex-shrink: 0;
-  transition: transform 0.3s;
+  margin-right: 1rem;
+  text-align: center;
 }
-.card:hover {
-  transform: scale(1.03);
+.carousel-item img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px; /* скругление */
 }
-.card-image img {
-  display: block;
-  width: 100%;
-  height: auto;
+.carousel-item p {
+  margin-top: 0.5rem;
 }
-.card-info {
-  padding: 0.5rem;
+.carousel-arrows {
+  text-align: center;
+  margin-top: 1rem;
 }
-.card-info h3 {
-  font-size: 1rem;
-  margin-bottom: 0.3rem;
+.carousel-arrow {
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin: 0 0.5rem;
 }
-.card-info p {
-  font-size: 0.85rem;
-  color: #ccc;
+.carousel-arrow:hover {
+  background: #666;
 }
 
-/* ПОДВАЛ */
+/* =========================
+   ПОДВАЛ (FOOTER)
+========================= */
 .main-footer {
   background-color: rgba(31, 31, 33, 0.95);
   text-align: center;
@@ -319,16 +333,18 @@ input:checked + .slider:before {
   color: #aaa;
 }
 
-/* ФОРМЫ (логин, регистрация) */
-.form-group {
+/* =========================
+   ФОРМЫ (ЛОГИН, РЕГИСТРАЦИЯ)
+========================= */
+.section-block .form-group {
   margin-bottom: 1rem;
 }
-.form-group label {
+.section-block .form-group label {
   display: block;
   margin-bottom: 0.3rem;
   font-weight: 600;
 }
-.form-group input {
+.section-block .form-group input {
   width: 100%;
   padding: 0.5rem;
   border-radius: 4px;
@@ -336,7 +352,9 @@ input:checked + .slider:before {
   outline: none;
 }
 
-/* ПЛЕЕР */
+/* =========================
+   ПЛЕЕР (PLAYER)
+========================= */
 .player-container {
   display: flex;
   flex-direction: column;
@@ -357,7 +375,49 @@ input:checked + .slider:before {
   border-radius: 8px;
 }
 
-/* АДАПТИВНОСТЬ */
+/* =========================
+   МОЙ СПИСОК (MYLIST)
+========================= */
+#mylist-container li {
+  margin-bottom: 0.5rem;
+}
+#mylist-container li button {
+  margin-left: 1rem;
+  border: none;
+  background-color: #a749f8;
+  color: #fff;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#mylist-container li button:hover {
+  background-color: #933ae0;
+}
+
+/* =========================
+   ЧАТ (CHAT)
+========================= */
+#chat-messages {
+  height: 300px;
+  overflow-y: auto;
+  background: rgba(28,28,30,0.8);
+  padding: 1rem;
+  border-radius: 8px;
+}
+.chat-message {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: #2c2c2e;
+  border-radius: 4px;
+}
+.chat-user {
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+/* =========================
+   АДАПТИВНОСТЬ
+========================= */
 @media (max-width: 900px) {
   .sidebar {
     display: none;
@@ -373,18 +433,23 @@ input:checked + .slider:before {
     width: 100%;
     max-width: 300px;
   }
-  .banner-content h1 {
-    font-size: 1.5rem;
+  .hero-carousel {
+    height: 250px;
+  }
+  .hero-slide-content {
+    max-width: 80%;
   }
 }
 
-/* СВЕТЛАЯ ТЕМА (добавляется класс .light-theme к body) */
+/* =========================
+   СВЕТЛАЯ ТЕМА (light-theme)
+========================= */
 body.light-theme {
   background-color: #f0f0f0;
   color: #222;
 }
 body.light-theme::before {
-  background: none; /* убираем гифку, например */
+  background: none; /* убираем гиф-фон */
 }
 body.light-theme .sidebar {
   background-color: #e6e6e6;
@@ -397,21 +462,46 @@ body.light-theme .section-block {
   background-color: #f9f9f9;
   color: #222;
 }
-body.light-theme .card {
-  background-color: #ffffff;
-  color: #222;
+body.light-theme .carousel-arrow {
+  background: #ccc;
+  color: #000;
+}
+body.light-theme .carousel-arrow:hover {
+  background: #aaa;
+}
+body.light-theme .hero-arrow {
+  background: rgba(255,255,255,0.5);
+  color: #000;
+}
+body.light-theme .hero-arrow:hover {
+  background: rgba(0,0,0,0.2);
+}
+body.light-theme .hero-slide-content {
+  color: #000;
 }
 body.light-theme .main-footer {
   background-color: #dcdcdc;
   color: #444;
 }
-#chat-messages .chat-message {
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  background-color: #2c2c2e;
-  border-radius: 4px;
+body.light-theme .search-box input {
+  background-color: #fff;
+  color: #222;
 }
-#chat-messages .chat-user {
-  font-weight: 600;
-  margin-right: 0.5rem;
+body.light-theme .menu li a:hover {
+  background-color: #ccc;
+}
+body.light-theme .btn-signin {
+  background-color: #a749f8;
+  color: #fff;
+}
+body.light-theme .btn-watch {
+  background-color: #a749f8;
+  color: #fff;
+}
+body.light-theme .btn-learn {
+  background-color: #999;
+  color: #fff;
+}
+body.light-theme .btn-learn:hover {
+  background-color: #777;
 }
