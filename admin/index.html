@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <title>AniVision Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключаем стили -->
+  <!-- Подключаем стили (можно вынести в отдельный admin.css) -->
   <link rel="stylesheet" href="admin.css">
   <!-- Иконки FontAwesome -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
   <style>
-    /* Пример встроенных стилей для админ-панели */
+    /* Общие стили */
     body {
       margin: 0;
       padding: 0;
@@ -65,6 +65,7 @@
       flex: 1;
       background: #141414;
       padding: 1rem;
+      overflow-y: auto;
     }
     .admin-header {
       display: flex;
@@ -96,7 +97,8 @@
     .section.active {
       display: block;
     }
-    .anime-form {
+    /* Формы */
+    .anime-form, .carousel-form {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
@@ -140,20 +142,21 @@
     .btn-save:hover {
       background: #933ae0;
     }
-    .anime-list table {
+    /* Таблицы */
+    .anime-list table, .carousel-list table {
       width: 100%;
       border-collapse: collapse;
     }
-    .anime-list th,
-    .anime-list td {
+    .anime-list th, .anime-list td,
+    .carousel-list th, .carousel-list td {
       padding: 0.8rem;
       border-bottom: 1px solid #333;
     }
-    .anime-list th {
+    .anime-list th, .carousel-list th {
       background: #2a2a2a;
       text-align: left;
     }
-    .anime-list tr:hover td {
+    .anime-list tr:hover td, .carousel-list tr:hover td {
       background: #2a2a2a;
     }
     .btn-action {
@@ -177,15 +180,10 @@
       <button class="nav-btn active" data-section="anime">
         <i class="fas fa-film"></i> Аниме
       </button>
-      <button class="nav-btn" data-section="recommendations">
-        <i class="fas fa-star"></i> Рекомендации
+      <button class="nav-btn" data-section="carousel">
+        <i class="fas fa-images"></i> Карусель
       </button>
-      <button class="nav-btn" data-section="trending">
-        <i class="fas fa-fire"></i> Trending
-      </button>
-      <button class="nav-btn" data-section="upcoming">
-        <i class="fas fa-hourglass-start"></i> Upcoming
-      </button>
+      <!-- Можно добавить другие секции -->
     </nav>
   </aside>
 
@@ -196,10 +194,9 @@
       <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
     </header>
 
-    <!-- Section: Anime -->
+    <!-- Секция: Управление аниме -->
     <section class="section active" id="anime-section">
       <h2>Управление аниме</h2>
-      <!-- Форма добавления/редактирования аниме -->
       <form class="anime-form" id="anime-form">
         <div class="form-row">
           <label>Название аниме</label>
@@ -228,9 +225,9 @@
           <label>Ссылка на плеер</label>
           <input type="url" id="anime-player" placeholder="https://player.site/watch?id=...">
         </div>
-        <!-- Чекбоксы для выбора разделов -->
+        <!-- Чекбоксы для выбора разделов, если нужно -->
         <div class="form-row">
-          <label>Разделы</label>
+          <label>Разделы (при создании можно оставить пустым, редактировать позже)</label>
           <div class="checkbox-group">
             <div>
               <input type="checkbox" id="section-trending" value="trending">
@@ -253,7 +250,6 @@
         <button type="submit" class="btn-save">Сохранить</button>
       </form>
 
-      <!-- Список аниме -->
       <div class="anime-list" id="anime-list">
         <h3>Список аниме</h3>
         <table>
@@ -267,12 +263,43 @@
             </tr>
           </thead>
           <tbody id="anime-table-body">
-            <!-- Строки добавляются через JavaScript -->
+            <!-- Строки добавляются через JS -->
           </tbody>
         </table>
       </div>
     </section>
-    <!-- Другие секции можно реализовать аналогично -->
+
+    <!-- Секция: Управление каруселью -->
+    <section class="section" id="carousel-section">
+      <h2>Управление каруселью</h2>
+      <form class="carousel-form" id="carousel-form">
+        <div class="form-row">
+          <label>URL баннера</label>
+          <input type="url" id="banner-image" placeholder="https://example.com/banner.jpg" required>
+        </div>
+        <div class="form-row">
+          <label>Ссылка</label>
+          <input type="url" id="banner-link" placeholder="https://example.com/page" required>
+        </div>
+        <button type="submit" class="btn-save">Добавить баннер</button>
+      </form>
+
+      <div class="carousel-list" id="carousel-list">
+        <h3>Баннеры карусели</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Изображение</th>
+              <th>Ссылка</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="carousel-table-body">
+            <!-- Строки добавляются через JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -280,10 +307,9 @@
   // Импорт Firebase (версия 11.4.0)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } 
-    from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-  // Конфигурация Firebase
+  // Конфигурация Firebase (убедитесь, что storageBucket указан корректно)
   const firebaseConfig = {
     apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
     authDomain: "anivision-194f5.firebaseapp.com",
@@ -299,11 +325,13 @@
   const analytics = getAnalytics(appFirebase);
   const db = getFirestore(appFirebase);
 
-  // Коллекция "anime"
+  // Коллекция для аниме
   const animeCollection = collection(db, "anime");
+  // Коллекция для баннеров карусели
+  const carouselCollection = collection(db, "carouselBanners");
 
-  // Режим: добавление или редактирование
-  let editingAnimeId = null; // если null – добавление, иначе редактирование
+  // Режим редактирования для аниме (если понадобится)
+  let editingAnimeId = null;
 
   // Функция загрузки списка аниме
   async function loadAnimeList() {
@@ -317,11 +345,10 @@
         renderAnimeRow(docId, data);
       });
     } catch (error) {
-      console.error("Ошибка при загрузке:", error);
+      console.error("Ошибка при загрузке аниме:", error);
     }
   }
 
-  // Функция отрисовки строки для одного аниме
   function renderAnimeRow(docId, data) {
     const tr = document.createElement("tr");
 
@@ -343,7 +370,7 @@
 
     const tdActions = document.createElement("td");
 
-    // Единственная кнопка "Редактировать" – переходит на anime.html с параметром animeId
+    // Кнопка "Редактировать" – переходит на anime.html с параметром animeId
     const btnEdit = document.createElement("button");
     btnEdit.textContent = "Редактировать";
     btnEdit.classList.add("btn-action");
@@ -364,8 +391,8 @@
           alert("Аниме удалено!");
           loadAnimeList();
         } catch (error) {
-          console.error("Ошибка при удалении:", error);
-          alert("Ошибка при удалении!");
+          console.error("Ошибка при удалении аниме:", error);
+          alert("Ошибка при удалении аниме.");
         }
       }
     });
@@ -375,7 +402,7 @@
     document.getElementById("anime-table-body").appendChild(tr);
   }
 
-  // Обработчик формы для добавления/обновления аниме
+  // Обработчик формы для аниме
   document.getElementById("anime-form").addEventListener("submit", async (e) => {
     e.preventDefault();
     const title = document.getElementById("anime-title").value.trim();
@@ -401,7 +428,6 @@
         await updateDoc(doc(db, "anime", editingAnimeId), { title, desc, cover, category, rating, playerLink, sections });
         alert("Аниме обновлено!");
         editingAnimeId = null;
-        document.querySelector(".btn-save").textContent = "Сохранить";
       } else {
         await addDoc(animeCollection, { title, desc, cover, category, rating, playerLink, sections });
         alert("Аниме успешно добавлено!");
@@ -409,7 +435,7 @@
       document.getElementById("anime-form").reset();
       loadAnimeList();
     } catch (error) {
-      console.error("Ошибка при сохранении:", error);
+      console.error("Ошибка при сохранении аниме:", error);
       alert("Ошибка при сохранении аниме.");
     }
   });
@@ -427,7 +453,80 @@
     });
   });
 
+  // Функция загрузки списка баннеров карусели
+  async function loadCarouselBanners() {
+    const tableBody = document.getElementById("carousel-table-body");
+    tableBody.innerHTML = "";
+    try {
+      const querySnapshot = await getDocs(carouselCollection);
+      querySnapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const docId = docSnap.id;
+        renderCarouselRow(docId, data);
+      });
+    } catch (error) {
+      console.error("Ошибка при загрузке баннеров:", error);
+    }
+  }
+
+  function renderCarouselRow(docId, data) {
+    const tr = document.createElement("tr");
+
+    const tdImage = document.createElement("td");
+    tdImage.innerHTML = `<img src="${data.image ? data.image : 'https://via.placeholder.com/100x50?text=No+Image'}" alt="Banner" style="width:100px;">`;
+    tr.appendChild(tdImage);
+
+    const tdLink = document.createElement("td");
+    tdLink.innerHTML = `<a href="${data.link}" target="_blank">${data.link}</a>`;
+    tr.appendChild(tdLink);
+
+    const tdActions = document.createElement("td");
+    const btnDelete = document.createElement("button");
+    btnDelete.textContent = "Удалить";
+    btnDelete.classList.add("btn-action");
+    btnDelete.addEventListener("click", async () => {
+      if (confirm("Удалить этот баннер?")) {
+        try {
+          await deleteDoc(doc(db, "carouselBanners", docId));
+          alert("Баннер удалён!");
+          loadCarouselBanners();
+        } catch (error) {
+          console.error("Ошибка при удалении баннера:", error);
+          alert("Ошибка при удалении баннера!");
+        }
+      }
+    });
+    tdActions.appendChild(btnDelete);
+    tr.appendChild(tdActions);
+
+    document.getElementById("carousel-table-body").appendChild(tr);
+  }
+
+  // Обработчик формы для карусели
+  document.getElementById("carousel-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const bannerImage = document.getElementById("banner-image").value.trim();
+    const bannerLink = document.getElementById("banner-link").value.trim();
+
+    if (!bannerImage || !bannerLink) {
+      alert("Заполните все поля баннера!");
+      return;
+    }
+
+    try {
+      await addDoc(carouselCollection, { image: bannerImage, link: bannerLink });
+      alert("Баннер успешно добавлен!");
+      document.getElementById("carousel-form").reset();
+      loadCarouselBanners();
+    } catch (error) {
+      console.error("Ошибка при добавлении баннера:", error);
+      alert("Ошибка при добавлении баннера.");
+    }
+  });
+
+  // Начальная загрузка
   loadAnimeList();
+  loadCarouselBanners();
 </script>
 </body>
 </html>
