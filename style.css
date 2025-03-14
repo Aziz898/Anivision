@@ -8,11 +8,16 @@
 /* Базовые стили */
 body {
   font-family: 'Montserrat', sans-serif;
-  background: #141414;
+  background: #141414; /* Тёмный фон */
   color: #fff;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* Цвета */
+:root {
+  --accent-color: #a749f8; /* Фиолетовый акцент */
 }
 
 /* Верхняя панель */
@@ -24,8 +29,16 @@ body {
   justify-content: space-between;
 }
 .app-title {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.logo-part1 {
+  color: #fff; /* "Ani" - белый */
+}
+.logo-part2 {
+  color: var(--accent-color); /* "vision" - фиолетовый */
 }
 .menu-btn {
   font-size: 1.3rem;
@@ -44,7 +57,7 @@ body {
   margin-bottom: 1.5rem;
 }
 .section-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-bottom: 1rem;
   font-weight: 600;
 }
@@ -58,7 +71,6 @@ body {
   overflow-x: auto;
   gap: 0.8rem;
   padding-bottom: 0.5rem;
-  /* скрыть полосу прокрутки (опционально) */
   scrollbar-width: none; /* Firefox */
 }
 .carousel-container::-webkit-scrollbar {
@@ -136,7 +148,7 @@ body {
   transition: background 0.3s;
 }
 .genre-btn:hover {
-  background: #a749f8;
+  background: var(--accent-color);
 }
 
 /* Кнопки */
@@ -144,7 +156,7 @@ body {
   display: inline-block;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
-  background: #a749f8;
+  background: var(--accent-color);
   color: #fff;
   text-decoration: none;
   transition: background 0.3s, transform 0.3s;
@@ -168,19 +180,18 @@ body {
 }
 .nav-link {
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 1.2rem; /* увеличим для иконок */
   text-decoration: none;
   padding: 0.3rem;
   transition: color 0.3s;
 }
 .nav-link.active,
 .nav-link:hover {
-  color: #a749f8;
+  color: var(--accent-color);
 }
 
-/* Адаптивность (для телефонов уже по умолчанию) */
+/* Адаптивность */
 @media (min-width: 768px) {
-  /* Можно задать стили для планшетов */
   .anime-card img {
     width: 140px;
     height: 200px;
