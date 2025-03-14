@@ -14,6 +14,8 @@ html, body {
   display: flex;
   flex-direction: column;
   position: relative;
+
+  /* Safe area (iPhone вырезы) */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -74,96 +76,107 @@ html, body {
   color: #fff;
 }
 
-/* Логотип: вариант текстовый */
-.app-title::before {
-  content: "Ani";
-  color: #fff;
-  margin-right: 4px;
-}
-.app-title::after {
-  content: "Vision";
-  color: #a749f8;
-  text-transform: capitalize;
-}
-
 /* ==============================
    CONTENT
 ============================== */
 .content {
   flex: 1;
+  padding-bottom: 5rem; /* отступ под нижнюю навигацию */
+}
+
+/* ==============================
+   HERO SECTION
+============================== */
+.hero-section {
+  margin-bottom: 1rem;
+}
+.hero-poster {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.hero-poster img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 1rem;
-  padding-bottom: 5rem; /* отступ для нижней навигации */
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+}
+.hero-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+.hero-desc {
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+.btn-hero {
+  background: #a749f8;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  transition: background 0.3s, transform 0.3s;
+}
+.btn-hero:hover {
+  background: #933ae0;
+  transform: scale(1.05);
 }
 
 /* ==============================
    SECTION TITLES
 ============================== */
 .section {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 .section-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-/* ==============================
-   ANIME LIST (КАТАЛОГ)
-============================== */
-.anime-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.anime-card {
-  background: #1f1f1f;
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  gap: 0.8rem;
-}
-.anime-card img {
-  width: 120px;
-  height: 160px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-.anime-info {
-  padding: 0.5rem;
-  flex: 1;
-}
-.anime-title {
   font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 0.3rem;
-}
-.anime-desc {
-  font-size: 0.85rem;
-  color: #ccc;
-  margin-bottom: 0.5rem;
-}
-.btn-watch {
-  display: inline-block;
-  padding: 0.4rem 0.8rem;
-  background: #a749f8;
-  color: #fff;
-  border-radius: 20px;
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: background 0.3s, transform 0.3s;
-}
-.btn-watch:hover {
-  background: #933ae0;
-  transform: scale(1.05);
+  margin: 0.5rem 1rem;
 }
 
 /* ==============================
-   BOTTOM NAVIGATION
+   NETFLIX-STYLE ROWS
+============================== */
+.row-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.5rem;
+  padding: 0 1rem 1rem;
+  scrollbar-width: none;
+}
+.row-container::-webkit-scrollbar {
+  display: none;
+}
+.row-poster {
+  width: 120px;
+  height: 180px; /* 2:3 соотношение */
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: #333;
+  transition: transform 0.3s;
+}
+.row-poster:hover {
+  transform: scale(1.08);
+}
+
+/* ==============================
+   BOTTOM NAV
 ============================== */
 .bottom-nav {
   position: fixed;
-  bottom: 0;
-  left: 0;
+  bottom: 0; left: 0;
   width: 100%;
   background: #000;
   display: flex;
@@ -195,8 +208,14 @@ html, body {
    MEDIA QUERIES
 ============================== */
 @media (min-width: 768px) {
-  .anime-card img {
-    width: 140px;
-    height: 200px;
+  .row-poster {
+    width: 160px;
+    height: 240px;
   }
+}
+
+/* АНИМАЦИИ (splash) */
+@keyframes colorFlow {
+  0% { color: #a749f8; }
+  100% { color: #fff; }
 }
