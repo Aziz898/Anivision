@@ -1,4 +1,4 @@
-/* ==============================
+/* ===============================
    RESET / BASE
 ============================== */
 html, body {
@@ -61,11 +61,6 @@ html, body {
   font-size: 1.3rem;
   font-weight: 600;
   text-align: center;
-  flex: 1;
-  /* Для центрирования, можно использовать trick */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .logo-part1 {
   color: #fff;
@@ -88,21 +83,29 @@ html, body {
   padding-bottom: 5rem;
 }
 
-/* HERO BANNER (один) */
-.hero-banner {
-  margin: 1rem;
-  border-radius: 8px;
-  overflow: hidden;
-}
-.hero-banner-bg {
+/* HERO-CAROUSEL (auto-rotate) */
+.hero-carousel {
   position: relative;
   width: 100%;
   height: 220px;
+  overflow: hidden;
+}
+.hero-slide {
+  position: absolute;
+  top: 0; left: 100%;
+  width: 100%; height: 100%;
+  display: flex;
+  flex-shrink: 0;
+  transition: left 0.8s ease;
+}
+.hero-slide-bg {
+  position: relative;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
-  border-radius: 8px;
 }
-.hero-banner-overlay {
+.hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to right, rgba(0,0,0,0.7), transparent);
@@ -113,7 +116,7 @@ html, body {
 }
 .banner-poster {
   width: 120px;
-  height: calc(120px * 16/9); /* 9:16 */
+  height: calc(120px * 16/9);
   object-fit: cover;
   border-radius: 8px;
 }
@@ -145,6 +148,17 @@ html, body {
 .btn-banner:hover {
   background: #933ae0;
   transform: scale(1.05);
+}
+/* Слайд видимый (active) */
+.hero-slide.active {
+  left: 0;
+}
+/* скрываем предыдущий/следующий */
+.hero-slide.prev {
+  left: -100%;
+}
+.hero-slide.next {
+  left: 100%;
 }
 
 /* SECTION-ROW */
@@ -187,7 +201,7 @@ html, body {
 }
 .row-poster {
   width: 140px;
-  height: 210px; /* увеличили постеры */
+  height: 210px;
   object-fit: cover;
   border-radius: 4px;
   flex-shrink: 0;
@@ -232,7 +246,7 @@ html, body {
 
 /* MEDIA QUERIES */
 @media (min-width: 768px) {
-  .hero-banner-bg {
+  .hero-carousel {
     height: 280px;
   }
   .banner-poster {
@@ -247,14 +261,14 @@ html, body {
 
 /* ANIMATIONS */
 @keyframes fadeIn {
-  0% { opacity: 0; }
+  0%   { opacity: 0; }
   100% { opacity: 1; }
 }
 @keyframes fadeOut {
-  0% { opacity: 1; }
+  0%   { opacity: 1; }
   100% { opacity: 0; }
 }
 @keyframes colorFlow {
-  0% { color: #a749f8; }
+  0%   { color: #a749f8; }
   100% { color: #fff; }
 }
