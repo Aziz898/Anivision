@@ -1,154 +1,86 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AniVision - Главная</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* Базовые стили для главной страницы */
-    body {
-      margin: 0;
-      padding: 0;
-      background: #141414;
-      color: #fff;
-      font-family: sans-serif;
-    }
-    header {
-      background: #000;
-      padding: 1rem;
-      text-align: center;
-      color: #a749f8;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-    /* Стили для динамичной карусели */
-    .hero-carousel {
-      position: relative;
-      width: 100%;
-      height: 220px;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-    .hero-slide {
-      position: absolute;
-      top: 0;
-      left: 100%;
-      width: 100%;
-      height: 100%;
-      transition: left 0.8s ease;
-    }
-    .hero-slide.active {
-      left: 0;
-    }
-    .hero-slide-bg {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .hero-slide a {
-      background: #a749f8;
-      color: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .hero-slide a:hover {
-      background: #933ae0;
-    }
-    /* Остальные блоки (Trending, Recommendations и т.д.) – пример разметки */
-    .section-row {
-      margin-bottom: 1rem;
-    }
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 1rem 0.5rem;
-    }
-    .section-title {
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    .btn-more {
-      background: none;
-      border: none;
-      color: #a749f8;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-    .btn-more:hover {
-      color: #fff;
-    }
-    .row-container {
-      display: flex;
-      overflow-x: auto;
-      gap: 0.5rem;
-      padding: 0 1rem 1rem;
-    }
-    .row-container::-webkit-scrollbar {
-      display: none;
-    }
-    .row-item {
-      position: relative;
-      flex-shrink: 0;
-      width: 140px;
-      background: #333;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .row-poster {
-      width: 100%;
-      height: 210px;
-      object-fit: cover;
-      display: block;
-    }
-  </style>
+  <title>AniVision MiniApp</title>
+  <!-- Мобильная адаптация -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- Подключаем style.css (оставляем оригинальный дизайн) -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome (иконки) -->
+  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
+  <!-- Шрифт Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>AniVision</h1>
-    <p>Ваши любимые аниме в одном месте</p>
-  </header>
-  <div class="container">
-    <!-- Динамичная карусель -->
-    <div class="hero-carousel" id="hero-carousel">
-      <!-- Баннеры будут загружены динамически -->
+  <!-- SPLASH SCREEN -->
+  <div class="splash-screen" id="splash-screen">
+    <div class="splash-logo">
+      <span class="splash-text">AniVision</span>
     </div>
+  </div>
 
-    <!-- Пример блока Trending -->
+  <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+  <header class="header">
+    <!-- Слева: кнопка языка -->
+    <button class="lang-btn">
+      <i class="fas fa-flag"></i>
+    </button>
+    <!-- По центру: AniVision -->
+    <h1 class="app-title">
+      <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
+    </h1>
+    <!-- Справа: уведомления -->
+    <button class="notif-btn">
+      <i class="fas fa-bell"></i>
+    </button>
+  </header>
+
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <main class="content">
+    <!-- HERO-КАРУСЕЛЬ -->
+    <section class="hero-carousel" id="hero-carousel">
+      <!-- Слайды будут подгружаться динамически из коллекции "carouselBanners" -->
+    </section>
+
+    <!-- Секции с горизонтальными каруселями -->
     <section class="section-row">
       <div class="section-header">
         <h3 class="section-title">Trending</h3>
         <button class="btn-more">See All</button>
       </div>
       <div class="row-container" id="trending-container">
-        <!-- Карточки Trending будут добавлены сюда -->
+        <!-- Карточки Trending будут подгружаться динамически -->
       </div>
     </section>
+    <!-- Здесь можно добавить и другие секции аналогично -->
+  </main>
 
-    <!-- Другие секции (Recommendations, Upcoming, Continue Watching) можно добавить аналогично -->
-  </div>
+  <!-- НИЖНЯЯ ПАНЕЛЬ -->
+  <nav class="bottom-nav">
+    <a href="#" class="nav-link active">
+      <i class="fas fa-home"></i>
+      <span class="nav-label">Главная</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-film"></i>
+      <span class="nav-label">Аниме</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-book"></i>
+      <span class="nav-label">Манга</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-user"></i>
+      <span class="nav-label">Профиль</span>
+    </a>
+  </nav>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
     import { getFirestore, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-    // Конфигурация Firebase (та же, что и в админке)
+    // Конфигурация Firebase (та же, что и в admin.html)
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
@@ -162,43 +94,37 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Функция загрузки баннеров для карусели
+    // Функция для загрузки слайдов карусели из коллекции "carouselBanners"
     async function loadCarousel() {
       const carousel = document.getElementById("hero-carousel");
       carousel.innerHTML = "";
       try {
         const carouselCollection = collection(db, "carouselBanners");
         const querySnapshot = await getDocs(carouselCollection);
-        const banners = [];
+        const slides = [];
         querySnapshot.forEach(docSnap => {
-          banners.push(docSnap.data());
-        });
-        if (banners.length === 0) {
-          carousel.innerHTML = `<p>Нет баннеров для карусели.</p>`;
-          return;
-        }
-        // Создаем слайды
-        banners.forEach((banner, index) => {
+          const data = docSnap.data();
           const slide = document.createElement("div");
           slide.classList.add("hero-slide");
-          if (index === 0) slide.classList.add("active");
-          slide.style.backgroundImage = `url('${banner.image}')`;
+          slide.style.backgroundImage = `url('${data.image}')`;
           slide.innerHTML = `
             <div class="hero-overlay">
-              <a href="${banner.link}" target="_blank">Перейти</a>
+              <a href="${data.link}" target="_blank">Перейти</a>
             </div>
           `;
+          slides.push(slide);
           carousel.appendChild(slide);
         });
-        startCarousel();
+        if (slides.length > 0) {
+          slides[0].classList.add("active");
+          startCarousel(slides);
+        }
       } catch (error) {
-        console.error("Ошибка при загрузке баннеров карусели:", error);
+        console.error("Ошибка при загрузке карусели:", error);
       }
     }
 
-    // Функция для автопрокрутки карусели
-    function startCarousel() {
-      const slides = document.querySelectorAll(".hero-slide");
+    function startCarousel(slides) {
       let currentIndex = 0;
       setInterval(() => {
         slides[currentIndex].classList.remove("active");
@@ -207,7 +133,7 @@
       }, 5000);
     }
 
-    // Функция для загрузки секции по фильтру (например, Trending)
+    // Функция для загрузки аниме для конкретного раздела (например, Trending)
     async function loadSection(sectionName, containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -232,13 +158,10 @@
       }
     }
 
-    // Вызываем функции для загрузки контента
+    // Загрузка контента
     loadCarousel();
     loadSection("trending", "trending-container");
-    // Можно добавить вызовы для других секций, если их добавите:
-    // loadSection("recommendations", "recommendations-container");
-    // loadSection("upcoming", "upcoming-container");
-    // loadSection("continue_watching", "continue-watching-container");
+    // Если есть другие секции, вызывайте loadSection() с соответствующими параметрами
   </script>
 </body>
 </html>
