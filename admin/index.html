@@ -28,7 +28,6 @@
       <button class="nav-btn" data-section="upcoming">
         <i class="fas fa-hourglass-start"></i> Upcoming
       </button>
-      <!-- Можно добавить больше пунктов -->
     </nav>
   </aside>
 
@@ -42,7 +41,7 @@
     <!-- СЕКЦИЯ: Аниме -->
     <section class="section active" id="anime-section">
       <h2>Управление аниме</h2>
-      <!-- Форма добавления/редактирования -->
+      <!-- Форма добавления -->
       <form class="anime-form" id="anime-form">
         <div class="form-row">
           <label>Название аниме</label>
@@ -87,50 +86,37 @@
             </tr>
           </thead>
           <tbody id="anime-table-body">
-            <!-- Сюда добавляются строки через JS -->
+            <!-- Строки добавляются через JS -->
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- Другие секции (Рекомендации, Trending, Upcoming) можно реализовать аналогично -->
-    <section class="section" id="recommendations-section">
-      <h2>Управление рекомендациями</h2>
-      <p>Здесь можно добавить форму и список для рекомендаций.</p>
-    </section>
-
-    <section class="section" id="trending-section">
-      <h2>Управление Trending</h2>
-      <p>Аналогичная логика для Trending.</p>
-    </section>
-
-    <section class="section" id="upcoming-section">
-      <h2>Управление Upcoming</h2>
-      <p>Аналогичная логика для Upcoming.</p>
-    </section>
+    <!-- Прочие секции (рекомендации, trending, upcoming) можно добавить по аналогии -->
 
   </main>
 </div>
 
-<!-- Скрипт: инициализация Firebase, Firestore и CRUD-операции -->
+<!-- Скрипт: Firebase + Firestore + CRUD -->
 <script type="module">
-  // Импортируем необходимые модули Firebase (версия 11.4.0)
+  // Импорт Firebase (v.11.4.0)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } 
+    from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-  // Ваши настройки Firebase (убедитесь, что storageBucket указан правильно)
+  // Ваш конфиг
   const firebaseConfig = {
     apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
     authDomain: "anivision-194f5.firebaseapp.com",
     projectId: "anivision-194f5",
-    storageBucket: "anivision-194f5.appspot.com",
+    storageBucket: "anivision-194f5.firebasestorage.app",
     messagingSenderId: "793506779659",
     appId: "1:793506779659:web:b391b63343af935afbed0e",
     measurementId: "G-JGNDHJT219"
   };
 
-  // Инициализируем Firebase
+  // Инициализация
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const db = getFirestore(app);
@@ -138,108 +124,100 @@
   // Ссылка на коллекцию "anime"
   const animeCollection = collection(db, "anime");
 
-  // Функция для загрузки списка аниме
-  async function loadAnimeList() {
+  // При загрузке DOM
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("anime-form");
     const tableBody = document.getElementById("anime-table-body");
-    tableBody.innerHTML = "";
-    try {
-      const querySnapshot = await getDocs(animeCollection);
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        const docId = docSnap.id;
-        renderAnimeRow(docId, data);
-      });
-    } catch (error) {
-      console.error("Ошибка при загрузке данных:", error);
+
+    // Загрузка списка аниме
+    async function loadAnimeList() {
+      tableBody.innerHTML = "";
+      try {
+        const querySnapshot = await getDocs(animeCollection);
+        querySnapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          const docId = docSnap.id;
+          renderAnimeRow(docId, data);
+        });
+      } catch (error) {
+        console.error("Ошибка при загрузке:", error);
+      }
     }
-  }
 
-  // Функция отрисовки строки таблицы
-  function renderAnimeRow(docId, data) {
-    const tableBody = document.getElementById("anime-table-body");
-    const tr = document.createElement("tr");
+    // Отрисовка строки
+    function renderAnimeRow(docId, data) {
+      const tr = document.createElement("tr");
 
-    // Название
-    const tdTitle = document.createElement("td");
-    tdTitle.textContent = data.title || "";
-    tr.appendChild(tdTitle);
+      const tdTitle = document.createElement("td");
+      tdTitle.textContent = data.title || "";
+      tr.appendChild(tdTitle);
 
-    // Категория
-    const tdCategory = document.createElement("td");
-    tdCategory.textContent = data.category || "";
-    tr.appendChild(tdCategory);
+      const tdCategory = document.createElement("td");
+      tdCategory.textContent = data.category || "";
+      tr.appendChild(tdCategory);
 
-    // Рейтинг
-    const tdRating = document.createElement("td");
-    tdRating.textContent = data.rating || "";
-    tr.appendChild(tdRating);
+      const tdRating = document.createElement("td");
+      tdRating.textContent = data.rating || "";
+      tr.appendChild(tdRating);
 
-    // Действия
-    const tdActions = document.createElement("td");
-    // Кнопка "Удалить"
-    const btnDelete = document.createElement("button");
-    btnDelete.textContent = "Удалить";
-    btnDelete.addEventListener("click", async () => {
-      if (confirm("Удалить это аниме?")) {
-        try {
-          await deleteDoc(doc(db, "anime", docId));
-          alert("Аниме удалено!");
-          loadAnimeList();
-        } catch (error) {
-          console.error("Ошибка при удалении:", error);
-          alert("Ошибка при удалении!");
+      const tdActions = document.createElement("td");
+      // Удаление
+      const btnDelete = document.createElement("button");
+      btnDelete.textContent = "Удалить";
+      btnDelete.addEventListener("click", async () => {
+        if (confirm("Удалить это аниме?")) {
+          try {
+            await deleteDoc(doc(db, "anime", docId));
+            alert("Аниме удалено!");
+            loadAnimeList();
+          } catch (err) {
+            console.error("Ошибка при удалении:", err);
+            alert("Ошибка при удалении!");
+          }
         }
+      });
+      tdActions.appendChild(btnDelete);
+
+      tr.appendChild(tdActions);
+      tableBody.appendChild(tr);
+    }
+
+    // Обработчик формы (Добавление)
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("anime-title").value.trim();
+      const desc = document.getElementById("anime-desc").value.trim();
+      const cover = document.getElementById("anime-cover").value.trim();
+      const category = document.getElementById("anime-category").value;
+      const rating = document.getElementById("anime-rating").value;
+      const playerLink = document.getElementById("anime-player").value.trim();
+
+      if (!title) {
+        alert("Название аниме обязательно!");
+        return;
+      }
+
+      try {
+        await addDoc(animeCollection, {
+          title,
+          desc,
+          cover,
+          category,
+          rating,
+          playerLink
+        });
+        alert("Аниме успешно добавлено!");
+        form.reset();
+        loadAnimeList();
+      } catch (error) {
+        console.error("Ошибка при добавлении:", error);
+        alert("Ошибка при добавлении аниме.");
       }
     });
-    tdActions.appendChild(btnDelete);
 
-    // (Опционально) можно добавить кнопку "Редактировать" и реализовать updateDoc
-    tr.appendChild(tdActions);
-
-    tableBody.appendChild(tr);
-  }
-
-  // Обработчик отправки формы для добавления нового аниме
-  document.getElementById("anime-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const title = document.getElementById("anime-title").value.trim();
-    const desc = document.getElementById("anime-desc").value.trim();
-    const cover = document.getElementById("anime-cover").value.trim();
-    const category = document.getElementById("anime-category").value;
-    const rating = document.getElementById("anime-rating").value;
-    const playerLink = document.getElementById("anime-player").value.trim();
-
-    if (!title) {
-      alert("Название аниме обязательно!");
-      return;
-    }
-
-    try {
-      await addDoc(animeCollection, { title, desc, cover, category, rating, playerLink });
-      alert("Аниме успешно добавлено!");
-      document.getElementById("anime-form").reset();
-      loadAnimeList();
-    } catch (error) {
-      console.error("Ошибка при добавлении:", error);
-      alert("Ошибка при добавлении аниме.");
-    }
+    // Первоначальная загрузка
+    loadAnimeList();
   });
-
-  // Функция для переключения секций по клику в боковом меню
-  const navBtns = document.querySelectorAll(".nav-btn");
-  const sections = document.querySelectorAll(".section");
-  navBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      navBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      sections.forEach(sec => sec.classList.remove("active"));
-      const sectionId = btn.getAttribute("data-section") + "-section";
-      document.getElementById(sectionId).classList.add("active");
-    });
-  });
-
-  // Начальная загрузка списка аниме
-  loadAnimeList();
 </script>
 </body>
 </html>
