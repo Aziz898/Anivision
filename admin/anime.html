@@ -27,7 +27,7 @@
       padding: 1rem;
     }
 
-    /* Карточка с информацией об аниме */
+    /* Карточка аниме */
     .anime-card {
       background: #1f1f1f;
       border-radius: 8px;
@@ -66,13 +66,11 @@
       background: #933ae0;
     }
 
-    /* Модальное окно для редактирования */
+    /* Модальное окно */
     .modal-overlay {
       position: fixed;
-      top: 0; 
-      left: 0;
-      width: 100%; 
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.6);
       display: none; /* по умолчанию скрыто */
       justify-content: center;
@@ -112,6 +110,16 @@
       color: #fff;
       font-size: 0.9rem;
     }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .checkbox-group label {
+      display: inline-block;
+      margin-left: 0.3rem;
+      color: #ccc;
+    }
     .modal-buttons {
       display: flex;
       justify-content: flex-end;
@@ -138,7 +146,7 @@
       background: #444;
     }
 
-    /* Форма добавления эпизода */
+    /* Блок для добавления эпизодов */
     .episode-section {
       background: #1f1f1f;
       border-radius: 8px;
@@ -216,7 +224,6 @@
   <div class="container">
     <!-- Карточка аниме -->
     <div class="anime-card" id="anime-card">
-      <!-- Здесь будет постер, название, описание и кнопка "Редактировать" -->
       <img class="anime-poster" id="anime-poster" src="" alt="Poster">
       <h2 class="anime-title" id="anime-title-display">...</h2>
       <p class="anime-desc" id="anime-desc-display">...</p>
@@ -230,12 +237,37 @@
         <form class="modal-form" id="edit-form">
           <label>Название аниме</label>
           <input type="text" id="edit-title" required>
+
           <label>Описание</label>
           <textarea id="edit-desc" rows="3"></textarea>
+
           <label>URL обложки</label>
           <input type="url" id="edit-cover">
+
           <label>Ссылка на плеер</label>
           <input type="url" id="edit-player">
+
+          <!-- Чекбоксы для выбора разделов -->
+          <label>Разделы</label>
+          <div class="checkbox-group">
+            <div>
+              <input type="checkbox" id="edit-section-trending" value="trending">
+              <label for="edit-section-trending">Trending</label>
+            </div>
+            <div>
+              <input type="checkbox" id="edit-section-recommendations" value="recommendations">
+              <label for="edit-section-recommendations">Recommendations</label>
+            </div>
+            <div>
+              <input type="checkbox" id="edit-section-upcoming" value="upcoming">
+              <label for="edit-section-upcoming">Upcoming</label>
+            </div>
+            <div>
+              <input type="checkbox" id="edit-section-continue_watching" value="continue_watching">
+              <label for="edit-section-continue_watching">Continue Watching</label>
+            </div>
+          </div>
+
           <div class="modal-buttons">
             <button type="button" class="modal-btn cancel" id="cancel-edit">Отмена</button>
             <button type="submit" class="modal-btn">Сохранить</button>
@@ -279,7 +311,7 @@
     import { getFirestore, doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } 
       from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-    // Конфиг Firebase
+    // ВАШИ настройки Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
@@ -289,7 +321,7 @@
       appId: "1:793506779659:web:b391b63343af935afbed0e",
       measurementId: "G-JGNDHJT219"
     };
-    
+
     const appFirebase = initializeApp(firebaseConfig);
     const db = getFirestore(appFirebase);
 
@@ -300,38 +332,54 @@
       alert("Не указан идентификатор аниме!");
     }
 
-    const animeDocRef = doc(db, "anime", animeId);
-
-    // Элементы DOM
+    // Ссылки на элементы
     const animePosterEl = document.getElementById("anime-poster");
     const animeTitleEl = document.getElementById("anime-title-display");
     const animeDescEl = document.getElementById("anime-desc-display");
-
     const editBtn = document.getElementById("edit-btn");
+
     const modalOverlay = document.getElementById("modal-overlay");
     const editForm = document.getElementById("edit-form");
     const cancelEditBtn = document.getElementById("cancel-edit");
 
+    // Поля формы редактирования
     const editTitleEl = document.getElementById("edit-title");
     const editDescEl = document.getElementById("edit-desc");
     const editCoverEl = document.getElementById("edit-cover");
     const editPlayerEl = document.getElementById("edit-player");
 
+    // Чекбоксы разделов (массив)
+    const sectionCheckboxes = [
+      { id: "edit-section-trending", value: "trending" },
+      { id: "edit-section-recommendations", value: "recommendations" },
+      { id: "edit-section-upcoming", value: "upcoming" },
+      { id: "edit-section-continue_watching", value: "continue_watching" }
+    ];
+
     // Загрузка деталей аниме
+    const animeDocRef = doc(db, "anime", animeId);
     async function loadAnimeDetails() {
       try {
         const animeDoc = await getDoc(animeDocRef);
         if (animeDoc.exists()) {
           const data = animeDoc.data();
+          // Заполнение карточки
           animePosterEl.src = data.cover ? data.cover : 'https://via.placeholder.com/400x600?text=No+Image';
           animeTitleEl.textContent = data.title || "";
           animeDescEl.textContent = data.desc || "";
 
-          // Заполняем форму редактирования (модалка)
+          // Заполняем поля модалки
           editTitleEl.value = data.title || "";
           editDescEl.value = data.desc || "";
           editCoverEl.value = data.cover || "";
           editPlayerEl.value = data.playerLink || "";
+
+          // Отмечаем чекбоксы разделов
+          sectionCheckboxes.forEach(chk => {
+            const el = document.getElementById(chk.id);
+            el.checked = data.sections && data.sections.includes(chk.value);
+          });
+
         } else {
           alert("Аниме не найдено!");
         }
@@ -339,20 +387,19 @@
         console.error("Ошибка при загрузке аниме:", error);
       }
     }
-
     loadAnimeDetails();
 
-    // Модальное окно: показать
+    // Показать модальное окно
     editBtn.addEventListener("click", () => {
       modalOverlay.classList.add("active");
     });
 
-    // Модальное окно: скрыть (отмена)
+    // Отмена редактирования
     cancelEditBtn.addEventListener("click", () => {
       modalOverlay.classList.remove("active");
     });
 
-    // Сохранение изменений в аниме (submit формы в модалке)
+    // Сохранение изменений
     editForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const newTitle = editTitleEl.value.trim();
@@ -360,12 +407,20 @@
       const newCover = editCoverEl.value.trim();
       const newPlayer = editPlayerEl.value.trim();
 
+      // Собираем массив выбранных разделов
+      const newSections = [];
+      sectionCheckboxes.forEach(chk => {
+        const el = document.getElementById(chk.id);
+        if (el.checked) newSections.push(chk.value);
+      });
+
       try {
         await updateDoc(animeDocRef, {
           title: newTitle,
           desc: newDesc,
           cover: newCover,
-          playerLink: newPlayer
+          playerLink: newPlayer,
+          sections: newSections
         });
         alert("Данные аниме обновлены!");
         modalOverlay.classList.remove("active");
