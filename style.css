@@ -1,6 +1,6 @@
 /* ===============================
    RESET / BASE
-=============================== */
+============================== */
 html, body {
   height: 100%;
   margin: 0;
@@ -14,11 +14,15 @@ html, body {
   display: flex;
   flex-direction: column;
   position: relative;
+
+  /* Safe area insets */
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* SPLASH SCREEN */
+/* ===============================
+   SPLASH SCREEN
+============================== */
 .splash-screen {
   position: fixed;
   inset: 0;
@@ -36,19 +40,21 @@ html, body {
   animation: colorFlow 2s infinite alternate;
 }
 @keyframes fadeIn {
-  0% { opacity: 0; }
+  0%   { opacity: 0; }
   100% { opacity: 1; }
 }
 @keyframes fadeOut {
-  0% { opacity: 1; }
+  0%   { opacity: 1; }
   100% { opacity: 0; }
 }
 @keyframes colorFlow {
-  0% { color: #a749f8; }
+  0%   { color: #a749f8; }
   100% { color: #fff; }
 }
 
-/* HEADER */
+/* ===============================
+   HEADER
+============================== */
 .header {
   background-color: #000;
   padding: 1rem;
@@ -77,13 +83,17 @@ html, body {
   color: #fff;
 }
 
-/* CONTENT */
+/* ===============================
+   CONTENT
+============================== */
 .content {
   flex: 1;
-  padding-bottom: 5rem;
+  padding-bottom: 5rem; /* отступ под нижнюю панель */
 }
 
-/* HERO CAROUSEL (горизонтальная) */
+/* ===============================
+   HERO CAROUSEL
+============================== */
 .hero-carousel {
   display: flex;
   overflow-x: auto;
@@ -106,7 +116,6 @@ html, body {
 .hero-poster {
   width: 40%;
   object-fit: cover;
-  display: block;
 }
 .hero-info {
   width: 60%;
@@ -139,7 +148,9 @@ html, body {
   transform: scale(1.05);
 }
 
-/* SECTION-ROW (Смотреть сейчас, По жанрам) */
+/* ===============================
+   SECTION ROWS
+============================== */
 .section-row {
   margin-bottom: 1rem;
 }
@@ -166,7 +177,9 @@ html, body {
   color: #fff;
 }
 
-/* ROW-CONTAINER (горизонтальный скролл) */
+/* ===============================
+   ROW-CONTAINER (горизонтальный скролл)
+============================== */
 .row-container {
   display: flex;
   overflow-x: auto;
@@ -184,12 +197,15 @@ html, body {
   border-radius: 4px;
   flex-shrink: 0;
   transition: transform 0.3s;
+  background: #333;
 }
 .row-poster:hover {
   transform: scale(1.08);
 }
 
-/* BOTTOM NAV (полупрозрачная с размытием) */
+/* ===============================
+   BOTTOM NAV (полупрозрачная, размытие)
+============================== */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0;
@@ -221,7 +237,9 @@ html, body {
   color: #a749f8;
 }
 
-/* MEDIA QUERIES */
+/* ===============================
+   MEDIA QUERIES
+============================== */
 @media (min-width: 768px) {
   .hero-slide {
     height: 300px;
