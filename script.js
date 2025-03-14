@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("AniVision final design loaded");
+  console.log("AniVision final design loaded with hero carousel");
 
   const splashScreen = document.getElementById('splash-screen');
   setTimeout(() => {
@@ -12,6 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Кнопка уведомлений
   const notifBtn = document.querySelector('.notif-btn');
   notifBtn?.addEventListener('click', () => {
-    alert('Уведомления: пока не реализовано!');
+    alert("Уведомления: пока не реализовано!");
   });
 });
