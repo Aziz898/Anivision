@@ -1,13 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Anivision MiniApp with updated tabs");
+  console.log("Anivision with alt tags & scroll fix");
 
   const splashScreen = document.getElementById('splash-screen');
 
   // Имитация, что через 2 сек splash пропадает
   setTimeout(() => {
-    // Анимация fadeOut (описана в предыдущем коде)
     splashScreen.style.animation = "fadeOut 0.7s forwards";
-    // Удалим splash через 0.7s
     setTimeout(() => {
       splashScreen.style.display = "none";
     }, 700);
