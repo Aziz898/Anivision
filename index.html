@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>AniVision — MiniApp</title>
+  <title>AniVision — Anime Track Style</title>
   <!-- Мобильная адаптация -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- Подключаем style.css -->
@@ -20,12 +20,9 @@
     </div>
   </div>
 
-  <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+  <!-- ВЕРХНЯЯ ПАНЕЛЬ (Anime Track-style) -->
   <header class="header">
-    <div class="app-title">
-      <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
-    </div>
-    <!-- Кнопка уведомлений -->
+    <h1 class="app-title">AniVision</h1>
     <button class="notif-btn">
       <i class="fas fa-bell"></i>
     </button>
@@ -33,110 +30,87 @@
 
   <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main class="content">
-    <!-- HERO-КАРУСЕЛЬ (где постер внутри баннера) -->
-    <section class="hero-carousel">
-      <!-- Слайд 1 -->
-      <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=1000');">
-        <div class="hero-overlay">
-          <!-- Постер внутри баннера -->
-          <img class="banner-poster" src="https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=200" alt="Anime Poster 1">
-          <div class="banner-info">
-            <h2 class="banner-title">Название аниме #1</h2>
-            <p class="banner-desc">Короткое описание, жанры и т.д.</p>
-            <button class="btn-banner">Смотреть</button>
+    <!-- Топовый блок: «Trending» (авто-карусель) -->
+    <section class="trending-section">
+      <h2 class="section-title">Trending</h2>
+      <div class="trending-carousel" id="trending-carousel">
+        <!-- Слайд 1 -->
+        <div class="trending-slide">
+          <img src="https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=800" alt="Spy x Family" />
+          <div class="trending-info">
+            <h3 class="trend-title">Spy x Family</h3>
+            <p class="trend-details">Comedy, Action • Spring 2022</p>
           </div>
         </div>
-      </div>
-      <!-- Слайд 2 -->
-      <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=1000');">
-        <div class="hero-overlay">
-          <img class="banner-poster" src="https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=200" alt="Anime Poster 2">
-          <div class="banner-info">
-            <h2 class="banner-title">Название аниме #2</h2>
-            <p class="banner-desc">Описание второго аниме.</p>
-            <button class="btn-banner">Смотреть</button>
+        <!-- Слайд 2 -->
+        <div class="trending-slide">
+          <img src="https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=800" alt="Jujutsu Kaisen" />
+          <div class="trending-info">
+            <h3 class="trend-title">Jujutsu Kaisen</h3>
+            <p class="trend-details">Action, Supernatural • Fall 2020</p>
           </div>
         </div>
-      </div>
-      <!-- Слайд 3 -->
-      <div class="hero-slide" style="background-image: url('https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=1000');">
-        <div class="hero-overlay">
-          <img class="banner-poster" src="https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=200" alt="Anime Poster 3">
-          <div class="banner-info">
-            <h2 class="banner-title">Название аниме #3</h2>
-            <p class="banner-desc">Описание третьего аниме.</p>
-            <button class="btn-banner">Смотреть</button>
+        <!-- Слайд 3 -->
+        <div class="trending-slide">
+          <img src="https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=800" alt="One Piece" />
+          <div class="trending-info">
+            <h3 class="trend-title">One Piece</h3>
+            <p class="trend-details">Adventure, Shounen • Ongoing</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- СЕКЦИЯ: Смотреть сейчас -->
+    <!-- Continue Watching -->
     <section class="section-row">
       <div class="section-header">
-        <h3 class="section-title">Смотреть сейчас</h3>
-        <button class="btn-more">Ещё</button>
+        <h3 class="section-title">Continue Watching</h3>
+        <button class="btn-more">See All</button>
       </div>
       <div class="row-container">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809377/pexels-photo-5809377.jpeg?w=300" alt="Смотреть 1">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809375/pexels-photo-5809375.jpeg?w=300" alt="Смотреть 2">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809374/pexels-photo-5809374.jpeg?w=300" alt="Смотреть 3">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809376/pexels-photo-5809376.jpeg?w=300" alt="Смотреть 4">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809377/pexels-photo-5809377.jpeg?w=300" alt="Jujutsu Kaisen Poster">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809375/pexels-photo-5809375.jpeg?w=300" alt="One Piece Poster">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809374/pexels-photo-5809374.jpeg?w=300" alt="Demon Slayer Poster">
       </div>
     </section>
 
-    <!-- СЕКЦИЯ: Популярное -->
+    <!-- Continue Reading (манга) -->
     <section class="section-row">
       <div class="section-header">
-        <h3 class="section-title">Популярное</h3>
-        <button class="btn-more">Ещё</button>
+        <h3 class="section-title">Continue Reading</h3>
+        <button class="btn-more">See All</button>
       </div>
       <div class="row-container">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809415/pexels-photo-5809415.jpeg?w=300" alt="Популярное 1">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="Популярное 2">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="Популярное 3">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Популярное 4">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="Manga Poster 1">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="Manga Poster 2">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Manga Poster 3">
       </div>
     </section>
 
-    <!-- СЕКЦИЯ: По жанрам -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title">По жанрам</h3>
-        <button class="btn-more">Ещё</button>
-      </div>
-      <div class="row-container">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="Жанр 1">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="Жанр 2">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Жанр 3">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809415/pexels-photo-5809415.jpeg?w=300" alt="Жанр 4">
-      </div>
-    </section>
-
-    <!-- (Можно добавить еще 8 подборок) -->
+    <!-- (Можно добавить еще секции) -->
   </main>
 
   <!-- НИЖНЯЯ ПАНЕЛЬ -->
   <nav class="bottom-nav">
     <a href="#" class="nav-link active">
       <i class="fas fa-home"></i>
-      <span class="nav-label">Главная</span>
+      <span class="nav-label">Home</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-search"></i>
+      <span class="nav-label">Search</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-play-circle"></i>
+      <span class="nav-label">Anime</span>
     </a>
     <a href="#" class="nav-link">
       <i class="fas fa-book"></i>
-      <span class="nav-label">Манга</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-film"></i>
-      <span class="nav-label">Аниме</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-bookmark"></i>
-      <span class="nav-label">Моё</span>
+      <span class="nav-label">Manga</span>
     </a>
     <a href="#" class="nav-link">
       <i class="fas fa-user"></i>
-      <span class="nav-label">Профиль</span>
+      <span class="nav-label">Profile</span>
     </a>
   </nav>
 
