@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("AniVision final version with single wide banner, 2x Continue Watching, Recommendations, 4 tabs");
+  console.log("AniVision with single auto-rotating carousel, language switch, top bar icons");
 
   // SPLASH SCREEN
   const splashScreen = document.getElementById('splash-screen');
@@ -10,10 +10,61 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 700);
   }, 2000);
 
-  // Языковая кнопка (заглушка)
+  // AUTO-ROTATE Hero Carousel
+  const heroCarousel = document.getElementById('hero-carousel');
+  const slides = heroCarousel.querySelectorAll('.hero-slide');
+  let currentIndex = 0;
+
+  // Показать первый слайд
+  slides[currentIndex].classList.add('active');
+
+  function nextHeroSlide() {
+    const currentSlide = slides[currentIndex];
+    currentSlide.classList.remove('active');
+    currentSlide.classList.add('prev');
+
+    currentIndex = (currentIndex + 1) % slides.length;
+    const newSlide = slides[currentIndex];
+    newSlide.classList.remove('next','prev');
+    newSlide.classList.add('active');
+
+    setTimeout(() => {
+      currentSlide.classList.remove('prev');
+    }, 800);
+  }
+
+  setInterval(nextHeroSlide, 5000);
+
+  // Кнопка языка (RU/EN) - заглушка
   const langBtn = document.querySelector('.lang-btn');
+  // Пример простого словаря
+  const translations = {
+    en: {
+      continueWatching: "Continue Watching",
+      recommendations: "Recommendations"
+    },
+    ru: {
+      continueWatching: "Продолжить просмотр",
+      recommendations: "Рекомендации"
+    }
+  };
+  let currentLang = 'en'; // по умолчанию
+
   langBtn?.addEventListener('click', () => {
-    alert("Выбор языка: RU / EN (в разработке)");
+    // Переключаем язык
+    currentLang = (currentLang === 'en') ? 'ru' : 'en';
+
+    // Меняем текст в нужных элементах
+    const cwTitle1 = document.getElementById('continue-watching-title');
+    if(cwTitle1) cwTitle1.textContent = translations[currentLang].continueWatching;
+
+    const cwTitle2 = document.getElementById('continue-watching-2-title');
+    if(cwTitle2) cwTitle2.textContent = translations[currentLang].continueWatching;
+
+    const recTitle = document.getElementById('recommendations-title');
+    if(recTitle) recTitle.textContent = translations[currentLang].recommendations;
+
+    alert("Язык переключен на " + (currentLang === 'en' ? "English" : "Русский"));
   });
 
   // Уведомления
