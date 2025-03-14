@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Anivision with alt tags & scroll fix");
+  console.log("Anivision: iOS scroll fix + alt images");
 
   const splashScreen = document.getElementById('splash-screen');
 
-  // Имитация, что через 2 сек splash пропадает
+  // Показываем splash 2 секунды, потом плавно скрываем
   setTimeout(() => {
     splashScreen.style.animation = "fadeOut 0.7s forwards";
     setTimeout(() => {
