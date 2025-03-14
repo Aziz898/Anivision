@@ -4,15 +4,158 @@
   <meta charset="UTF-8">
   <title>AniVision Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключаем стили -->
+  <!-- Подключаем стили (можно вынести в отдельный admin.css) -->
   <link rel="stylesheet" href="admin.css">
-  <!-- Иконки FontAwesome (для кнопок) -->
+  <!-- Иконки FontAwesome -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
+  <style>
+    /* Пример встроенных стилей для админ-панели */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #141414;
+      color: #fff;
+      font-family: sans-serif;
+    }
+    .admin-container {
+      display: flex;
+      min-height: 100vh;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #1f1f1f;
+      padding: 1rem;
+    }
+    .sidebar-logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #a749f8;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: #ccc;
+      text-align: left;
+      padding: 0.8rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-left: 4px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-btn:hover {
+      color: #fff;
+      background: #2a2a2a;
+    }
+    .nav-btn.active {
+      color: #fff;
+      background: #2a2a2a;
+      border-left: 4px solid #a749f8;
+    }
+    /* Main content */
+    .main-content {
+      flex: 1;
+      background: #141414;
+      padding: 1rem;
+    }
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #000;
+      padding: 1rem;
+    }
+    .admin-header h1 {
+      margin: 0;
+      color: #a749f8;
+    }
+    .logout-btn {
+      background: none;
+      border: 1px solid #a749f8;
+      color: #a749f8;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .logout-btn:hover {
+      background: #a749f8;
+      color: #fff;
+    }
+    .section {
+      display: none;
+      padding: 1rem;
+    }
+    .section.active {
+      display: block;
+    }
+    .anime-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      background: #1f1f1f;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .form-row {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-row label {
+      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .form-row input,
+    .form-row textarea,
+    .form-row select {
+      background: #2a2a2a;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem;
+      color: #fff;
+    }
+    .btn-save {
+      grid-column: 1 / 3;
+      background: #a749f8;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.7rem 1rem;
+      cursor: pointer;
+    }
+    .btn-save:hover {
+      background: #933ae0;
+    }
+    .anime-list table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .anime-list th,
+    .anime-list td {
+      padding: 0.8rem;
+      border-bottom: 1px solid #333;
+    }
+    .anime-list th {
+      background: #2a2a2a;
+      text-align: left;
+    }
+    .anime-list tr:hover td {
+      background: #2a2a2a;
+    }
+  </style>
 </head>
 <body>
-
 <div class="admin-container">
-  <!-- Левое меню (Sidebar) -->
+  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-logo">AniVision</div>
     <nav class="sidebar-nav">
@@ -31,17 +174,17 @@
     </nav>
   </aside>
 
-  <!-- Основная часть -->
+  <!-- Main content -->
   <main class="main-content">
     <header class="admin-header">
       <h1>Админ-панель AniVision</h1>
       <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
     </header>
 
-    <!-- СЕКЦИЯ: Аниме -->
+    <!-- Section: Anime -->
     <section class="section active" id="anime-section">
       <h2>Управление аниме</h2>
-      <!-- Форма добавления -->
+      <!-- Форма добавления аниме -->
       <form class="anime-form" id="anime-form">
         <div class="form-row">
           <label>Название аниме</label>
@@ -86,138 +229,147 @@
             </tr>
           </thead>
           <tbody id="anime-table-body">
-            <!-- Строки добавляются через JS -->
+            <!-- Строки добавляются через JavaScript -->
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- Прочие секции (рекомендации, trending, upcoming) можно добавить по аналогии -->
-
+    <!-- Другие секции (рекомендации, trending, upcoming) можно реализовать аналогично -->
   </main>
 </div>
 
-<!-- Скрипт: Firebase + Firestore + CRUD -->
 <script type="module">
-  // Импорт Firebase (v.11.4.0)
+  // Импорт Firebase (версия 11.4.0)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
   import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } 
     from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-  // Ваш конфиг
+  // Конфигурация Firebase – обратите внимание на storageBucket (указан корректно, если ваш проект использует .appspot.com)
   const firebaseConfig = {
     apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
     authDomain: "anivision-194f5.firebaseapp.com",
     projectId: "anivision-194f5",
-    storageBucket: "anivision-194f5.firebasestorage.app",
+    storageBucket: "anivision-194f5.appspot.com",
     messagingSenderId: "793506779659",
     appId: "1:793506779659:web:b391b63343af935afbed0e",
     measurementId: "G-JGNDHJT219"
   };
 
-  // Инициализация
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
+  // Инициализация Firebase
+  const appFirebase = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(appFirebase);
+  const db = getFirestore(appFirebase);
 
-  // Ссылка на коллекцию "anime"
+  // Коллекция "anime"
   const animeCollection = collection(db, "anime");
 
-  // При загрузке DOM
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("anime-form");
+  // Функция загрузки списка аниме
+  async function loadAnimeList() {
     const tableBody = document.getElementById("anime-table-body");
-
-    // Загрузка списка аниме
-    async function loadAnimeList() {
-      tableBody.innerHTML = "";
-      try {
-        const querySnapshot = await getDocs(animeCollection);
-        querySnapshot.forEach(docSnap => {
-          const data = docSnap.data();
-          const docId = docSnap.id;
-          renderAnimeRow(docId, data);
-        });
-      } catch (error) {
-        console.error("Ошибка при загрузке:", error);
-      }
-    }
-
-    // Отрисовка строки
-    function renderAnimeRow(docId, data) {
-      const tr = document.createElement("tr");
-
-      const tdTitle = document.createElement("td");
-      tdTitle.textContent = data.title || "";
-      tr.appendChild(tdTitle);
-
-      const tdCategory = document.createElement("td");
-      tdCategory.textContent = data.category || "";
-      tr.appendChild(tdCategory);
-
-      const tdRating = document.createElement("td");
-      tdRating.textContent = data.rating || "";
-      tr.appendChild(tdRating);
-
-      const tdActions = document.createElement("td");
-      // Удаление
-      const btnDelete = document.createElement("button");
-      btnDelete.textContent = "Удалить";
-      btnDelete.addEventListener("click", async () => {
-        if (confirm("Удалить это аниме?")) {
-          try {
-            await deleteDoc(doc(db, "anime", docId));
-            alert("Аниме удалено!");
-            loadAnimeList();
-          } catch (err) {
-            console.error("Ошибка при удалении:", err);
-            alert("Ошибка при удалении!");
-          }
-        }
+    tableBody.innerHTML = "";
+    try {
+      const querySnapshot = await getDocs(animeCollection);
+      querySnapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const docId = docSnap.id;
+        renderAnimeRow(docId, data);
       });
-      tdActions.appendChild(btnDelete);
-
-      tr.appendChild(tdActions);
-      tableBody.appendChild(tr);
+    } catch (error) {
+      console.error("Ошибка при загрузке:", error);
     }
+  }
 
-    // Обработчик формы (Добавление)
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const title = document.getElementById("anime-title").value.trim();
-      const desc = document.getElementById("anime-desc").value.trim();
-      const cover = document.getElementById("anime-cover").value.trim();
-      const category = document.getElementById("anime-category").value;
-      const rating = document.getElementById("anime-rating").value;
-      const playerLink = document.getElementById("anime-player").value.trim();
+  // Функция отрисовки строки таблицы для одного аниме
+  function renderAnimeRow(docId, data) {
+    const tr = document.createElement("tr");
 
-      if (!title) {
-        alert("Название аниме обязательно!");
-        return;
-      }
+    const tdTitle = document.createElement("td");
+    tdTitle.textContent = data.title || "";
+    tr.appendChild(tdTitle);
 
-      try {
-        await addDoc(animeCollection, {
-          title,
-          desc,
-          cover,
-          category,
-          rating,
-          playerLink
-        });
-        alert("Аниме успешно добавлено!");
-        form.reset();
-        loadAnimeList();
-      } catch (error) {
-        console.error("Ошибка при добавлении:", error);
-        alert("Ошибка при добавлении аниме.");
+    const tdCategory = document.createElement("td");
+    tdCategory.textContent = data.category || "";
+    tr.appendChild(tdCategory);
+
+    const tdRating = document.createElement("td");
+    tdRating.textContent = data.rating || "";
+    tr.appendChild(tdRating);
+
+    const tdActions = document.createElement("td");
+
+    // Кнопка "Эпизоды" – переход на страницу anime.html с параметром animeId
+    const btnEpisodes = document.createElement("button");
+    btnEpisodes.textContent = "Эпизоды";
+    btnEpisodes.style.marginRight = "0.5rem";
+    btnEpisodes.addEventListener("click", () => {
+      window.location.href = "anime.html?animeId=" + docId;
+    });
+    tdActions.appendChild(btnEpisodes);
+
+    // Кнопка "Удалить"
+    const btnDelete = document.createElement("button");
+    btnDelete.textContent = "Удалить";
+    btnDelete.addEventListener("click", async () => {
+      if (confirm("Удалить это аниме?")) {
+        try {
+          await deleteDoc(doc(db, "anime", docId));
+          alert("Аниме удалено!");
+          loadAnimeList();
+        } catch (error) {
+          console.error("Ошибка при удалении:", error);
+          alert("Ошибка при удалении!");
+        }
       }
     });
+    tdActions.appendChild(btnDelete);
 
-    // Первоначальная загрузка
-    loadAnimeList();
+    tr.appendChild(tdActions);
+    document.getElementById("anime-table-body").appendChild(tr);
+  }
+
+  // Обработчик формы для добавления нового аниме
+  document.getElementById("anime-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const title = document.getElementById("anime-title").value.trim();
+    const desc = document.getElementById("anime-desc").value.trim();
+    const cover = document.getElementById("anime-cover").value.trim();
+    const category = document.getElementById("anime-category").value;
+    const rating = document.getElementById("anime-rating").value;
+    const playerLink = document.getElementById("anime-player").value.trim();
+
+    if (!title) {
+      alert("Название аниме обязательно!");
+      return;
+    }
+
+    try {
+      await addDoc(animeCollection, { title, desc, cover, category, rating, playerLink });
+      alert("Аниме успешно добавлено!");
+      document.getElementById("anime-form").reset();
+      loadAnimeList();
+    } catch (error) {
+      console.error("Ошибка при добавлении:", error);
+      alert("Ошибка при добавлении аниме.");
+    }
   });
+
+  // Обработка навигации в sidebar
+  const navBtns = document.querySelectorAll(".nav-btn");
+  const sections = document.querySelectorAll(".section");
+  navBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      navBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      sections.forEach(sec => sec.classList.remove("active"));
+      const sectionId = btn.getAttribute("data-section") + "-section";
+      document.getElementById(sectionId).classList.add("active");
+    });
+  });
+
+  // Начальная загрузка
+  loadAnimeList();
 </script>
 </body>
 </html>
