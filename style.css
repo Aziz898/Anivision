@@ -1,36 +1,35 @@
-/* -------------------------
+/* ==============================
    RESET / BASE
--------------------------- */
+============================== */
+
+/* Устанавливаем на html, body высоту 100%, разрешаем вертикальную прокрутку */
 html, body {
-  /* Задаём высоту и разрешаем вертикальную прокрутку */
   height: 100%;
   margin: 0;
   padding: 0;
 
-  /* Разрешаем прокрутку по вертикали, отключаем по горизонтали */
+  /* Вертикальная прокрутка, плавная на iOS */
   overflow-x: hidden;
   overflow-y: auto;
-
-  /* iOS плавный скролл */
   -webkit-overflow-scrolling: touch;
 
-  /* Safe area insets для iPhone (чтобы контент не прятался за вырезами) */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-
-  /* Базовые цвета и шрифт */
+  /* Фон и шрифт */
   background: #141414;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
 
-  display: flex;        /* позволяем верхней панели, контенту и нижней панели располагаться в столбик */
+  display: flex;
   flex-direction: column;
   position: relative;
+
+  /* Safe area insets для iPhone (вырезы) */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* -------------------------
-   SPLASH SCREEN
--------------------------- */
+/* ==============================
+   SPLASH SCREEN (АНИМАЦИЯ)
+============================== */
 .splash-screen {
   position: fixed;
   inset: 0; /* top:0, right:0, bottom:0, left:0 */
@@ -39,11 +38,8 @@ html, body {
   justify-content: center;
   align-items: center;
   z-index: 9999;
-
-  /* Анимация появления */
   animation: fadeIn 0.5s ease forwards;
 }
-
 .splash-logo {
   text-align: center;
 }
@@ -51,10 +47,10 @@ html, body {
   font-size: 2rem;
   font-weight: 600;
   color: #a749f8;
-  /* Анимация переливания цвета, если нужно */
   animation: colorFlow 2s infinite alternate;
 }
 
+/* Анимации */
 @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
@@ -68,9 +64,9 @@ html, body {
   100% { color: #fff; }
 }
 
-/* -------------------------
+/* ==============================
    HEADER (ВЕРХНЯЯ ПАНЕЛЬ)
--------------------------- */
+============================== */
 .header {
   background-color: #000;
   padding: 1rem;
@@ -78,24 +74,20 @@ html, body {
   align-items: center;
   justify-content: space-between;
 }
-
 .app-title {
   font-size: 1.3rem;
   font-weight: 600;
   display: flex;
   align-items: center;
 }
-
-/* Логотип: Ani (белый), Vision (фиолетовый) */
 .logo-part1 {
   color: #fff; /* Ani */
 }
 .logo-part2 {
   color: #a749f8; /* Vision */
-  text-transform: capitalize; /* Делает V заглавной */
+  text-transform: capitalize; /* делает V заглавной, если в HTML «vision» */
   margin-left: 2px;
 }
-
 .menu-btn {
   font-size: 1.3rem;
   background: none;
@@ -103,147 +95,100 @@ html, body {
   color: #fff;
 }
 
-/* -------------------------
-   MAIN CONTENT
--------------------------- */
+/* ==============================
+   CONTENT (MAIN)
+============================== */
 .content {
-  /* Можно задать дополнительный нижний отступ,
-     чтобы контент не прятался за нижней панелью */
-  padding-bottom: 5rem; 
-  /* -webkit-overflow-scrolling: touch; <-- не нужно, если scroll на body */
-}
-
-/* Секция (например, "Рекомендации", "Рекомендуемое") */
-.section {
-  margin-bottom: 1.5rem;
-  padding: 0 1rem;
-}
-
-/* Заголовок секции */
-.section-title {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-/* -------------------------
-   CAROUSEL
--------------------------- */
-.carousel-section {
-  margin-bottom: 1.5rem;
-  padding: 0 1rem;
-}
-.carousel-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 0.8rem;
-  padding-bottom: 0.5rem;
-
-  scrollbar-width: none; /* Firefox */
-}
-.carousel-container::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
-}
-
-.carousel-item {
-  min-width: 140px;
-  flex-shrink: 0;
-  background: #1f1f1f;
-  border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-}
-.carousel-item img {
-  width: 140px;
-  height: 200px;
-  object-fit: cover;
-  display: block;
-}
-.carousel-title {
-  font-size: 0.9rem;
-  padding: 0.3rem;
-}
-
-/* -------------------------
-   ANIME LIST (РЕКОМЕНДУЕМОЕ)
--------------------------- */
-.anime-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.anime-card {
-  background: #1f1f1f;
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  gap: 0.8rem;
-}
-.anime-card img {
-  width: 120px;
-  height: 160px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-.anime-info {
-  padding: 0.5rem 0.5rem;
+  /* отступ снизу под нижнюю навигацию */
+  padding-bottom: 5rem;
   flex: 1;
 }
-.anime-title {
+
+/* ==============================
+   КАРУСЕЛИ (16:9)
+============================== */
+.carousel-section {
+  margin-bottom: 1.5rem;
+}
+/* Заголовок секции (Рекомендации, Рекомендуемое, По жанрам) */
+.section-title {
   font-size: 1rem;
-  margin-bottom: 0.3rem;
+  margin: 0.5rem 1rem;
   font-weight: 600;
 }
-.anime-desc {
+/* Контейнер для широких слайдов */
+.wide-carousel-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 0 1rem 1rem;
+  scrollbar-width: none; /* Firefox */
+}
+.wide-carousel-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+/* Каждый слайд (16:9) */
+.wide-carousel-slide {
+  position: relative;
+  min-width: 90vw;  /* почти вся ширина экрана */
+  height: calc(90vw * 9/16); /* соотношение 16:9 */
+  background-color: #1f1f1f;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+/* Полупрозрачный оверлей */
+.wide-carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+/* Постер 9:16 внутри слайда */
+.poster-vertical {
+  width: 100px;
+  height: calc(100px * 16/9); /* 9:16 */
+  object-fit: cover;
+  border-radius: 4px;
+}
+/* Информация о слайде (название, описание, кнопка) */
+.slide-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-width: 50%;
+}
+.slide-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+.slide-desc {
   font-size: 0.85rem;
   color: #ccc;
-  margin-bottom: 0.5rem;
 }
-.btn-watch {
-  font-size: 0.85rem;
-}
-
-/* -------------------------
-   GENRE LIST
--------------------------- */
-.genre-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.genre-btn {
-  background: #2c2c2e;
+.btn-watch-wide {
+  background: #a749f8;
+  color: #fff;
   border: none;
-  color: #fff;
-  padding: 0.5rem 0.8rem;
   border-radius: 20px;
+  padding: 0.5rem 1rem;
   font-size: 0.85rem;
-  transition: background 0.3s;
-}
-.genre-btn:hover {
-  background: #a749f8;
-}
-
-/* -------------------------
-   BUTTONS (общий стиль)
--------------------------- */
-.btn {
-  display: inline-block;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  background: #a749f8;
-  color: #fff;
-  text-decoration: none;
   transition: background 0.3s, transform 0.3s;
 }
-.btn:hover {
+.btn-watch-wide:hover {
   background: #933ae0;
   transform: scale(1.05);
 }
 
-/* -------------------------
+/* ==============================
    BOTTOM NAVIGATION
--------------------------- */
+============================== */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0;
@@ -259,7 +204,6 @@ html, body {
   /* safe area inset снизу */
   padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
 }
-
 .nav-link {
   display: flex;
   flex-direction: column;
@@ -267,7 +211,6 @@ html, body {
   color: #fff;
   font-size: 1.2rem;
   text-decoration: none;
-  padding: 0.3rem;
   transition: color 0.3s;
 }
 .nav-label {
@@ -279,15 +222,36 @@ html, body {
   color: #a749f8;
 }
 
-/* -------------------------
+/* ==============================
+   ANIMATIONS
+============================== */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes colorFlow {
+  0% { color: #a749f8; }
+  100% { color: #fff; }
+}
+
+/* (Дублирование некоторых анимаций, если нужно, 
+   либо удалите их, если уже описаны выше) */
+
+/* ==============================
    MEDIA QUERIES
--------------------------- */
+============================== */
 @media (min-width: 768px) {
-  .anime-card img {
-    width: 140px;
-    height: 200px;
+  /* При более широком экране можно увеличить слайды */
+  .wide-carousel-slide {
+    min-width: 500px;
+    height: calc(500px * 9/16);
   }
-  .carousel-item {
-    min-width: 160px;
+  .poster-vertical {
+    width: 120px;
+    height: calc(120px * 16/9);
   }
 }
