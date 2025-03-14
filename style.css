@@ -16,13 +16,13 @@
 /* ОСНОВА */
 body {
   font-family: 'Montserrat', sans-serif;
-  background: var(--bg-color);
-  color: var(--text-color);
+  background: #141414;
+  color: #fff;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  /* overflow: hidden; <-- УДАЛЕНО */
   position: relative;
-  overflow: hidden;
 }
 
 /* SPLASH SCREEN */
@@ -248,15 +248,18 @@ body {
   }
 }
 
+/* ЛОГО AniVision: Ani (white), Vision (фиолетовый, c заглавной V) */
 .logo-part1 {
   color: #fff; /* Ani белым */
 }
 .logo-part2 {
-  color: var(--accent-color); /* Vision фиолетовым */
-  font-size: 1.3rem;
-  text-transform: capitalize; /* "Vision" с заглавной V */
+  color: #a749f8; /* Vision фиолетовым */
+  text-transform: capitalize; /* делает V заглавной */
+  margin-left: 2px;
+  /* при желании можно добавить font-size: 1.2rem; */
 }
 
+/* И т.д. (остальные стили из предыдущего кода) */
 /* ... остальное из предыдущего кода ... */
 
 /* Нижняя панель - изменены названия вкладок и иконки */
