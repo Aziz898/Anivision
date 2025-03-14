@@ -2,60 +2,156 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Anivision — Netflix-Style Anime Streaming</title>
+  <title>Anivision — Netflix-Style MiniApp</title>
+  <!-- Мобильная адаптация -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="telegram-web-app-title" content="Anivision">
-  <meta property="og:image" content="https://example.com/preview.jpg">
-  
-  <!-- Стили -->
+  <!-- Подключаем стили -->
   <link rel="stylesheet" href="style.css">
-  
-  <!-- Иконки -->
+  <!-- Font Awesome для иконок -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-  
-  <!-- Шрифты -->
+  <!-- Шрифт Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
-  <!-- Splash Screen -->
+  <!-- SPLASH SCREEN -->
   <div class="splash-screen" id="splash-screen">
     <div class="splash-logo">
       <span class="splash-text">Anivision</span>
     </div>
   </div>
 
-  <!-- Основной контент -->
-  <div class="app-container">
-    <!-- Шапка -->
-    <header class="header">
-      <h1 class="app-title">
-        <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
-      </h1>
-      <button class="menu-btn" aria-label="Открыть меню">
-        <i class="fas fa-ellipsis-v"></i>
-      </button>
-    </header>
+  <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+  <header class="header">
+    <h1 class="app-title">
+      <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
+    </h1>
+    <button class="menu-btn">
+      <i class="fas fa-ellipsis-v"></i>
+    </button>
+  </header>
 
-    <!-- Основной контент -->
-    <main class="content" id="main-content">
-      <!-- Секции будут загружены динамически -->
-    </main>
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <main class="content">
+    <!-- Секция 1: Рекомендации -->
+    <section class="carousel-section">
+      <h2 class="section-title">Рекомендации</h2>
+      <div class="wide-carousel-container">
+        <!-- Слайд 1 -->
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=200" alt="Магическая битва Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Магическая битва</h3>
+              <p class="slide-desc">Новая экшен-комедия с элементами фэнтези...</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
+          </div>
+        </div>
+        <!-- Слайд 2 -->
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063436/pexels-photo-5063436.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063436/pexels-photo-5063436.jpeg?w=200" alt="One Piece Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">One Piece</h3>
+              <p class="slide-desc">Пираты, приключения и море!</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
+          </div>
+        </div>
+        <!-- Слайд 3 -->
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=200" alt="Атака Титанов Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Атака Титанов</h3>
+              <p class="slide-desc">Человечество на грани вымирания.</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <!-- Нижняя навигация -->
-    <nav class="bottom-nav">
-      <!-- Навигационные ссылки -->
-    </nav>
-  </div>
+    <!-- Секция 2: Рекомендуемое -->
+    <section class="carousel-section">
+      <h2 class="section-title">Рекомендуемое</h2>
+      <div class="wide-carousel-container">
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=200" alt="Демон Казановы Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Демон Казановы</h3>
+              <p class="slide-desc">Новая экшен-комедия...</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
+          </div>
+        </div>
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063572/pexels-photo-5063572.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063572/pexels-photo-5063572.jpeg?w=200" alt="Летописи Тьмы Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Летописи Тьмы</h3>
+              <p class="slide-desc">Сражения с монстрами...</p>
+              <button class="btn-watch-wide">Смотреть</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Видео плеер -->
-  <div class="video-player" id="video-player" hidden>
-    <button class="close-player" aria-label="Закрыть плеер">×</button>
-    <iframe class="video-iframe" allowfullscreen></iframe>
-  </div>
+    <!-- Секция 3: По жанрам -->
+    <section class="carousel-section">
+      <h2 class="section-title">По жанрам</h2>
+      <div class="wide-carousel-container">
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=200" alt="Экшен Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Экшен</h3>
+              <p class="slide-desc">Захватывающие битвы и сражения!</p>
+              <button class="btn-watch-wide">Открыть</button>
+            </div>
+          </div>
+        </div>
+        <div class="wide-carousel-slide" style="background-image: url('https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=1000');">
+          <div class="wide-carousel-overlay">
+            <img class="poster-vertical" src="https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=200" alt="Романтика Poster">
+            <div class="slide-info">
+              <h3 class="slide-title">Романтика</h3>
+              <p class="slide-desc">Истории любви и драмы.</p>
+              <button class="btn-watch-wide">Открыть</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- Скрипты -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </main>
+
+  <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+  <nav class="bottom-nav">
+    <a href="#" class="nav-link active">
+      <i class="fas fa-home"></i>
+      <span class="nav-label">Главная</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-book"></i>
+      <span class="nav-label">Манга</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-film"></i>
+      <span class="nav-label">Аниме</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-bookmark"></i>
+      <span class="nav-label">Моё</span>
+    </a>
+    <a href="#" class="nav-link">
+      <i class="fas fa-user"></i>
+      <span class="nav-label">Профиль</span>
+    </a>
+  </nav>
+
   <script src="script.js"></script>
 </body>
 </html>
