@@ -2,13 +2,16 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>AniVision MiniApp</title>
+  <title>AniVision</title>
   <!-- Мобильная адаптация -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <!-- Подключаем style.css -->
   <link rel="stylesheet" href="style.css">
-  <!-- Font Awesome (иконки) -->
+
+  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
+
   <!-- Шрифт Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -32,15 +35,15 @@
 
   <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main class="content">
-    <!-- HERO-КАРУСЕЛЬ -->
+    <!-- HERO-КАРУСЕЛЬ (горизонтальная) -->
     <section class="hero-carousel">
       <!-- Слайд 1 -->
       <div class="hero-slide">
         <img class="hero-poster" src="https://images.pexels.com/photos/12954821/pexels-photo-12954821.jpeg?w=600" alt="Anime Poster 1">
         <div class="hero-info">
           <h2 class="hero-title">Название аниме #1</h2>
-          <p class="hero-desc">Описание аниме, интересные детали, жанры и т.д.</p>
-          <button class="btn btn-hero">Смотреть</button>
+          <p class="hero-desc">Короткое описание аниме. Жанры, детали...</p>
+          <button class="btn-hero">Смотреть</button>
         </div>
       </div>
       <!-- Слайд 2 -->
@@ -48,8 +51,8 @@
         <img class="hero-poster" src="https://images.pexels.com/photos/11533651/pexels-photo-11533651.jpeg?w=600" alt="Anime Poster 2">
         <div class="hero-info">
           <h2 class="hero-title">Название аниме #2</h2>
-          <p class="hero-desc">Короткое описание второго аниме, жанр и т.д.</p>
-          <button class="btn btn-hero">Смотреть</button>
+          <p class="hero-desc">Ещё одно аниме, описание и прочее.</p>
+          <button class="btn-hero">Смотреть</button>
         </div>
       </div>
       <!-- Слайд 3 -->
@@ -57,8 +60,8 @@
         <img class="hero-poster" src="https://images.pexels.com/photos/6476872/pexels-photo-6476872.jpeg?w=600" alt="Anime Poster 3">
         <div class="hero-info">
           <h2 class="hero-title">Название аниме #3</h2>
-          <p class="hero-desc">Описание третьего аниме, экшен, фэнтези и т.д.</p>
-          <button class="btn btn-hero">Смотреть</button>
+          <p class="hero-desc">Дополнительное описание третьего аниме.</p>
+          <button class="btn-hero">Смотреть</button>
         </div>
       </div>
     </section>
@@ -70,11 +73,24 @@
         <button class="btn-more">Ещё</button>
       </div>
       <div class="row-container">
-        <!-- Пример постеров 9:16 -->
         <img class="row-poster" src="https://images.pexels.com/photos/5809377/pexels-photo-5809377.jpeg?w=300" alt="Смотреть 1">
         <img class="row-poster" src="https://images.pexels.com/photos/5809375/pexels-photo-5809375.jpeg?w=300" alt="Смотреть 2">
         <img class="row-poster" src="https://images.pexels.com/photos/5809374/pexels-photo-5809374.jpeg?w=300" alt="Смотреть 3">
         <img class="row-poster" src="https://images.pexels.com/photos/5809376/pexels-photo-5809376.jpeg?w=300" alt="Смотреть 4">
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ «Популярное» -->
+    <section class="section-row">
+      <div class="section-header">
+        <h3 class="section-title">Популярное</h3>
+        <button class="btn-more">Ещё</button>
+      </div>
+      <div class="row-container">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809415/pexels-photo-5809415.jpeg?w=300" alt="Популярное 1">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="Популярное 2">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="Популярное 3">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Популярное 4">
       </div>
     </section>
 
@@ -85,19 +101,17 @@
         <button class="btn-more">Ещё</button>
       </div>
       <div class="row-container">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809415/pexels-photo-5809415.jpeg?w=300" alt="Жанр 1">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="Жанр 1">
         <img class="row-poster" src="https://images.pexels.com/photos/5809380/pexels-photo-5809380.jpeg?w=300" alt="Жанр 2">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809378/pexels-photo-5809378.jpeg?w=300" alt="Жанр 3">
-        <img class="row-poster" src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Жанр 4">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809381/pexels-photo-5809381.jpeg?w=300" alt="Жанр 3">
+        <img class="row-poster" src="https://images.pexels.com/photos/5809415/pexels-photo-5809415.jpeg?w=300" alt="Жанр 4">
       </div>
     </section>
 
-    <!-- Пример дополнительных подборок (дублируем) -->
-    <!-- ... -->
-
+    <!-- (Можно добавить еще 8 подборок, как хотите) -->
   </main>
 
-  <!-- НИЖНЯЯ ПАНЕЛЬ (размытие, полупрозрачность) -->
+  <!-- НИЖНЯЯ ПАНЕЛЬ -->
   <nav class="bottom-nav">
     <a href="#" class="nav-link active">
       <i class="fas fa-home"></i>
