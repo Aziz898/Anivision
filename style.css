@@ -247,3 +247,45 @@ body {
     min-width: 160px;
   }
 }
+
+.logo-part1 {
+  color: #fff; /* Ani белым */
+}
+.logo-part2 {
+  color: var(--accent-color); /* Vision фиолетовым */
+  font-size: 1.3rem;
+  text-transform: capitalize; /* "Vision" с заглавной V */
+}
+
+/* ... остальное из предыдущего кода ... */
+
+/* Нижняя панель - изменены названия вкладок и иконки */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+  background: #000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 0;
+  z-index: 999;
+}
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  font-size: 1.2rem; /* размер иконки */
+  text-decoration: none;
+  padding: 0.3rem;
+  transition: color 0.3s;
+}
+.nav-label {
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
+}
+.nav-link.active,
+.nav-link:hover {
+  color: var(--accent-color);
+}
