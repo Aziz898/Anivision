@@ -2,83 +2,95 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Anivision MiniApp</title>
-  <!-- Мобильчная адаптация -->
+  <title>AniVision MiniApp</title>
+  <!-- Мобильная адаптация -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <!-- Подключаем стили -->
   <link rel="stylesheet" href="style.css">
-  <!-- Подключаем шрифт Montserrat -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <!-- Font Awesome для иконок (если нужно в навигации) -->
+
+  <!-- Font Awesome для иконок -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
+
+  <!-- Шрифт Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- SPLASH SCREEN (заставка при запуске) -->
+  <!-- SPLASH SCREEN -->
   <div class="splash-screen" id="splash-screen">
     <div class="splash-logo">
-      <span class="splash-text">Anivision</span>
+      <span class="splash-text">AniVision</span>
     </div>
   </div>
 
   <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
   <header class="header">
-    <h1 class="app-title">Anivision</h1>
-    <!-- Кнопка меню, если потребуется (пока заглушка) -->
-    <button class="menu-btn">☰</button>
+    <h1 class="app-title">AniVision</h1>
+    <button class="menu-btn">
+      <i class="fas fa-ellipsis-v"></i>
+    </button>
   </header>
 
   <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main class="content">
+    <!-- БОЛЬШОЙ ПОСТЕР (как в референсе) -->
+    <section class="hero-section">
+      <div class="hero-poster">
+        <img src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=700" alt="Главный постер">
+        <div class="hero-overlay">
+          <h2 class="hero-title">Последние хиты</h2>
+          <p class="hero-desc">Смотрите самые новые аниме и сериалы!</p>
+          <button class="btn-hero">Смотреть</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Горизонтальная карусель 1 -->
     <section class="section">
-      <h2 class="section-title">Рекомендуем вам</h2>
-      <div class="anime-list">
-        <!-- Карточка 1 -->
-        <div class="anime-card">
-          <img src="https://images.unsplash.com/photo-1611080627592-d7b8f4cddab7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Магическая битва (Постер)">
-          <div class="anime-info">
-            <h3 class="anime-title">Магическая битва (2 сезон)</h3>
-            <p class="anime-desc">Эпическое аниме о чародеях и проклятиях.</p>
-            <a href="player.html" class="btn btn-watch">Смотреть сейчас</a>
-          </div>
-        </div>
-        <!-- Карточка 2 -->
-        <div class="anime-card">
-          <img src="https://images.unsplash.com/photo-1637731629106-151d73c513a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="One Piece (Постер)">
-          <div class="anime-info">
-            <h3 class="anime-title">One Piece</h3>
-            <p class="anime-desc">Пираты, приключения и бесконечное море.</p>
-            <a href="player.html" class="btn btn-watch">Смотреть сейчас</a>
-          </div>
-        </div>
-        <!-- Карточка 3 -->
-        <div class="anime-card">
-          <img src="https://images.unsplash.com/photo-1625303472022-4f14c5d2930b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Атака Титанов (Постер)">
-          <div class="anime-info">
-            <h3 class="anime-title">Атака Титанов</h3>
-            <p class="anime-desc">Борьба человечества с гигантами.</p>
-            <a href="player.html" class="btn btn-watch">Смотреть сейчас</a>
-          </div>
-        </div>
+      <h3 class="section-title">Новинки</h3>
+      <div class="row-container">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435662/pexels-photo-8435662.jpeg?w=300" alt="Anime Poster 1">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435661/pexels-photo-8435661.jpeg?w=300" alt="Anime Poster 2">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435663/pexels-photo-8435663.jpeg?w=300" alt="Anime Poster 3">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435664/pexels-photo-8435664.jpeg?w=300" alt="Anime Poster 4">
+        <img class="row-poster" src="https://images.pexels.com/photos/8435665/pexels-photo-8435665.jpeg?w=300" alt="Anime Poster 5">
+      </div>
+    </section>
+
+    <!-- Горизонтальная карусель 2 -->
+    <section class="section">
+      <h3 class="section-title">Популярное</h3>
+      <div class="row-container">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063436/pexels-photo-5063436.jpeg?w=300" alt="One Piece Poster">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063457/pexels-photo-5063457.jpeg?w=300" alt="Attack on Titan Poster">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063581/pexels-photo-5063581.jpeg?w=300" alt="Demon Poster">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063572/pexels-photo-5063572.jpeg?w=300" alt="Dark Chronicles Poster">
+        <img class="row-poster" src="https://images.pexels.com/photos/5063986/pexels-photo-5063986.jpeg?w=300" alt="Another Poster">
       </div>
     </section>
   </main>
 
   <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
   <nav class="bottom-nav">
-    <a href="index.html" class="nav-link active">
+    <a href="#" class="nav-link active">
       <i class="fas fa-home"></i>
       <span class="nav-label">Главная</span>
     </a>
-    <a href="search.html" class="nav-link">
+    <a href="#" class="nav-link">
       <i class="fas fa-search"></i>
       <span class="nav-label">Поиск</span>
     </a>
-    <a href="profile.html" class="nav-link">
+    <a href="#" class="nav-link">
+      <i class="fas fa-bookmark"></i>
+      <span class="nav-label">Моё</span>
+    </a>
+    <a href="#" class="nav-link">
       <i class="fas fa-user"></i>
       <span class="nav-label">Профиль</span>
     </a>
   </nav>
 
+  <!-- Скрипт -->
   <script src="script.js"></script>
 </body>
 </html>
