@@ -1,40 +1,121 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Админ-панель AniVision</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Подключаем шрифт Montserrat -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-      /* Базовые стили для админки */
-      body {
-        margin: 0;
-        font-family: 'Montserrat', sans-serif;
-        background: #141414;
-        color: #fff;
-      }
-      .header {
-        padding: 1rem;
-        background: #000;
-        text-align: center;
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #a749f8;
-      }
-      /* Контейнер для CMS, чтобы отступ был комфортным */
-      .cms-container {
-        margin: 1rem;
-      }
-      /* Дополнительные стили можно добавить по желанию */
-    </style>
-  </head>
-  <body>
-    <!-- Заголовок админ-панели -->
-    <div class="header">Админ-панель AniVision</div>
-    <!-- Контейнер для Netlify CMS -->
-    <div class="cms-container">
-      <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
-    </div>
-  </body>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AniVision Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Подключаем стили -->
+  <link rel="stylesheet" href="admin.css">
+  <!-- Иконки FontAwesome (для кнопок) -->
+  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="admin-container">
+  <!-- Левое меню (Sidebar) -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">AniVision</div>
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" data-section="anime">
+        <i class="fas fa-film"></i> Аниме
+      </button>
+      <button class="nav-btn" data-section="recommendations">
+        <i class="fas fa-star"></i> Рекомендации
+      </button>
+      <button class="nav-btn" data-section="trending">
+        <i class="fas fa-fire"></i> Trending
+      </button>
+      <button class="nav-btn" data-section="upcoming">
+        <i class="fas fa-hourglass-start"></i> Upcoming
+      </button>
+      <!-- Можно добавить больше пунктов -->
+    </nav>
+  </aside>
+
+  <!-- Основная часть -->
+  <main class="main-content">
+    <header class="admin-header">
+      <h1>Админ-панель AniVision</h1>
+      <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+    </header>
+
+    <!-- СЕКЦИЯ: Аниме -->
+    <section class="section active" id="anime-section">
+      <h2>Управление аниме</h2>
+      <!-- Форма добавления/редактирования -->
+      <form class="anime-form" id="anime-form">
+        <div class="form-row">
+          <label>Название аниме</label>
+          <input type="text" id="anime-title" placeholder="Например, Jujutsu Kaisen" required>
+        </div>
+        <div class="form-row">
+          <label>Описание</label>
+          <textarea id="anime-desc" rows="3" placeholder="Краткое описание аниме"></textarea>
+        </div>
+        <div class="form-row">
+          <label>URL обложки</label>
+          <input type="url" id="anime-cover" placeholder="https://example.com/poster.jpg">
+        </div>
+        <div class="form-row">
+          <label>Категория</label>
+          <select id="anime-category">
+            <option value="TV">TV</option>
+            <option value="Manga">Manga</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Рейтинг</label>
+          <input type="number" step="0.1" min="0" max="10" id="anime-rating" placeholder="8.5">
+        </div>
+        <div class="form-row">
+          <label>Ссылка на плеер</label>
+          <input type="url" id="anime-player" placeholder="https://player.site/watch?id=...">
+        </div>
+        <button type="submit" class="btn-save">Сохранить</button>
+      </form>
+
+      <!-- Список аниме -->
+      <div class="anime-list" id="anime-list">
+        <h3>Список аниме</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Название</th>
+              <th>Категория</th>
+              <th>Рейтинг</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="anime-table-body">
+            <!-- Сюда добавляются строки через JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- СЕКЦИЯ: Рекомендации -->
+    <section class="section" id="recommendations-section">
+      <h2>Управление рекомендациями</h2>
+      <!-- Аналогичная форма + список -->
+      <p>Здесь можно добавить форму и список для рекомендаций.</p>
+    </section>
+
+    <!-- СЕКЦИЯ: Trending -->
+    <section class="section" id="trending-section">
+      <h2>Управление Trending</h2>
+      <p>Аналогичная логика. Список тайтлов, которые отображаются в Trending.</p>
+    </section>
+
+    <!-- СЕКЦИЯ: Upcoming -->
+    <section class="section" id="upcoming-section">
+      <h2>Управление Upcoming</h2>
+      <p>Аналогичная логика. Список аниме, которые скоро выйдут.</p>
+    </section>
+
+  </main>
+</div>
+
+<!-- Скрипт -->
+<script src="admin.js"></script>
+</body>
 </html>
