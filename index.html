@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>AniVision MiniApp</title>
+  <!-- Мобильная адаптация и Safe Area для iOS -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome для иконок -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
+  <!-- Шрифт Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* Сохранённый дизайн оригинальной страницы, с splash screen, header, hero-карусель, секциями, нижней панелью */
+    /* Safe Area */
     html, body {
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
     }
+    /* Общие стили */
     body {
       margin: 0;
       background: #141414;
@@ -49,6 +53,7 @@
       border: none;
       color: #fff;
       font-size: 1.3rem;
+      cursor: pointer;
     }
     .app-title {
       font-size: 1.3rem;
@@ -59,7 +64,7 @@
     .logo-part2 { color: #a749f8; margin-left: 4px; }
     /* Main Content */
     .content {
-      padding-bottom: 5rem;
+      padding-bottom: 5rem; /* пространство для нижней панели */
     }
     /* Hero Carousel */
     .hero-carousel {
@@ -76,7 +81,9 @@
       height: 100%;
       transition: left 0.8s ease;
     }
-    .hero-slide.active { left: 0; }
+    .hero-slide.active {
+      left: 0;
+    }
     .hero-slide-bg {
       width: 100%;
       height: 100%;
@@ -100,7 +107,9 @@
       text-decoration: none;
       transition: background 0.3s;
     }
-    .hero-overlay a:hover { background: #933ae0; }
+    .hero-overlay a:hover {
+      background: #933ae0;
+    }
     /* Секции с горизонтальными каруселями */
     .section-row {
       margin-bottom: 1rem;
@@ -111,7 +120,10 @@
       align-items: center;
       margin: 0 1rem 0.5rem;
     }
-    .section-title { font-size: 1rem; font-weight: 600; }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
     .btn-more {
       background: none;
       border: none;
@@ -119,8 +131,11 @@
       font-size: 0.85rem;
       text-transform: uppercase;
       cursor: pointer;
+      transition: color 0.3s;
     }
-    .btn-more:hover { color: #fff; }
+    .btn-more:hover {
+      color: #fff;
+    }
     .row-container {
       display: flex;
       overflow-x: auto;
@@ -128,7 +143,9 @@
       padding: 0 1rem 1rem;
       scrollbar-width: none;
     }
-    .row-container::-webkit-scrollbar { display: none; }
+    .row-container::-webkit-scrollbar {
+      display: none;
+    }
     .row-item {
       flex-shrink: 0;
       width: 140px;
@@ -138,13 +155,15 @@
       background: #333;
       transition: transform 0.3s;
     }
-    .row-item:hover { transform: scale(1.08); }
+    .row-item:hover {
+      transform: scale(1.08);
+    }
     .row-poster {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    /* Bottom Nav */
+    /* Bottom Navigation */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -168,8 +187,13 @@
       text-decoration: none;
       transition: color 0.3s;
     }
-    .nav-label { font-size: 0.7rem; margin-top: 0.2rem; }
-    .nav-link.active, .nav-link:hover { color: #a749f8; }
+    .nav-label {
+      font-size: 0.7rem;
+      margin-top: 0.2rem;
+    }
+    .nav-link.active, .nav-link:hover {
+      color: #a749f8;
+    }
   </style>
 </head>
 <body>
@@ -189,7 +213,7 @@
   <main class="content">
     <!-- HERO-КАРУСЕЛЬ -->
     <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайды будут подгружаться динамически -->
+      <!-- Слайды будут загружаться динамически из коллекции "carouselBanners" -->
     </section>
 
     <!-- Секция: Trending -->
@@ -202,11 +226,10 @@
         <!-- Карточки Trending подгружаются динамически -->
       </div>
     </section>
-
-    <!-- Можно добавить другие секции аналогично -->
+    <!-- Дополнительные секции можно добавить аналогично -->
   </main>
 
-  <!-- Нижняя панель -->
+  <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar) -->
   <nav class="bottom-nav">
     <a href="#" class="nav-link active">
       <i class="fas fa-home"></i>
@@ -230,7 +253,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
     import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-    // Конфигурация Firebase (та же, что и в админке)
+    // Конфигурация Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
@@ -244,7 +267,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Функция для fadeOut splash screen
+    // Функция для плавного скрытия Splash Screen
     window.addEventListener("load", () => {
       setTimeout(() => {
         const splash = document.getElementById("splash-screen");
@@ -308,7 +331,7 @@
       }, 5000);
     }
 
-    // Загрузка секции Trending
+    // Функция для загрузки аниме для секции Trending
     async function loadSection(sectionName, containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -336,6 +359,7 @@
     // Загружаем контент
     loadCarousel();
     loadSection("trending", "trending-container");
+    // Другие секции можно загрузить аналогично, если они настроены
   </script>
 </body>
 </html>
