@@ -1,226 +1,141 @@
-// Firebase configuration and initialization
-  var firebaseConfig = {
-    apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
-    authDomain: "anivision-194f5.firebaseapp.com",
-    projectId: "anivision-194f5",
-    storageBucket: "anivision-194f5.appspot.com",
-    messagingSenderId: "793506779659",
-    appId: "1:793506779659:web:b391b63343af935afbed0e",
-    measurementId: "G-JGNDHJT219"
-  };
-// Initialize Firebase
+// Firebase v8 SDK (для простоты, используем старую нотацию)
+var firebaseConfig = {
+  apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
+  authDomain: "anivision-194f5.firebaseapp.com",
+  projectId: "anivision-194f5",
+  storageBucket: "anivision-194f5.appspot.com",
+  messagingSenderId: "793506779659",
+  appId: "1:793506779659:web:b391b63343af935afbed0e",
+  measurementId: "G-JGNDHJT219"
+};
+// Инициализация Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 var storage = firebase.storage();
 
-// DOM elements for sections
-var carouselContainer = document.getElementById('carousel');
-var trendingList = document.getElementById('trending-list');
-var continueList = document.getElementById('continue-list');
-var recommendList = document.getElementById('recommend-list');
-// Admin form elements
-var addAnimeForm = document.getElementById('addAnimeForm');
-var addCarouselForm = document.getElementById('addCarouselForm');
-
-// Load Carousel items from Firebase and set up auto-slide
-var slideInterval;
-function loadCarousel() {
-  db.collection('carousel').onSnapshot(function(snapshot) {
-    // Clear existing slides
-    carouselContainer.innerHTML = '';
-    var slides = [];
-    snapshot.forEach(function(doc) {
-      var data = doc.data();
-      // Create slide element
-      var slide = document.createElement('div');
-      slide.classList.add('slide');
-      // Set slide background image
-      if (data.image) {
-        slide.style.backgroundImage = 'url("' + data.image + '")';
-      }
-      // Create slide content overlay (title and watch button)
-      var content = document.createElement('div');
-      content.classList.add('slide-content');
-      var title = document.createElement('h2');
-      title.textContent = data.title || '';
-      content.appendChild(title);
-      var watchBtn = document.createElement('a');
-      watchBtn.href = '#';
-      watchBtn.textContent = 'Смотреть';
-      watchBtn.classList.add('watch-btn');
-      content.appendChild(watchBtn);
-      slide.appendChild(content);
-      carouselContainer.appendChild(slide);
-      slides.push(slide);
-    });
-    // Activate the first slide
-    if (slides.length > 0) {
-      slides[0].classList.add('active');
-    }
-    // Reset and restart carousel interval
-    if (slideInterval) {
-      clearInterval(slideInterval);
-    }
-    var currentIndex = 0;
-    slideInterval = setInterval(function() {
-      if (slides.length > 0) {
-        // Cycle to the next slide
-        slides[currentIndex].classList.remove('active');
-        currentIndex = (currentIndex + 1) % slides.length;
-        slides[currentIndex].classList.add('active');
-      }
-    }, 5000);
-  });
-}
-
-// Load Trending section from Firebase
-function loadTrending() {
-  db.collection('trending').onSnapshot(function(snapshot) {
-    trendingList.innerHTML = '';
-    snapshot.forEach(function(doc) {
-      var data = doc.data();
-      // Create card
-      var card = document.createElement('div');
-      card.classList.add('card');
-      // Cover image
-      var img = document.createElement('img');
-      img.src = data.image || '';
-      img.alt = data.title || 'Anime Cover';
-      card.appendChild(img);
-      // Title text
-      var title = document.createElement('div');
-      title.classList.add('card-title');
-      title.textContent = data.title || '';
-      card.appendChild(title);
-      trendingList.appendChild(card);
-    });
-  });
-}
-
-// Load Continue Watching section from Firebase
-function loadContinue() {
-  db.collection('continue').onSnapshot(function(snapshot) {
-    continueList.innerHTML = '';
-    snapshot.forEach(function(doc) {
-      var data = doc.data();
-      var card = document.createElement('div');
-      card.classList.add('card', 'progress-card');
-      // Cover image
-      var img = document.createElement('img');
-      img.src = data.image || '';
-      img.alt = data.title || 'Anime Cover';
-      card.appendChild(img);
-      // Title text
-      var title = document.createElement('div');
-      title.classList.add('card-title');
-      title.textContent = data.title || '';
-      card.appendChild(title);
-      // Progress bar if progress data exists
-      if (data.progress !== undefined) {
-        var progressBar = document.createElement('div');
-        progressBar.classList.add('progress-bar');
-        var progressSpan = document.createElement('span');
-        progressSpan.style.width = data.progress + '%';
-        progressBar.appendChild(progressSpan);
-        card.appendChild(progressBar);
-      }
-      continueList.appendChild(card);
-    });
-  });
-}
-
-// Load Recommendations section from Firebase
-function loadRecommendations() {
-  db.collection('recommendations').onSnapshot(function(snapshot) {
-    recommendList.innerHTML = '';
-    snapshot.forEach(function(doc) {
-      var data = doc.data();
-      var card = document.createElement('div');
-      card.classList.add('card');
-      // Cover image
-      var img = document.createElement('img');
-      img.src = data.image || '';
-      img.alt = data.title || 'Anime Cover';
-      card.appendChild(img);
-      // Title text
-      var title = document.createElement('div');
-      title.classList.add('card-title');
-      title.textContent = data.title || '';
-      card.appendChild(title);
-      recommendList.appendChild(card);
-    });
-  });
-}
-
-// Initialize all content sections on page load
-window.addEventListener('DOMContentLoaded', function() {
-  loadCarousel();
-  loadTrending();
-  loadContinue();
-  loadRecommendations();
-  // If admin user is logged in, display the admin panel:
-  // document.getElementById('admin-panel').style.display = 'block';
+// Функция для fade-out splash screen
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var splash = document.getElementById('splash-screen');
+    splash.style.opacity = 0;
+    setTimeout(function() {
+      splash.style.display = 'none';
+    }, 700);
+  }, 2000);
 });
 
-// Admin Panel: Add new anime to Trending/Recommendations
-if (addAnimeForm) {
-  addAnimeForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var title = document.getElementById('animeTitle').value.trim();
-    var section = document.getElementById('animeSection').value;
-    var fileInput = document.getElementById('animeCover');
-    var file = fileInput.files[0];
-    if (!title || !file) {
-      alert('Пожалуйста, заполните название и выберите файл обложки.');
-      return;
-    }
-    // Upload cover image to Firebase Storage
-    var storageRef = storage.ref('covers/' + Date.now() + '_' + file.name);
-    storageRef.put(file).then(function(snapshot) {
-      return snapshot.ref.getDownloadURL();
-    }).then(function(downloadURL) {
-      // Add new anime document to Firestore
-      return db.collection(section).add({
-        title: title,
-        image: downloadURL
-      });
-    }).then(function() {
-      alert('Аниме добавлено в ' + (section === 'trending' ? 'Популярное' : 'Рекомендации'));
-      addAnimeForm.reset();
-    }).catch(function(error) {
-      console.error('Error adding document: ', error);
-      alert('Ошибка при добавлении: ' + error.message);
-    });
-  });
+// Языковой переключатель
+var translations = {
+  en: {
+    trendingTitle: "Trending",
+    navHome: "Home",
+    navAnime: "Anime",
+    navManga: "Manga",
+    navProfile: "Profile",
+    watchNow: "Watch Now"
+  },
+  ru: {
+    trendingTitle: "Популярное",
+    navHome: "Главная",
+    navAnime: "Аниме",
+    navManga: "Манга",
+    navProfile: "Профиль",
+    watchNow: "Смотреть"
+  }
+};
+var currentLang = "ru";
+function applyTranslations() {
+  document.querySelector('[data-i18n="trendingTitle"]').textContent = translations[currentLang].trendingTitle;
+  document.querySelector('[data-i18n="navHome"]').textContent = translations[currentLang].navHome;
+  document.querySelector('[data-i18n="navAnime"]').textContent = translations[currentLang].navAnime;
+  document.querySelector('[data-i18n="navManga"]').textContent = translations[currentLang].navManga;
+  document.querySelector('[data-i18n="navProfile"]').textContent = translations[currentLang].navProfile;
+  // Можно обновить и другие элементы, если они имеют data-i18n
 }
+document.getElementById("lang-btn").addEventListener("click", function() {
+  currentLang = (currentLang === "ru") ? "en" : "ru";
+  applyTranslations();
+  alert("Язык переключен на " + (currentLang === "ru" ? "Русский" : "English"));
+});
+applyTranslations();
 
-// Admin Panel: Add new carousel banner
-if (addCarouselForm) {
-  addCarouselForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var title = document.getElementById('bannerTitle').value.trim();
-    var fileInput = document.getElementById('bannerImage');
-    var file = fileInput.files[0];
-    if (!title || !file) {
-      alert('Пожалуйста, введите заголовок и выберите файл баннера.');
-      return;
-    }
-    // Upload banner image to Firebase Storage
-    var storageRef = storage.ref('banners/' + Date.now() + '_' + file.name);
-    storageRef.put(file).then(function(snapshot) {
-      return snapshot.ref.getDownloadURL();
-    }).then(function(downloadURL) {
-      // Add new banner document to Firestore
-      return db.collection('carousel').add({
-        title: title,
-        image: downloadURL
-      });
-    }).then(function() {
-      alert('Баннер добавлен в карусель');
-      addCarouselForm.reset();
-    }).catch(function(error) {
-      console.error('Error adding banner: ', error);
-      alert('Ошибка при добавлении баннера: ' + error.message);
+// Уведомления: модальное окно
+var notifModal = document.getElementById("notif-modal");
+var notifBtn = document.getElementById("notif-btn");
+var notifClose = document.getElementById("notif-close");
+notifBtn.addEventListener("click", function() {
+  notifModal.style.display = "block";
+});
+notifClose.addEventListener("click", function() {
+  notifModal.style.display = "none";
+});
+window.addEventListener("click", function(event) {
+  if (event.target == notifModal) {
+    notifModal.style.display = "none";
+  }
+});
+
+// HERO-карусель
+function loadCarousel() {
+  db.collection("carouselBanners").get().then(function(querySnapshot) {
+    var carousel = document.getElementById("hero-carousel");
+    carousel.innerHTML = "";
+    var slides = [];
+    querySnapshot.forEach(function(doc) {
+      var data = doc.data();
+      var slide = document.createElement("div");
+      slide.className = "slide fade-in";
+      slide.style.backgroundImage = "url('" + data.image + "')";
+      // Создаем overlay с кнопкой
+      var overlay = document.createElement("div");
+      overlay.className = "hero-overlay";
+      var btn = document.createElement("a");
+      btn.href = data.link || "#";
+      btn.textContent = translations[currentLang].watchNow;
+      overlay.appendChild(btn);
+      slide.appendChild(overlay);
+      carousel.appendChild(slide);
+      slides.push(slide);
     });
+    if (slides.length > 0) {
+      slides[0].classList.add("active", "visible");
+      var currentIndex = 0;
+      setInterval(function() {
+        slides[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add("active");
+      }, 5000);
+    }
+  }).catch(function(error) {
+    console.error("Ошибка при загрузке карусели:", error);
   });
 }
+loadCarousel();
+
+// Функция для загрузки аниме в секцию Trending
+function loadTrending() {
+  db.collection("anime").where("sections", "array-contains", "trending").get().then(function(querySnapshot) {
+    var container = document.getElementById("trending-container");
+    container.innerHTML = "";
+    querySnapshot.forEach(function(doc) {
+      var data = doc.data();
+      var card = document.createElement("a");
+      card.className = "anime-card";
+      card.href = "#"; // ссылка на подробную страницу аниме
+      var img = document.createElement("img");
+      img.src = data.cover || "https://via.placeholder.com/200x300?text=No+Image";
+      img.alt = data.title;
+      card.appendChild(img);
+      var title = document.createElement("div");
+      title.className = "anime-title";
+      title.textContent = data.title;
+      card.appendChild(title);
+      container.appendChild(card);
+    });
+  }).catch(function(error) {
+    console.error("Ошибка при загрузке Trending:", error);
+  });
+}
+loadTrending();
+
+// Можно добавить функции для других секций аналогично…
