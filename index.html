@@ -2,98 +2,62 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AniVision</title>
+  <title>AniVision – Главная</title>
+  <!-- Мобильная адаптация и safe-area -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <!-- Подключаем стили -->
   <link rel="stylesheet" href="style.css" />
-  <!-- Google Font (optional) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
-  <!-- Firebase SDKs -->
-  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <!-- Подключаем Font Awesome -->
+  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
+  <!-- Подключаем скрипт -->
   <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- Header / Navigation -->
-  <header>
-    <nav class="navbar">
-      <div class="logo">AniVision</div>
-      <ul class="nav-links">
-        <li class="active"><a href="#">Главная</a></li>
-        <li><a href="#">Аниме</a></li>
-        <li><a href="#">Мой список</a></li>
-      </ul>
-      <div class="user-icon">
-        <a href="#"><span>Профиль</span></a>
-      </div>
-    </nav>
+  <!-- Splash Screen (интро) -->
+  <div class="splash-screen" id="splash-screen">
+    <div class="splash-logo">AniVision</div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <button id="lang-btn" class="lang-btn"><i class="fas fa-flag"></i></button>
+    <div class="app-title"><span class="logo-part1">Ani</span><span class="logo-part2">Vision</span></div>
+    <button id="notif-btn" class="notif-btn"><i class="fas fa-bell"></i></button>
   </header>
 
-  <!-- Carousel Section -->
-  <section class="carousel-section">
-    <div class="carousel" id="carousel">
-      <!-- Slides will be injected by script.js -->
+  <!-- Основной контент -->
+  <main class="content">
+    <!-- Hero-карусель -->
+    <section class="hero-carousel" id="hero-carousel">
+      <!-- Слайды карусели будут подгружаться динамически -->
+    </section>
+
+    <!-- Секция Trending -->
+    <section class="content-section" id="trending-section">
+      <h2 class="section-title" data-i18n="trendingTitle">Trending</h2>
+      <div class="cards-container" id="trending-container">
+        <!-- Карточки для секции Trending будут подгружаться динамически -->
+      </div>
+    </section>
+
+    <!-- Дополнительные секции можно добавить аналогично -->
+  </main>
+
+  <!-- Нижняя панель (Tab Bar) -->
+  <nav class="bottom-nav">
+    <a href="#" class="nav-link active" data-i18n="navHome"><i class="fas fa-home"></i><span class="nav-label">Главная</span></a>
+    <a href="#" class="nav-link" data-i18n="navAnime"><i class="fas fa-film"></i><span class="nav-label">Аниме</span></a>
+    <a href="#" class="nav-link" data-i18n="navManga"><i class="fas fa-book"></i><span class="nav-label">Манга</span></a>
+    <a href="#" class="nav-link" data-i18n="navProfile"><i class="fas fa-user"></i><span class="nav-label">Профиль</span></a>
+  </nav>
+
+  <!-- Модальное окно уведомлений (заглушка) -->
+  <div id="notif-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="notif-close">&times;</span>
+      <h3>Уведомления</h3>
+      <p>Новых уведомлений нет.</p>
     </div>
-  </section>
-
-  <!-- Trending Section -->
-  <section class="content-section" id="trending-section">
-    <h2 class="section-title">Популярное</h2>
-    <div class="cards-container" id="trending-list">
-      <!-- Trending cards inserted by script.js -->
-    </div>
-  </section>
-
-  <!-- Continue Watching Section -->
-  <section class="content-section" id="continue-section">
-    <h2 class="section-title">Продолжить просмотр</h2>
-    <div class="cards-container" id="continue-list">
-      <!-- Continue watching cards inserted by script.js -->
-    </div>
-  </section>
-
-  <!-- Recommendations Section -->
-  <section class="content-section" id="recommend-section">
-    <h2 class="section-title">Рекомендации</h2>
-    <div class="cards-container" id="recommend-list">
-      <!-- Recommendation cards inserted by script.js -->
-    </div>
-  </section>
-
-  <!-- Admin Panel Section (hidden by default, visible only to admins) -->
-  <section id="admin-panel">
-    <h2>Админ панель</h2>
-    <!-- Form to add new anime (Trending or Recommendations) -->
-    <form id="addAnimeForm">
-      <h3>Добавить аниме</h3>
-      <label for="animeTitle">Название аниме:</label>
-      <input type="text" id="animeTitle" required />
-
-      <label for="animeSection">Раздел:</label>
-      <select id="animeSection">
-        <option value="trending">Популярное (Trending)</option>
-        <option value="recommendations">Рекомендации</option>
-      </select>
-
-      <label for="animeCover">Обложка (файл):</label>
-      <input type="file" id="animeCover" accept="image/*" required />
-
-      <button type="submit">Добавить</button>
-    </form>
-
-    <!-- Form to add new carousel banner -->
-    <form id="addCarouselForm">
-      <h3>Добавить баннер в карусель</h3>
-      <label for="bannerTitle">Заголовок/Название:</label>
-      <input type="text" id="bannerTitle" required />
-
-      <label for="bannerImage">Изображение баннера (файл):</label>
-      <input type="file" id="bannerImage" accept="image/*" required />
-
-      <button type="submit">Добавить баннер</button>
-    </form>
-  </section>
+  </div>
 </body>
 </html>
