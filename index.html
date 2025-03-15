@@ -57,6 +57,7 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+      justify-content: center;
     }
     .logo-part1 { color: #fff; }
     .logo-part2 { color: #a749f8; margin-left: 4px; }
@@ -96,10 +97,10 @@
     /* ---------- HERO-карусель ---------- */
     .hero-carousel {
       position: relative;
-      width: 100%;
+      width: calc(100% - 2rem); /* Чтобы слева/справа был отступ */
+      margin: 0 auto 1rem;      /* Центрируем и снизу делаем отступ */
       height: 220px;
       overflow: hidden;
-      margin-bottom: 1rem;
       border-radius: 12px;
     }
     .hero-slide {
@@ -177,7 +178,7 @@
       flex-shrink: 0;
       width: 140px;
       height: 210px;
-      border-radius: 12px;  /* изменено на более округлую форму */
+      border-radius: 12px; /* более округлые углы */
       overflow: hidden;
       background: #333;
       transition: transform 0.3s;
@@ -250,7 +251,7 @@
   <main class="content">
     <!-- HERO-КАРУСЕЛЬ -->
     <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайды будут подгружаться динамически из Firestore (коллекция carouselBanners) -->
+      <!-- Слайды будут подгружаться динамически -->
     </section>
 
     <!-- СЕКЦИЯ: Trending -->
@@ -314,7 +315,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
     import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-    // Полный Firebase-конфиг с вашими данными
+    // Полный Firebase-конфиг (с вашими ключами)
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
@@ -328,7 +329,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Fade-out Splash Screen через 2 секунды
+    // Fade-out Splash Screen
     window.addEventListener("load", () => {
       setTimeout(() => {
         const splash = document.getElementById("splash-screen");
@@ -377,7 +378,7 @@
       alert("Уведомления пока не реализованы!");
     });
 
-    // HERO-карусель: загружаем слайды из коллекции "carouselBanners"
+    // HERO-карусель
     async function loadCarousel() {
       const carouselElem = document.getElementById("hero-carousel");
       carouselElem.innerHTML = "";
@@ -408,7 +409,7 @@
     }
     loadCarousel();
 
-    // Функция для загрузки секции (например, Trending, Continue Watching, Recommendations, Upcoming)
+    // Функция для загрузки секций
     async function loadSection(sectionKey, containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -431,9 +432,10 @@
           container.appendChild(cardLink);
         });
       } catch (error) {
-        console.error(`Ошибка при загрузке раздела [${sectionKey}]:`, error);
+        console.error(`Ошибка при загрузке [${sectionKey}]:`, error);
       }
     }
+    // Загружаем секции
     loadSection("trending", "trending-container");
     loadSection("continue_watching", "continue-container");
     loadSection("recommendations", "recommend-container");
