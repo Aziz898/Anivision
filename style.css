@@ -1,29 +1,25 @@
-/* Переменные цветовой схемы */
+/* ---------- Общие переменные ---------- */
 :root {
-  --primary-color: #8e44ad;  /* Фиолетовый */
-  --bg-color: #000;          /* Чёрный */
-  --text-color: #fff;        /* Белый */
-  --accent-color: #4B0082;   /* Тёмно-фиолетовый */
+  --primary-color: #8e44ad; /* Фиолетовый акцент */
+  --bg-color: #000;        /* Чёрный фон */
+  --text-color: #fff;      /* Белый текст */
+  --accent-color: #4B0082; /* Тёмно-фиолетовый */
 }
 
-/* Безопасная зона (Safe Area) */
+/* Safe area для iOS */
 html, body {
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
-}
-
-/* Общие стили */
-body {
   margin: 0;
   background: var(--bg-color);
   color: var(--text-color);
   font-family: 'Poppins', sans-serif;
 }
 
-/* Splash Screen */
+/* ---------- Splash Screen ---------- */
 .splash-screen {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   background: var(--bg-color);
   display: flex;
   justify-content: center;
@@ -31,6 +27,10 @@ body {
   z-index: 9999;
   opacity: 1;
   transition: opacity 0.7s ease;
+}
+.splash-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 .splash-logo {
   font-size: 2rem;
@@ -40,11 +40,11 @@ body {
 }
 @keyframes logoPulse {
   0% { opacity: 0; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.05); }
+  50% { opacity: 1; transform: scale(1.1); }
   100% { opacity: 1; transform: scale(1); }
 }
 
-/* Header */
+/* ---------- Header ---------- */
 .header {
   background: #111;
   padding: 10px 15px;
@@ -62,17 +62,23 @@ body {
 .app-title {
   font-size: 1.4rem;
   font-weight: 600;
+  text-align: center;
 }
-.logo-part1 { color: var(--text-color); }
-.logo-part2 { color: var(--primary-color); margin-left: 5px; }
+.logo-part1 {
+  color: var(--text-color);
+}
+.logo-part2 {
+  color: var(--primary-color);
+  margin-left: 5px;
+}
 
-/* Основной контент */
+/* ---------- Main Content ---------- */
 .content {
   padding: 15px;
-  padding-bottom: 70px; /* Для нижней панели */
+  padding-bottom: 70px; /* отступ под нижнюю панель */
 }
 
-/* Hero-карусель */
+/* ---------- Hero-карусель ---------- */
 .hero-carousel {
   position: relative;
   width: 100%;
@@ -81,7 +87,7 @@ body {
   overflow: hidden;
   margin-bottom: 20px;
 }
-.slide {
+.hero-carousel .slide {
   position: absolute;
   top: 0;
   left: 100%;
@@ -89,43 +95,36 @@ body {
   height: 100%;
   opacity: 0;
   transition: opacity 1s ease;
+  background-size: cover;
+  background-position: center;
 }
-.slide.active {
+.hero-carousel .slide.active {
   left: 0;
   opacity: 1;
   z-index: 1;
 }
-.slide .slide-content {
+.hero-overlay {
   position: absolute;
-  bottom: 20%;
-  left: 5%;
-  color: var(--text-color);
-  background: rgba(0,0,0,0.5);
-  padding: 10px;
-  border-radius: 5px;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.slide .slide-content h2 {
-  font-size: 2em;
-  margin-bottom: 5px;
-}
-.slide .slide-content p {
-  font-size: 1em;
-  margin-bottom: 10px;
-}
-.slide .slide-content button {
+.hero-overlay a {
   background: var(--primary-color);
   color: var(--text-color);
-  border: none;
-  padding: 8px 15px;
+  padding: 0.6em 1.2em;
   border-radius: 4px;
-  cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
   transition: background 0.3s;
 }
-.slide .slide-content button:hover {
+.hero-overlay a:hover {
   background: var(--accent-color);
 }
 
-/* Контент-секции (например, Trending) */
+/* ---------- Content Sections (Trending, etc.) ---------- */
 .content-section {
   margin-bottom: 20px;
 }
@@ -140,17 +139,18 @@ body {
   gap: 10px;
   overflow-x: auto;
   padding-bottom: 10px;
-  scrollbar-width: none;  /* Firefox */
+  scrollbar-width: none; /* Firefox */
 }
 .cards-container::-webkit-scrollbar {
-  display: none;
+  display: none;        /* Chrome/Safari */
 }
+/* Карточка аниме */
 .anime-card {
   flex: 0 0 auto;
   width: 140px;
   text-align: center;
-  text-decoration: none;
   color: var(--text-color);
+  text-decoration: none;
 }
 .anime-card img {
   width: 100%;
@@ -167,7 +167,7 @@ body {
   font-size: 0.9em;
 }
 
-/* Нижняя панель (Tab Bar) */
+/* ---------- Bottom Nav (Tab Bar) ---------- */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -182,64 +182,53 @@ body {
   padding-bottom: calc(10px + env(safe-area-inset-bottom));
   z-index: 100;
 }
-.nav-link {
+.bottom-nav .nav-link {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: var(--text-color);
   text-decoration: none;
+  font-size: 1.2rem;
   transition: color 0.3s;
 }
-.nav-link .nav-label {
+.bottom-nav .nav-link .nav-label {
   font-size: 0.7em;
   margin-top: 3px;
 }
-.nav-link.active, .nav-link:hover {
+.bottom-nav .nav-link.active,
+.bottom-nav .nav-link:hover {
   color: var(--primary-color);
 }
 
-/* Модальное окно уведомлений */
+/* ---------- Modal (Уведомления) ---------- */
 .modal {
-  display: none; /* Скрыто по умолчанию */
+  display: none;
   position: fixed;
   z-index: 200;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
   background: rgba(0,0,0,0.7);
 }
-.modal-content {
-  background: var(--bg-color);
+.modal .modal-content {
+  background: #222;
   margin: 15% auto;
   padding: 20px;
   border-radius: 8px;
   width: 80%;
   max-width: 400px;
+  color: var(--text-color);
+  position: relative;
 }
-.modal-content h3 {
+.modal .modal-content h3 {
   margin-top: 0;
   color: var(--primary-color);
 }
-.close {
-  color: var(--text-color);
-  float: right;
+.modal .close {
+  position: absolute;
+  top: 10px; right: 10px;
   font-size: 1.5em;
-  font-weight: bold;
   cursor: pointer;
 }
-.close:hover {
-  color: var(--primary-color);
-}
-
-/* Плавное появление элементов */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
+.modal .close:hover {
+  color: var(--accent-color);
 }
