@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <title>AniVision MiniApp</title>
@@ -8,7 +8,7 @@
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* Сохранённый дизайн оригинальной страницы, с splash screen, header, hero-карусель, секциями, нижней панелью */
+    /* --- Общие стили для главной страницы --- */
     html, body {
       padding-top: env(safe-area-inset-top);
       padding-bottom: env(safe-area-inset-bottom);
@@ -49,6 +49,7 @@
       border: none;
       color: #fff;
       font-size: 1.3rem;
+      cursor: pointer;
     }
     .app-title {
       font-size: 1.3rem;
@@ -67,6 +68,7 @@
       width: 100%;
       height: 250px;
       overflow: hidden;
+      margin-bottom: 1rem;
     }
     .hero-slide {
       position: absolute;
@@ -75,15 +77,11 @@
       width: 100%;
       height: 100%;
       transition: left 0.8s ease;
-    }
-    .hero-slide.active { left: 0; }
-    .hero-slide-bg {
-      width: 100%;
-      height: 100%;
       background-size: cover;
       background-position: center;
-      position: relative;
+      opacity: 0;
     }
+    .hero-slide.active { left: 0; opacity: 1; }
     .hero-overlay {
       position: absolute;
       inset: 0;
@@ -101,7 +99,7 @@
       transition: background 0.3s;
     }
     .hero-overlay a:hover { background: #933ae0; }
-    /* Секции с горизонтальными каруселями */
+    /* Section: горизонтальные карусели */
     .section-row {
       margin-bottom: 1rem;
     }
@@ -111,7 +109,10 @@
       align-items: center;
       margin: 0 1rem 0.5rem;
     }
-    .section-title { font-size: 1rem; font-weight: 600; }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
     .btn-more {
       background: none;
       border: none;
@@ -119,6 +120,7 @@
       font-size: 0.85rem;
       text-transform: uppercase;
       cursor: pointer;
+      transition: color 0.3s;
     }
     .btn-more:hover { color: #fff; }
     .row-container {
@@ -175,7 +177,7 @@
 <body>
   <!-- SPLASH SCREEN -->
   <div class="splash-screen" id="splash-screen">
-    <div class="splash-logo"><span class="splash-text">AniVision</span></div>
+    <div class="splash-logo">AniVision</div>
   </div>
 
   <!-- HEADER -->
@@ -189,7 +191,7 @@
   <main class="content">
     <!-- HERO-КАРУСЕЛЬ -->
     <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайды будут подгружаться динамически -->
+      <!-- Слайды будут подгружаться динамически из Firestore (коллекция carouselBanners) -->
     </section>
 
     <!-- Секция: Trending -->
@@ -202,11 +204,10 @@
         <!-- Карточки Trending подгружаются динамически -->
       </div>
     </section>
-
-    <!-- Можно добавить другие секции аналогично -->
+    <!-- Дополнительные секции можно добавить аналогично -->
   </main>
 
-  <!-- НИЖНЯЯ ПАНЕЛЬ -->
+  <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar) -->
   <nav class="bottom-nav">
     <a href="#" class="nav-link active">
       <i class="fas fa-home"></i>
@@ -230,7 +231,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
     import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
-    // Вставляем все API напрямую (без переменных окружения)
+    // Firebase-конфиг (вставьте ваши данные)
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
@@ -244,7 +245,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Fade-out Splash Screen через 2 секунды
+    // Fade-out splash screen через 2 секунды
     window.addEventListener("load", () => {
       setTimeout(() => {
         const splash = document.getElementById("splash-screen");
@@ -253,7 +254,7 @@
       }, 2000);
     });
 
-    // Переключение языка
+    // Переключатель языка
     const translations = {
       en: { trending: "Trending", seeAll: "See All", watchNow: "Watch Now" },
       ru: { trending: "Популярное", seeAll: "Ещё", watchNow: "Смотреть" }
@@ -269,7 +270,7 @@
       alert("Уведомления пока не реализованы!");
     });
 
-    // Загрузка HERO-карусели
+    // Функция загрузки HERO-карусели
     async function loadCarousel() {
       const carousel = document.getElementById("hero-carousel");
       carousel.innerHTML = "";
@@ -284,7 +285,7 @@
           slide.style.backgroundImage = `url('${data.image}')`;
           slide.innerHTML = `
             <div class="hero-overlay">
-              <a href="${data.link}" target="_blank">${translations[currentLang].watchNow}</a>
+              <a href="player.html?animeId=${data.animeId || ''}" target="_blank">${translations[currentLang].watchNow}</a>
             </div>
           `;
           slides.push(slide);
@@ -305,7 +306,7 @@
     }
     loadCarousel();
 
-    // Функция для загрузки аниме в секцию (по разделу)
+    // Функция для загрузки раздела Trending
     async function loadSection(sectionName, containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -316,23 +317,25 @@
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach(docSnap => {
           const data = docSnap.data();
-          const card = document.createElement("div");
-          card.classList.add("row-item");
-          card.innerHTML = `
+          const docId = docSnap.id;
+          // Оборачиваем карточку в ссылку, которая ведёт на страницу плеера
+          const cardLink = document.createElement("a");
+          cardLink.href = `player.html?animeId=${docId}`;
+          cardLink.classList.add("row-item");
+          cardLink.innerHTML = `
             <img class="row-poster"
                  src="${data.cover ? data.cover : 'https://via.placeholder.com/200x300?text=No+Image'}"
                  alt="${data.title}">
           `;
-          container.appendChild(card);
+          container.appendChild(cardLink);
         });
       } catch (error) {
         console.error(`Ошибка при загрузке раздела [${sectionName}]:`, error);
       }
     }
 
-    // Загружаем секции
+    // Загружаем секцию Trending (при необходимости добавьте вызовы для других разделов)
     loadSection("trending", "trending-container");
-    // Если нужны другие секции, добавьте вызовы loadSection с нужным ключом
   </script>
 </body>
 </html>
