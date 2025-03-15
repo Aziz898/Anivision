@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>AniVision Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключаем стили (можно вынести в отдельный admin.css) -->
+  <!-- Подключаем стили (можно вынести в admin.css) -->
   <link rel="stylesheet" href="admin.css">
   <!-- Иконки FontAwesome -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
@@ -172,390 +172,387 @@
   </style>
 </head>
 <body>
-<div class="admin-container">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">AniVision</div>
-    <nav class="sidebar-nav">
-      <button class="nav-btn active" data-section="anime">
-        <i class="fas fa-film"></i> Аниме
-      </button>
-      <button class="nav-btn" data-section="carousel">
-        <i class="fas fa-images"></i> Карусель
-      </button>
-    </nav>
-  </aside>
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">AniVision</div>
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-section="anime">
+          <i class="fas fa-film"></i> Аниме
+        </button>
+        <button class="nav-btn" data-section="carousel">
+          <i class="fas fa-images"></i> Карусель
+        </button>
+      </nav>
+    </aside>
 
-  <!-- Main content -->
-  <main class="main-content">
-    <header class="admin-header">
-      <h1>Админ-панель AniVision</h1>
-      <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
-    </header>
+    <!-- Main content -->
+    <main class="main-content">
+      <header class="admin-header">
+        <h1>Админ-панель AniVision</h1>
+        <button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+      </header>
 
-    <!-- Section: Управление аниме -->
-    <section class="section active" id="anime-section">
-      <h2>Управление аниме</h2>
-      <form class="anime-form" id="anime-form">
-        <div class="form-row">
-          <label>Название аниме</label>
-          <input type="text" id="anime-title" placeholder="Например, Jujutsu Kaisen" required>
-        </div>
-        <div class="form-row">
-          <label>Описание</label>
-          <textarea id="anime-desc" rows="3" placeholder="Краткое описание аниме"></textarea>
-        </div>
-        <div class="form-row">
-          <label>URL обложки (если нет файла)</label>
-          <input type="url" id="anime-cover" placeholder="https://example.com/poster.jpg">
-        </div>
-        <div class="form-row">
-          <label>Загрузить обложку</label>
-          <input type="file" id="cover-file" accept="image/*">
-        </div>
-        <div class="form-row">
-          <label>Категория</label>
-          <select id="anime-category">
-            <option value="TV">TV</option>
-            <option value="Manga">Manga</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <label>Рейтинг</label>
-          <input type="number" step="0.1" min="0" max="10" id="anime-rating" placeholder="8.5">
-        </div>
-        <div class="form-row">
-          <label>Ссылка на плеер</label>
-          <input type="url" id="anime-player" placeholder="https://player.site/watch?id=...">
-        </div>
-        <!-- Чекбоксы для выбора разделов -->
-        <div class="form-row">
-          <label>Разделы (отметьте хотя бы один)</label>
-          <div class="checkbox-group">
-            <div>
-              <input type="checkbox" id="section-trending" value="trending">
-              <label for="section-trending">Trending</label>
-            </div>
-            <div>
-              <input type="checkbox" id="section-recommendations" value="recommendations">
-              <label for="section-recommendations">Recommendations</label>
-            </div>
-            <div>
-              <input type="checkbox" id="section-upcoming" value="upcoming">
-              <label for="section-upcoming">Upcoming</label>
-            </div>
-            <div>
-              <input type="checkbox" id="section-continue_watching" value="continue_watching">
-              <label for="section-continue_watching">Continue Watching</label>
+      <!-- Section: Управление аниме -->
+      <section class="section active" id="anime-section">
+        <h2>Управление аниме</h2>
+        <form class="anime-form" id="anime-form">
+          <div class="form-row">
+            <label>Название аниме</label>
+            <input type="text" id="anime-title" placeholder="Например, Jujutsu Kaisen" required>
+          </div>
+          <div class="form-row">
+            <label>Описание</label>
+            <textarea id="anime-desc" rows="3" placeholder="Краткое описание аниме"></textarea>
+          </div>
+          <div class="form-row">
+            <label>URL обложки (если нет файла)</label>
+            <input type="url" id="anime-cover" placeholder="https://example.com/poster.jpg">
+          </div>
+          <div class="form-row">
+            <label>Загрузить обложку</label>
+            <input type="file" id="cover-file" accept="image/*">
+          </div>
+          <div class="form-row">
+            <label>Категория</label>
+            <select id="anime-category">
+              <option value="TV">TV</option>
+              <option value="Manga">Manga</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Рейтинг</label>
+            <input type="number" step="0.1" min="0" max="10" id="anime-rating" placeholder="8.5">
+          </div>
+          <div class="form-row">
+            <label>Ссылка на плеер</label>
+            <input type="url" id="anime-player" placeholder="https://player.site/watch?id=...">
+          </div>
+          <!-- Чекбоксы для выбора разделов -->
+          <div class="form-row">
+            <label>Разделы</label>
+            <div class="checkbox-group">
+              <div>
+                <input type="checkbox" id="section-trending" value="trending">
+                <label for="section-trending">Trending</label>
+              </div>
+              <div>
+                <input type="checkbox" id="section-recommendations" value="recommendations">
+                <label for="section-recommendations">Recommendations</label>
+              </div>
+              <div>
+                <input type="checkbox" id="section-upcoming" value="upcoming">
+                <label for="section-upcoming">Upcoming</label>
+              </div>
+              <div>
+                <input type="checkbox" id="section-continue_watching" value="continue_watching">
+                <label for="section-continue_watching">Continue Watching</label>
+              </div>
             </div>
           </div>
+          <button type="submit" class="btn-save">Сохранить</button>
+        </form>
+
+        <div class="anime-list" id="anime-list">
+          <h3>Список аниме</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Название</th>
+                <th>Категория</th>
+                <th>Рейтинг</th>
+                <th>Разделы</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody id="anime-table-body">
+              <!-- Данные подгружаются через JS -->
+            </tbody>
+          </table>
         </div>
-        <button type="submit" class="btn-save">Сохранить</button>
-      </form>
+      </section>
 
-      <div class="anime-list" id="anime-list">
-        <h3>Список аниме</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Название</th>
-              <th>Категория</th>
-              <th>Рейтинг</th>
-              <th>Разделы</th>
-              <th>Действия</th>
-            </tr>
-          </thead>
-          <tbody id="anime-table-body">
-            <!-- Данные подгружаются через JS -->
-          </tbody>
-        </table>
-      </div>
-    </section>
+      <!-- Section: Управление каруселью -->
+      <section class="section" id="carousel-section">
+        <h2>Управление каруселью</h2>
+        <form class="carousel-form" id="carousel-form">
+          <div class="form-row">
+            <label>URL баннера (если нет файла)</label>
+            <input type="url" id="banner-image-link" placeholder="https://example.com/banner.jpg" required>
+          </div>
+          <div class="form-row">
+            <label>Загрузить баннер</label>
+            <input type="file" id="banner-file" accept="image/*">
+          </div>
+          <div class="form-row">
+            <label>Ссылка</label>
+            <input type="url" id="banner-link" placeholder="https://example.com/page" required>
+          </div>
+          <button type="submit" class="btn-save">Добавить баннер</button>
+        </form>
 
-    <!-- Section: Управление каруселью -->
-    <section class="section" id="carousel-section">
-      <h2>Управление каруселью</h2>
-      <form class="carousel-form" id="carousel-form">
-        <div class="form-row">
-          <label>URL баннера (если нет файла)</label>
-          <input type="url" id="banner-image-link" placeholder="https://example.com/banner.jpg" required>
+        <div class="carousel-list" id="carousel-list">
+          <h3>Баннеры карусели</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Изображение</th>
+                <th>Ссылка</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody id="carousel-table-body">
+              <!-- Баннеры подгружаются через JS -->
+            </tbody>
+          </table>
         </div>
-        <div class="form-row">
-          <label>Загрузить баннер</label>
-          <input type="file" id="banner-file" accept="image/*">
-        </div>
-        <div class="form-row">
-          <label>Ссылка</label>
-          <input type="url" id="banner-link" placeholder="https://example.com/page" required>
-        </div>
-        <button type="submit" class="btn-save">Добавить баннер</button>
-      </form>
+      </section>
+    </main>
+  </div>
 
-      <div class="carousel-list" id="carousel-list">
-        <h3>Баннеры карусели</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Изображение</th>
-              <th>Ссылка</th>
-              <th>Действия</th>
-            </tr>
-          </thead>
-          <tbody id="carousel-table-body">
-            <!-- Баннеры подгружаются через JS -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-</div>
+  <script type="module">
+    // Импорт Firebase SDK (версия 11.4.0)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
 
-<script type="module">
-  // Импорт Firebase SDK (v11.4.0)
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
+    // Конфигурация Firebase (вставляем напрямую)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
+      authDomain: "anivision-194f5.firebaseapp.com",
+      projectId: "anivision-194f5",
+      storageBucket: "anivision-194f5.appspot.com",
+      messagingSenderId: "793506779659",
+      appId: "1:793506779659:web:b391b63343af935afbed0e",
+      measurementId: "G-JGNDHJT219"
+    };
 
-  // Конфигурация Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
-    authDomain: "anivision-194f5.firebaseapp.com",
-    projectId: "anivision-194f5",
-    storageBucket: "anivision-194f5.appspot.com",
-    messagingSenderId: "793506779659",
-    appId: "1:793506779659:web:b391b63343af935afbed0e",
-    measurementId: "G-JGNDHJT219"
-  };
+    // Инициализация Firebase, Firestore и Storage
+    const appFirebase = initializeApp(firebaseConfig);
+    const db = getFirestore(appFirebase);
+    const storage = getStorage(appFirebase);
 
-  // Инициализация Firebase, Firestore и Storage
-  const appFirebase = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(appFirebase);
-  const db = getFirestore(appFirebase);
-  const storage = getStorage(appFirebase);
+    // Коллекции
+    const animeCollection = collection(db, "anime");
+    const carouselCollection = collection(db, "carouselBanners");
 
-  // Коллекции
-  const animeCollection = collection(db, "anime");
-  const carouselCollection = collection(db, "carouselBanners");
+    let editingAnimeId = null;
 
-  let editingAnimeId = null;
-
-  // Функция загрузки списка аниме (админ-панель)
-  async function loadAnimeList() {
-    const tableBody = document.getElementById("anime-table-body");
-    tableBody.innerHTML = "";
-    try {
-      const querySnapshot = await getDocs(animeCollection);
-      querySnapshot.forEach(docSnap => {
-        const data = docSnap.data();
-        const docId = docSnap.id;
-        renderAnimeRow(docId, data);
-      });
-    } catch (error) {
-      console.error("Ошибка при загрузке аниме:", error);
+    // Функция загрузки списка аниме
+    async function loadAnimeList() {
+      const tableBody = document.getElementById("anime-table-body");
+      tableBody.innerHTML = "";
+      try {
+        const querySnapshot = await getDocs(animeCollection);
+        querySnapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          const docId = docSnap.id;
+          renderAnimeRow(docId, data);
+        });
+      } catch (error) {
+        console.error("Ошибка при загрузке аниме:", error);
+      }
     }
-  }
 
-  function renderAnimeRow(docId, data) {
-    const tr = document.createElement("tr");
+    function renderAnimeRow(docId, data) {
+      const tr = document.createElement("tr");
 
-    const tdTitle = document.createElement("td");
-    tdTitle.textContent = data.title || "";
-    tr.appendChild(tdTitle);
+      const tdTitle = document.createElement("td");
+      tdTitle.textContent = data.title || "";
+      tr.appendChild(tdTitle);
 
-    const tdCategory = document.createElement("td");
-    tdCategory.textContent = data.category || "";
-    tr.appendChild(tdCategory);
+      const tdCategory = document.createElement("td");
+      tdCategory.textContent = data.category || "";
+      tr.appendChild(tdCategory);
 
-    const tdRating = document.createElement("td");
-    tdRating.textContent = data.rating || "";
-    tr.appendChild(tdRating);
+      const tdRating = document.createElement("td");
+      tdRating.textContent = data.rating || "";
+      tr.appendChild(tdRating);
 
-    const tdSections = document.createElement("td");
-    tdSections.textContent = data.sections ? data.sections.join(", ") : "";
-    tr.appendChild(tdSections);
+      const tdSections = document.createElement("td");
+      tdSections.textContent = data.sections ? data.sections.join(", ") : "";
+      tr.appendChild(tdSections);
 
-    const tdActions = document.createElement("td");
-    const btnEdit = document.createElement("button");
-    btnEdit.textContent = "Редактировать";
-    btnEdit.classList.add("btn-action");
-    btnEdit.style.marginRight = "0.5rem";
-    btnEdit.addEventListener("click", () => {
-      window.location.href = "anime.html?animeId=" + docId;
-    });
-    tdActions.appendChild(btnEdit);
+      const tdActions = document.createElement("td");
+      const btnEdit = document.createElement("button");
+      btnEdit.textContent = "Редактировать";
+      btnEdit.classList.add("btn-action");
+      btnEdit.style.marginRight = "0.5rem";
+      btnEdit.addEventListener("click", () => {
+        window.location.href = "anime.html?animeId=" + docId;
+      });
+      tdActions.appendChild(btnEdit);
 
-    const btnDelete = document.createElement("button");
-    btnDelete.textContent = "Удалить";
-    btnDelete.classList.add("btn-action");
-    btnDelete.addEventListener("click", async () => {
-      if (confirm("Удалить это аниме?")) {
+      const btnDelete = document.createElement("button");
+      btnDelete.textContent = "Удалить";
+      btnDelete.classList.add("btn-action");
+      btnDelete.addEventListener("click", async () => {
+        if (confirm("Удалить это аниме?")) {
+          try {
+            await deleteDoc(doc(db, "anime", docId));
+            alert("Аниме удалено!");
+            loadAnimeList();
+          } catch (error) {
+            console.error("Ошибка при удалении аниме:", error);
+            alert("Ошибка при удалении!");
+          }
+        }
+      });
+      tdActions.appendChild(btnDelete);
+
+      tr.appendChild(tdActions);
+      document.getElementById("anime-table-body").appendChild(tr);
+    }
+
+    // Функция для загрузки файла и получения URL (для обложки)
+    async function uploadFile(file, folder) {
+      const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
+      await uploadBytes(storageRef, file);
+      return await getDownloadURL(storageRef);
+    }
+
+    // Обработчик формы для добавления/обновления аниме
+    document.getElementById("anime-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("anime-title").value.trim();
+      const desc = document.getElementById("anime-desc").value.trim();
+      const coverURLInput = document.getElementById("anime-cover").value.trim();
+      const category = document.getElementById("anime-category").value;
+      const rating = document.getElementById("anime-rating").value;
+      const playerLink = document.getElementById("anime-player").value.trim();
+
+      const coverFileInput = document.getElementById("cover-file");
+      let coverURL = coverURLInput;
+      if (coverFileInput.files.length > 0) {
         try {
-          await deleteDoc(doc(db, "anime", docId));
-          alert("Аниме удалено!");
-          loadAnimeList();
+          coverURL = await uploadFile(coverFileInput.files[0], "covers");
         } catch (error) {
-          console.error("Ошибка при удалении аниме:", error);
-          alert("Ошибка при удалении!");
+          console.error("Ошибка при загрузке обложки:", error);
+          alert("Ошибка при загрузке обложки.");
+          return;
         }
       }
-    });
-    tdActions.appendChild(btnDelete);
-    tr.appendChild(tdActions);
-    document.getElementById("anime-table-body").appendChild(tr);
-  }
 
-  // Функция загрузки файла и получения URL (для обложки или баннера)
-  async function uploadFile(file, folder) {
-    const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
-    await uploadBytes(storageRef, file);
-    return await getDownloadURL(storageRef);
-  }
-
-  // Обработчик формы для добавления/редактирования аниме
-  document.getElementById("anime-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const title = document.getElementById("anime-title").value.trim();
-    const desc = document.getElementById("anime-desc").value.trim();
-    const coverURLInput = document.getElementById("anime-cover").value.trim();
-    const category = document.getElementById("anime-category").value;
-    const rating = document.getElementById("anime-rating").value;
-    const playerLink = document.getElementById("anime-player").value.trim();
-
-    const coverFileInput = document.getElementById("cover-file");
-    let coverURL = coverURLInput;
-    if (coverFileInput.files.length > 0) {
-      try {
-        coverURL = await uploadFile(coverFileInput.files[0], "covers");
-      } catch (error) {
-        console.error("Ошибка при загрузке обложки:", error);
-        alert("Ошибка при загрузке обложки.");
-        return;
-      }
-    }
-
-    // Собираем выбранные разделы
-    const sections = [];
-    document.querySelectorAll('input[type="checkbox"][id^="section-"]').forEach(chk => {
-      if (chk.checked) sections.push(chk.value);
-    });
-    if (sections.length === 0) {
-      alert("Укажите хотя бы один раздел (например, trending)!");
-      return;
-    }
-    if (!title) {
-      alert("Название аниме обязательно!");
-      return;
-    }
-    try {
-      if (editingAnimeId) {
-        await updateDoc(doc(db, "anime", editingAnimeId), { title, desc, cover: coverURL, category, rating, playerLink, sections });
-        alert("Аниме обновлено!");
-        editingAnimeId = null;
-      } else {
-        await addDoc(animeCollection, { title, desc, cover: coverURL, category, rating, playerLink, sections });
-        alert("Аниме успешно добавлено!");
-      }
-      document.getElementById("anime-form").reset();
-      loadAnimeList();
-    } catch (error) {
-      console.error("Ошибка при сохранении аниме:", error);
-      alert("Ошибка при сохранении аниме.");
-    }
-  });
-
-  // Обработчик формы для добавления баннера карусели
-  document.getElementById("carousel-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const bannerLink = document.getElementById("banner-link").value.trim();
-    const bannerLinkInput = document.getElementById("banner-image-link").value.trim();
-    const bannerFileInput = document.getElementById("banner-file");
-    let bannerImageURL = bannerLinkInput;
-    if (bannerFileInput.files.length > 0) {
-      try {
-        bannerImageURL = await uploadFile(bannerFileInput.files[0], "carouselBanners");
-      } catch (error) {
-        console.error("Ошибка при загрузке баннера:", error);
-        alert("Ошибка при загрузке баннера.");
-        return;
-      }
-    }
-    if (!bannerImageURL || !bannerLink) {
-      alert("Заполните все поля баннера!");
-      return;
-    }
-    try {
-      await addDoc(carouselCollection, { image: bannerImageURL, link: bannerLink });
-      alert("Баннер успешно добавлен!");
-      document.getElementById("carousel-form").reset();
-      loadCarouselBanners();
-    } catch (error) {
-      console.error("Ошибка при добавлении баннера:", error);
-      alert("Ошибка при добавлении баннера.");
-    }
-  });
-
-  // Функция загрузки баннеров карусели (админ-панель)
-  async function loadCarouselBanners() {
-    const tableBody = document.getElementById("carousel-table-body");
-    tableBody.innerHTML = "";
-    try {
-      const querySnapshot = await getDocs(carouselCollection);
-      querySnapshot.forEach(docSnap => {
-        const data = docSnap.data();
-        const docId = docSnap.id;
-        renderCarouselRow(docId, data);
+      // Собираем выбранные разделы
+      const sections = [];
+      document.querySelectorAll('input[type="checkbox"][id^="section-"]').forEach(chk => {
+        if (chk.checked) sections.push(chk.value);
       });
-    } catch (error) {
-      console.error("Ошибка при загрузке баннеров:", error);
-    }
-  }
 
-  function renderCarouselRow(docId, data) {
-    const tr = document.createElement("tr");
-    const tdImage = document.createElement("td");
-    tdImage.innerHTML = `<img src="${data.image ? data.image : 'https://via.placeholder.com/100x50?text=No+Image'}" alt="Banner" style="width:100px;">`;
-    tr.appendChild(tdImage);
-    const tdLink = document.createElement("td");
-    tdLink.innerHTML = `<a href="${data.link}" target="_blank">${data.link}</a>`;
-    tr.appendChild(tdLink);
-    const tdActions = document.createElement("td");
-    const btnDelete = document.createElement("button");
-    btnDelete.textContent = "Удалить";
-    btnDelete.classList.add("btn-action");
-    btnDelete.addEventListener("click", async () => {
-      if (confirm("Удалить этот баннер?")) {
+      if (!title) {
+        alert("Название аниме обязательно!");
+        return;
+      }
+
+      try {
+        if (editingAnimeId) {
+          await updateDoc(doc(db, "anime", editingAnimeId), { title, desc, cover: coverURL, category, rating, playerLink, sections });
+          alert("Аниме обновлено!");
+          editingAnimeId = null;
+        } else {
+          await addDoc(animeCollection, { title, desc, cover: coverURL, category, rating, playerLink, sections });
+          alert("Аниме успешно добавлено!");
+        }
+        document.getElementById("anime-form").reset();
+        loadAnimeList();
+      } catch (error) {
+        console.error("Ошибка при сохранении аниме:", error);
+        alert("Ошибка при сохранении аниме.");
+      }
+    });
+
+    // Обработчик формы для добавления баннера карусели
+    document.getElementById("carousel-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const bannerLink = document.getElementById("banner-link").value.trim();
+      const bannerLinkInput = document.getElementById("banner-image-link").value.trim();
+      const bannerFileInput = document.getElementById("banner-file");
+      let bannerImageURL = bannerLinkInput;
+      if (bannerFileInput.files.length > 0) {
         try {
-          await deleteDoc(doc(db, "carouselBanners", docId));
-          alert("Баннер удалён!");
-          loadCarouselBanners();
+          bannerImageURL = await uploadFile(bannerFileInput.files[0], "carouselBanners");
         } catch (error) {
-          console.error("Ошибка при удалении баннера:", error);
-          alert("Ошибка при удалении баннера!");
+          console.error("Ошибка при загрузке баннера:", error);
+          alert("Ошибка при загрузке баннера.");
+          return;
         }
       }
+      if (!bannerImageURL || !bannerLink) {
+        alert("Заполните все поля баннера!");
+        return;
+      }
+      try {
+        await addDoc(carouselCollection, { image: bannerImageURL, link: bannerLink });
+        alert("Баннер успешно добавлен!");
+        document.getElementById("carousel-form").reset();
+        loadCarouselBanners();
+      } catch (error) {
+        console.error("Ошибка при добавлении баннера:", error);
+        alert("Ошибка при добавлении баннера.");
+      }
     });
-    tdActions.appendChild(btnDelete);
-    tr.appendChild(tdActions);
-    document.getElementById("carousel-table-body").appendChild(tr);
-  }
 
-  // Обработка навигации в sidebar
-  const navBtns = document.querySelectorAll(".nav-btn");
-  const sectionsDOM = document.querySelectorAll(".section");
-  navBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      navBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      sectionsDOM.forEach(sec => sec.classList.remove("active"));
-      const sectionId = btn.getAttribute("data-section") + "-section";
-      document.getElementById(sectionId).classList.add("active");
+    // Функция загрузки баннеров карусели
+    async function loadCarouselBanners() {
+      const tableBody = document.getElementById("carousel-table-body");
+      tableBody.innerHTML = "";
+      try {
+        const querySnapshot = await getDocs(carouselCollection);
+        querySnapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          const docId = docSnap.id;
+          renderCarouselRow(docId, data);
+        });
+      } catch (error) {
+        console.error("Ошибка при загрузке баннеров:", error);
+      }
+    }
+
+    function renderCarouselRow(docId, data) {
+      const tr = document.createElement("tr");
+      const tdImage = document.createElement("td");
+      tdImage.innerHTML = `<img src="${data.image ? data.image : 'https://via.placeholder.com/100x50?text=No+Image'}" alt="Banner" style="width:100px;">`;
+      tr.appendChild(tdImage);
+      const tdLink = document.createElement("td");
+      tdLink.innerHTML = `<a href="${data.link}" target="_blank">${data.link}</a>`;
+      tr.appendChild(tdLink);
+      const tdActions = document.createElement("td");
+      const btnDelete = document.createElement("button");
+      btnDelete.textContent = "Удалить";
+      btnDelete.classList.add("btn-action");
+      btnDelete.addEventListener("click", async () => {
+        if (confirm("Удалить этот баннер?")) {
+          try {
+            await deleteDoc(doc(db, "carouselBanners", docId));
+            alert("Баннер удалён!");
+            loadCarouselBanners();
+          } catch (error) {
+            console.error("Ошибка при удалении баннера:", error);
+            alert("Ошибка при удалении баннера!");
+          }
+        }
+      });
+      tdActions.appendChild(btnDelete);
+      tr.appendChild(tdActions);
+      document.getElementById("carousel-table-body").appendChild(tr);
+    }
+
+    // Обработка навигации в sidebar
+    const navBtns = document.querySelectorAll(".nav-btn");
+    const sectionsDOM = document.querySelectorAll(".section");
+    navBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        navBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        sectionsDOM.forEach(sec => sec.classList.remove("active"));
+        const sectionId = btn.getAttribute("data-section") + "-section";
+        document.getElementById(sectionId).classList.add("active");
+      });
     });
-  });
 
-  // Начальная загрузка
-  loadAnimeList();
-  loadCarouselBanners();
-</script>
+    // Начальная загрузка
+    loadAnimeList();
+    loadCarouselBanners();
+  </script>
 </body>
 </html>
