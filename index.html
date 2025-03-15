@@ -7,56 +7,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <!-- Подключаем стили -->
   <link rel="stylesheet" href="style.css" />
-  <!-- Подключаем Font Awesome -->
+  <!-- Font Awesome (иконки) -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-  <!-- Подключаем скрипт -->
+  <!-- Скрипт (включая Firebase SDK v8 подключаем в script.js) -->
   <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- Splash Screen (интро) -->
+  <!-- SPLASH SCREEN (с анимацией) -->
   <div class="splash-screen" id="splash-screen">
     <div class="splash-logo">AniVision</div>
   </div>
 
-  <!-- Header -->
+  <!-- HEADER -->
   <header class="header">
-    <button id="lang-btn" class="lang-btn"><i class="fas fa-flag"></i></button>
-    <div class="app-title"><span class="logo-part1">Ani</span><span class="logo-part2">Vision</span></div>
-    <button id="notif-btn" class="notif-btn"><i class="fas fa-bell"></i></button>
+    <!-- Кнопка смены языка -->
+    <button id="lang-btn" class="lang-btn">
+      <i class="fas fa-flag"></i>
+    </button>
+    <!-- Название/логотип -->
+    <div class="app-title">
+      <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
+    </div>
+    <!-- Кнопка уведомлений -->
+    <button id="notif-btn" class="notif-btn">
+      <i class="fas fa-bell"></i>
+    </button>
   </header>
 
-  <!-- Основной контент -->
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main class="content">
-    <!-- Hero-карусель -->
+    <!-- HERO-КАРУСЕЛЬ -->
     <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайды карусели будут подгружаться динамически -->
+      <!-- Слайды будут подгружаться динамически из Firestore (коллекция carouselBanners) -->
     </section>
 
     <!-- Секция Trending -->
-    <section class="content-section" id="trending-section">
-      <h2 class="section-title" data-i18n="trendingTitle">Trending</h2>
+    <section class="content-section">
+      <h2 class="section-title" data-i18n="trendingTitle">Популярное</h2>
       <div class="cards-container" id="trending-container">
-        <!-- Карточки для секции Trending будут подгружаться динамически -->
+        <!-- Карточки аниме подгружаются через script.js из Firestore (коллекция anime) -->
       </div>
     </section>
 
-    <!-- Дополнительные секции можно добавить аналогично -->
+    <!-- При желании можно добавить другие секции: Continue Watching, Recommendations, etc. -->
   </main>
 
-  <!-- Нижняя панель (Tab Bar) -->
+  <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar) -->
   <nav class="bottom-nav">
-    <a href="#" class="nav-link active" data-i18n="navHome"><i class="fas fa-home"></i><span class="nav-label">Главная</span></a>
-    <a href="#" class="nav-link" data-i18n="navAnime"><i class="fas fa-film"></i><span class="nav-label">Аниме</span></a>
-    <a href="#" class="nav-link" data-i18n="navManga"><i class="fas fa-book"></i><span class="nav-label">Манга</span></a>
-    <a href="#" class="nav-link" data-i18n="navProfile"><i class="fas fa-user"></i><span class="nav-label">Профиль</span></a>
+    <a href="#" class="nav-link active" data-i18n="navHome">
+      <i class="fas fa-home"></i>
+      <span class="nav-label">Главная</span>
+    </a>
+    <a href="#" class="nav-link" data-i18n="navAnime">
+      <i class="fas fa-film"></i>
+      <span class="nav-label">Аниме</span>
+    </a>
+    <a href="#" class="nav-link" data-i18n="navManga">
+      <i class="fas fa-book"></i>
+      <span class="nav-label">Манга</span>
+    </a>
+    <a href="#" class="nav-link" data-i18n="navProfile">
+      <i class="fas fa-user"></i>
+      <span class="nav-label">Профиль</span>
+    </a>
   </nav>
 
-  <!-- Модальное окно уведомлений (заглушка) -->
+  <!-- МОДАЛЬНОЕ ОКНО УВЕДОМЛЕНИЙ -->
   <div id="notif-modal" class="modal">
     <div class="modal-content">
-      <span class="close" id="notif-close">&times;</span>
+      <span id="notif-close" class="close">&times;</span>
       <h3>Уведомления</h3>
-      <p>Новых уведомлений нет.</p>
+      <p>Здесь будут отображаться новые уведомления (заглушка).</p>
     </div>
   </div>
 </body>
