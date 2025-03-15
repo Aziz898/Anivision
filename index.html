@@ -2,83 +2,162 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>AniVision – Главная</title>
-  <!-- Мобильная адаптация и safe area -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <!-- Подключаем стили -->
-  <link rel="stylesheet" href="style.css" />
-  <!-- Font Awesome (иконки) -->
-  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-  <!-- Подключаем скрипт (Firebase SDK и наш код) -->
-  <script defer src="script.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anime Streaming - Главная</title>
+  <!-- Подключение SDK Firebase (App, Firestore, Storage) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js"></script>
+  <style>
+    /* --- Стили главной страницы --- */
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #121212;
+      color: #fff;
+    }
+    h2 {
+      margin: 20px 0 10px 20px;
+      font-size: 1.5em;
+    }
+    .anime-list {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 0 20px 20px;
+    }
+    .anime-item {
+      flex: 0 0 auto;
+      margin-right: 15px;
+      width: 160px;
+    }
+    .anime-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #333;
+    }
+    .anime-item .title {
+      margin-top: 5px;
+      font-size: 0.9em;
+      text-align: center;
+      line-height: 1.2;
+    }
+    /* Дополнительные стили для скроллбара (необязательно) */
+    .anime-list::-webkit-scrollbar {
+      height: 8px;
+    }
+    .anime-list::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 4px;
+    }
+    .anime-list::-webkit-scrollbar-track {
+      background: #222;
+    }
+  </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="header">
-    <button id="lang-btn" class="lang-btn"><i class="fas fa-flag"></i></button>
-    <div class="app-title"><span class="logo-part1">Ani</span><span class="logo-part2">Vision</span></div>
-    <button id="notif-btn" class="notif-btn"><i class="fas fa-bell"></i></button>
-  </header>
 
-  <!-- MAIN CONTENT -->
-  <main class="content">
-    <!-- HERO-карусель -->
-    <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайды подгружаются из Firestore (коллекция carouselBanners) -->
-    </section>
+  <!-- Раздел Trending -->
+  <section>
+    <h2>Trending</h2>
+    <div class="anime-list" id="trending-list"></div>
+  </section>
+  <!-- Раздел Recommendations -->
+  <section>
+    <h2>Recommendations</h2>
+    <div class="anime-list" id="recommendations-list"></div>
+  </section>
+  <!-- Раздел Upcoming -->
+  <section>
+    <h2>Upcoming</h2>
+    <div class="anime-list" id="upcoming-list"></div>
+  </section>
+  <!-- Раздел Continue Watching -->
+  <section>
+    <h2>Continue Watching</h2>
+    <div class="anime-list" id="continue-list"></div>
+  </section>
 
-    <!-- Секция Trending -->
-    <section class="content-section" id="trending-section">
-      <h2 class="section-title" data-i18n="trendingTitle">Trending</h2>
-      <div class="cards-container" id="trending-container">
-        <!-- Карточки Trending будут подгружаться динамически -->
-      </div>
-    </section>
+  <script>
+    // Конфигурация вашего Firebase проекта (замените на свои ключи)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    // Инициализация Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
 
-    <!-- Секция Continue Watching -->
-    <section class="content-section" id="continue-section">
-      <h2 class="section-title" data-i18n="continueTitle">Continue Watching</h2>
-      <div class="cards-container" id="continue-container">
-        <!-- Карточки Continue Watching -->
-      </div>
-    </section>
+    // Функция для отображения списка аниме в указанном элементе
+    function renderAnimeList(sectionName, containerId) {
+      const container = document.getElementById(containerId);
+      // Подписка на обновления коллекции с фильтром по разделу sectionName
+      db.collection("anime").where("section", "==", sectionName)
+        .onSnapshot((snapshot) => {
+          // Очистка контейнера перед перерисовкой
+          container.innerHTML = "";
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            // Создание элемента для аниме
+            const item = document.createElement("div");
+            item.classList.add("anime-item");
+            // Элемент изображения
+            const img = document.createElement("img");
+            // Проверяем наличие поля изображения
+            if (data.imageUrl) {
+              // Если в документе есть прямой URL изображения
+              img.src = data.imageUrl;
+            } else if (data.imagePath) {
+              // Если указан путь в хранилище, получаем публичный URL
+              storage.ref(data.imagePath).getDownloadURL().then((url) => {
+                img.src = url;
+              }).catch((error) => {
+                console.error("Ошибка загрузки изображения из Storage:", error);
+              });
+            } else if (data.image) {
+              // Поле image может содержать URL или путь; пробуем оба варианта
+              if (data.image.startsWith("http")) {
+                img.src = data.image;
+              } else {
+                storage.ref(data.image).getDownloadURL().then((url) => {
+                  img.src = url;
+                }).catch((error) => {
+                  console.error("Ошибка загрузки изображения:", error);
+                });
+              }
+            } else {
+              // Если поля изображения нет, используем placeholder
+              img.src = "placeholder.jpg";  // укажите путь к placeholder при необходимости
+            }
+            // Заголовок/название аниме
+            const titleEl = document.createElement("div");
+            titleEl.classList.add("title");
+            titleEl.textContent = data.title || "No Title";
 
-    <!-- Секция Recommendations -->
-    <section class="content-section" id="recommend-section">
-      <h2 class="section-title" data-i18n="recommendTitle">Recommendations</h2>
-      <div class="cards-container" id="recommend-container">
-        <!-- Карточки Recommendations -->
-      </div>
-    </section>
-  </main>
+            // Вставляем изображение и название в элемент аниме
+            item.appendChild(img);
+            item.appendChild(titleEl);
+            // Добавляем аниме в контейнер списка
+            container.appendChild(item);
+          });
+        }, (error) => {
+          console.error(`Ошибка запроса раздела ${sectionName}:`, error);
+        });
+    }
 
-  <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar) -->
-  <nav class="bottom-nav">
-    <a href="#" class="nav-link active" data-i18n="navHome">
-      <i class="fas fa-home"></i>
-      <span class="nav-label">Главная</span>
-    </a>
-    <a href="#" class="nav-link" data-i18n="navAnime">
-      <i class="fas fa-film"></i>
-      <span class="nav-label">Аниме</span>
-    </a>
-    <a href="#" class="nav-link" data-i18n="navManga">
-      <i class="fas fa-book"></i>
-      <span class="nav-label">Манга</span>
-    </a>
-    <a href="#" class="nav-link" data-i18n="navProfile">
-      <i class="fas fa-user"></i>
-      <span class="nav-label">Профиль</span>
-    </a>
-  </nav>
-
-  <!-- МОДАЛЬНОЕ ОКНО УВЕДОМЛЕНИЙ (заглушка) -->
-  <div id="notif-modal" class="modal">
-    <div class="modal-content">
-      <span id="notif-close" class="close">&times;</span>
-      <h3>Уведомления</h3>
-      <p>Новых уведомлений нет.</p>
-    </div>
-  </div>
+    // Вызываем функцию для каждого раздела, чтобы загрузить данные и подписаться на обновления
+    renderAnimeList("Trending", "trending-list");
+    renderAnimeList("Recommendations", "recommendations-list");
+    renderAnimeList("Upcoming", "upcoming-list");
+    renderAnimeList("Continue Watching", "continue-list");
+  </script>
 </body>
 </html>
