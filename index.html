@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- Подключаем шрифты -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <!-- Font Awesome (для иконок уведомлений) -->
+  <!-- Font Awesome (иконки уведомлений) -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
   <style>
     /* ---------- Общие стили ---------- */
@@ -73,13 +73,6 @@
       background: #a749f8;
       color: #fff;
     }
-    .notif-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
     .search-bar {
       background: #2a2a2a;
       border: none;
@@ -88,6 +81,13 @@
       color: #fff;
       font-size: 0.85rem;
       width: 120px;
+    }
+    .notif-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
     }
     /* ---------- Main Content ---------- */
     .content {
@@ -177,7 +177,7 @@
       flex-shrink: 0;
       width: 140px;
       height: 210px;
-      border-radius: 4px;
+      border-radius: 12px;  /* изменено на более округлую форму */
       overflow: hidden;
       background: #333;
       transition: transform 0.3s;
@@ -191,7 +191,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 4px;
+      border-radius: 12px;
     }
     /* ---------- Bottom Nav (Tab Bar) ---------- */
     .bottom-nav {
@@ -389,10 +389,7 @@
           const slide = document.createElement("div");
           slide.className = "hero-slide";
           slide.style.backgroundImage = `url("${data.image}")`;
-          // Если в документе задан animeId, можно передавать его, иначе ссылка пустая
-          slide.innerHTML = `
-            <div class="hero-overlay"></div>
-          `;
+          slide.innerHTML = `<div class="hero-overlay"></div>`;
           carouselElem.appendChild(slide);
           slides.push(slide);
         });
@@ -411,7 +408,7 @@
     }
     loadCarousel();
 
-    // Функция загрузки секции (например, Trending, Continue Watching, Recommendations, Upcoming)
+    // Функция для загрузки секции (например, Trending, Continue Watching, Recommendations, Upcoming)
     async function loadSection(sectionKey, containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -423,7 +420,6 @@
         qSnap.forEach(docSnap => {
           const data = docSnap.data();
           const docId = docSnap.id;
-          // Оборачиваем карточку в ссылку, ведущую на страницу плеера (player.html)
           const cardLink = document.createElement("a");
           cardLink.href = `player.html?animeId=${docId}`;
           cardLink.classList.add("row-item");
@@ -438,8 +434,6 @@
         console.error(`Ошибка при загрузке раздела [${sectionKey}]:`, error);
       }
     }
-
-    // Загружаем секции (добавьте при необходимости дополнительные)
     loadSection("trending", "trending-container");
     loadSection("continue_watching", "continue-container");
     loadSection("recommendations", "recommend-container");
