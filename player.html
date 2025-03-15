@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>AniVision Player</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <!-- Шрифт Montserrat -->
+  <!-- Подключаем шрифт Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <!-- Font Awesome (для иконок) -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
   <style>
-    /* ---------- Общие стили (фон, шрифт) ---------- */
+    /* ---------- Общие стили ---------- */
     html, body {
       margin: 0;
       background: #141414;
       color: #fff;
       font-family: 'Montserrat', sans-serif;
-      padding-bottom: 5rem; /* Отступ снизу для MiniApp */
+      padding-bottom: 5rem; /* отступ снизу для MiniApp Telegram */
     }
-    /* ---------- Шапка (Header), аналогична index.html ---------- */
+    /* ---------- Header (как на главной) ---------- */
     .header {
       background: #000;
       padding: 0.5rem 1rem;
@@ -80,13 +80,13 @@
       cursor: pointer;
     }
 
-    /* ---------- Контейнер контента ---------- */
+    /* ---------- Контейнер ---------- */
     .container {
       width: calc(100% - 2rem);
       margin: 0 auto;
       padding: 1rem 0;
     }
-    /* ---------- Блок с инфой об аниме ---------- */
+    /* ---------- Блок с постером и инфой ---------- */
     .anime-info-block {
       display: flex;
       flex-wrap: wrap;
@@ -122,6 +122,7 @@
       line-height: 1.4;
       margin-top: 0.5rem;
     }
+
     /* ---------- Плеер ---------- */
     .player-container {
       margin-bottom: 1rem;
@@ -141,7 +142,8 @@
       height: 100%;
       border: none;
     }
-    /* ---------- Список серий ---------- */
+
+    /* ---------- Список серий (опционально, если нет episodes, будет пусто) ---------- */
     .episodes-list {
       margin-top: 1rem;
       margin-bottom: 1rem;
@@ -163,7 +165,7 @@
       background: #333;
     }
 
-    /* ---------- Рекомендации (горизонтальный ряд) ---------- */
+    /* ---------- Рекомендованное (горизонтальный ряд) ---------- */
     .recommend-row {
       margin-top: 1rem;
     }
@@ -253,7 +255,7 @@
   </style>
 </head>
 <body>
-  <!-- ШАПКА (Header), аналогичная index.html -->
+  <!-- HEADER (шапка) -->
   <header class="header">
     <div class="left-part">
       <!-- Кнопка «Назад» -->
@@ -272,9 +274,9 @@
     </div>
   </header>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <!-- Основной контент -->
   <div class="container">
-    <!-- Блок: постер + инфа -->
+    <!-- Блок: постер + инфо -->
     <div class="anime-info-block">
       <img id="anime-poster" class="anime-poster" alt="Poster">
       <div class="anime-details">
@@ -291,10 +293,9 @@
       </div>
     </div>
 
-    <!-- Список серий -->
+    <!-- Список серий (опционально, если в Firestore нет episodes, блок будет пуст) -->
     <div class="episodes-list" id="episodes-list">
       <h3>Список серий</h3>
-      <!-- добавляем эпизоды через JS -->
     </div>
 
     <!-- Рекомендованное -->
@@ -308,7 +309,7 @@
     </div>
   </div>
 
-  <!-- Нижняя панель (Tab Bar), как на главной -->
+  <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar), как на главной -->
   <nav class="bottom-nav">
     <a href="index.html" class="nav-link">
       <i class="fas fa-home"></i>
@@ -332,19 +333,20 @@
   <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js"></script>
   <script>
-    // Firebase-конфиг (тот же, что и на главной)
+    // Firebase-конфиг (тот же, что и в admin.html / index.html)
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_BUCKET",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
+      authDomain: "anivision-194f5.firebaseapp.com",
+      projectId: "anivision-194f5",
+      storageBucket: "anivision-194f5.appspot.com",
+      messagingSenderId: "793506779659",
+      appId: "1:793506779659:web:b391b63343af935afbed0e",
+      measurementId: "G-JGNDHJT219"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Переключатель языка (EN/RU), если нужно
+    // Языковой переключатель
     let currentLang = "en";
     const langToggle = document.getElementById("lang-toggle");
     langToggle.addEventListener("click", () => {
@@ -379,18 +381,18 @@
         const data = docSnap.data();
         console.log("Данные аниме:", data);
 
-        // Поля, соответствующие админ-панели: title, desc, cover, rating, playerLink, episodes
+        // Подставляем поля из админ-панели
+        // title, desc, cover, rating, playerLink, sections
         document.getElementById('anime-poster').src = data.cover || "https://via.placeholder.com/120x170?text=NoPoster";
         document.getElementById('anime-title').textContent = data.title || "Без названия";
         document.getElementById('anime-meta').textContent = `Рейтинг: ${data.rating || 'N/A'}`;
         document.getElementById('anime-desc').textContent = data.desc || "";
 
-        // Плеер
+        // Если есть playerLink, открываем
         if (data.playerLink) {
           openEpisode(data.title, data.playerLink);
         }
-
-        // Список эпизодов
+        // Если есть episodes (добавляем вручную в Firestore, т. к. админ-панель пока не содержит поле episodes)
         if (Array.isArray(data.episodes)) {
           const episodesList = document.getElementById('episodes-list');
           data.episodes.forEach(ep => {
@@ -413,7 +415,7 @@
       iframe.src = epLink || "";
     }
 
-    // Рекомендованное (берём из anime, где sections содержит "recommendations")
+    // Рекомендованное: sections содержит "recommendations"
     async function loadRecommendations() {
       const container = document.getElementById('recommend-container');
       container.innerHTML = "";
@@ -439,5 +441,6 @@
       }
     }
   </script>
+
 </body>
 </html>
