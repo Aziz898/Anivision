@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>AniVision Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключаем стили (можно вынести в admin.css) -->
+  <!-- Подключаем стили (можно вынести в отдельный admin.css) -->
   <link rel="stylesheet" href="admin.css">
   <!-- Иконки FontAwesome -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
@@ -311,23 +311,25 @@
   </div>
 
   <script type="module">
-    // Импорт Firebase SDK (версия 11.4.0)
+    // Импорт Firebase и Storage (версия 11.4.0)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } 
+      from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } 
+      from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
 
-    // Конфигурация Firebase (вставляем напрямую)
+    // Конфигурация Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
       projectId: "anivision-194f5",
-      storageBucket: "anivision-194f5.appspot.com",
+      storageBucket: "anivision-194f5.appspot.com", /* Обратите внимание на .appspot.com */
       messagingSenderId: "793506779659",
       appId: "1:793506779659:web:b391b63343af935afbed0e",
       measurementId: "G-JGNDHJT219"
     };
 
-    // Инициализация Firebase, Firestore и Storage
+    // Инициализация Firebase
     const appFirebase = initializeApp(firebaseConfig);
     const db = getFirestore(appFirebase);
     const storage = getStorage(appFirebase);
@@ -374,6 +376,8 @@
       tr.appendChild(tdSections);
 
       const tdActions = document.createElement("td");
+
+      // Кнопка "Редактировать" – переходим на другую страницу (пример)
       const btnEdit = document.createElement("button");
       btnEdit.textContent = "Редактировать";
       btnEdit.classList.add("btn-action");
@@ -383,6 +387,7 @@
       });
       tdActions.appendChild(btnEdit);
 
+      // Кнопка "Удалить"
       const btnDelete = document.createElement("button");
       btnDelete.textContent = "Удалить";
       btnDelete.classList.add("btn-action");
@@ -404,14 +409,19 @@
       document.getElementById("anime-table-body").appendChild(tr);
     }
 
-    // Функция для загрузки файла и получения URL (для обложки)
+    // Функция загрузки файла в Firebase Storage
     async function uploadFile(file, folder) {
       const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
-      await uploadBytes(storageRef, file);
-      return await getDownloadURL(storageRef);
+      // Загружаем файл
+      const snap = await uploadBytes(storageRef, file);
+      console.log("File uploaded:", snap.metadata.fullPath);
+      // Получаем URL
+      const url = await getDownloadURL(storageRef);
+      console.log("Download URL:", url);
+      return url;
     }
 
-    // Обработчик формы для добавления/обновления аниме
+    // Обработчик формы (Добавление/обновление аниме)
     document.getElementById("anime-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const title = document.getElementById("anime-title").value.trim();
@@ -421,6 +431,7 @@
       const rating = document.getElementById("anime-rating").value;
       const playerLink = document.getElementById("anime-player").value.trim();
 
+      // Если выбран файл
       const coverFileInput = document.getElementById("cover-file");
       let coverURL = coverURLInput;
       if (coverFileInput.files.length > 0) {
@@ -446,11 +457,15 @@
 
       try {
         if (editingAnimeId) {
-          await updateDoc(doc(db, "anime", editingAnimeId), { title, desc, cover: coverURL, category, rating, playerLink, sections });
+          await updateDoc(doc(db, "anime", editingAnimeId), {
+            title, desc, cover: coverURL, category, rating, playerLink, sections
+          });
           alert("Аниме обновлено!");
           editingAnimeId = null;
         } else {
-          await addDoc(animeCollection, { title, desc, cover: coverURL, category, rating, playerLink, sections });
+          await addDoc(animeCollection, {
+            title, desc, cover: coverURL, category, rating, playerLink, sections
+          });
           alert("Аниме успешно добавлено!");
         }
         document.getElementById("anime-form").reset();
@@ -461,7 +476,7 @@
       }
     });
 
-    // Обработчик формы для добавления баннера карусели
+    // Обработчик формы (Добавление баннера карусели)
     document.getElementById("carousel-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const bannerLink = document.getElementById("banner-link").value.trim();
@@ -513,9 +528,11 @@
       const tdImage = document.createElement("td");
       tdImage.innerHTML = `<img src="${data.image ? data.image : 'https://via.placeholder.com/100x50?text=No+Image'}" alt="Banner" style="width:100px;">`;
       tr.appendChild(tdImage);
+
       const tdLink = document.createElement("td");
       tdLink.innerHTML = `<a href="${data.link}" target="_blank">${data.link}</a>`;
       tr.appendChild(tdLink);
+
       const tdActions = document.createElement("td");
       const btnDelete = document.createElement("button");
       btnDelete.textContent = "Удалить";
@@ -523,7 +540,7 @@
       btnDelete.addEventListener("click", async () => {
         if (confirm("Удалить этот баннер?")) {
           try {
-            await deleteDoc(doc(db, "carouselBanners", docId));
+            await deleteDoc(doc(carouselCollection, docId));
             alert("Баннер удалён!");
             loadCarouselBanners();
           } catch (error) {
@@ -534,7 +551,7 @@
       });
       tdActions.appendChild(btnDelete);
       tr.appendChild(tdActions);
-      document.getElementById("carousel-table-body").appendChild(tr);
+      tableBody.appendChild(tr);
     }
 
     // Обработка навигации в sidebar
