@@ -1,12 +1,13 @@
 // Firebase configuration and initialization
-var firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
+  var firebaseConfig = {
+    apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
+    authDomain: "anivision-194f5.firebaseapp.com",
+    projectId: "anivision-194f5",
+    storageBucket: "anivision-194f5.appspot.com",
+    messagingSenderId: "793506779659",
+    appId: "1:793506779659:web:b391b63343af935afbed0e",
+    measurementId: "G-JGNDHJT219"
+  };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
