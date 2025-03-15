@@ -1,12 +1,12 @@
 /* ---------- Переменные цветовой схемы ---------- */
 :root {
-  --primary-color: #8e44ad; /* Фиолетовый акцент */
-  --bg-color: #000;        /* Чёрный фон */
-  --text-color: #fff;      /* Белый текст */
-  --accent-color: #4B0082; /* Тёмно-фиолетовый */
+  --primary-color: #8e44ad; /* Фиолетовый */
+  --bg-color: #000;         /* Чёрный */
+  --text-color: #fff;       /* Белый */
+  --accent-color: #4B0082;  /* Тёмно-фиолетовый */
 }
 
-/* Safe area для iOS */
+/* Safe area */
 html, body {
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
@@ -34,20 +34,14 @@ html, body {
 .app-title {
   font-size: 1.4rem;
   font-weight: 600;
-  text-align: center;
 }
-.logo-part1 {
-  color: var(--text-color);
-}
-.logo-part2 {
-  color: var(--primary-color);
-  margin-left: 5px;
-}
+.logo-part1 { color: var(--text-color); }
+.logo-part2 { color: var(--primary-color); margin-left: 5px; }
 
 /* ---------- Main Content ---------- */
 .content {
   padding: 15px;
-  padding-bottom: 70px; /* отступ под нижнюю панель */
+  padding-bottom: 70px; /* Отступ под нижнюю панель */
 }
 
 /* ---------- Hero-карусель ---------- */
@@ -96,7 +90,7 @@ html, body {
   background: var(--accent-color);
 }
 
-/* ---------- Content Sections (например, Trending) ---------- */
+/* ---------- Content Sections ---------- */
 .content-section {
   margin-bottom: 20px;
 }
@@ -114,7 +108,7 @@ html, body {
   scrollbar-width: none; /* Firefox */
 }
 .cards-container::-webkit-scrollbar {
-  display: none;        /* Chrome/Safari */
+  display: none;         /* Chrome/Safari */
 }
 /* Карточка аниме */
 .anime-card {
@@ -139,7 +133,7 @@ html, body {
   font-size: 0.9em;
 }
 
-/* ---------- Bottom Nav (Tab Bar) ---------- */
+/* ---------- Bottom Navigation (Tab Bar) ---------- */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -177,8 +171,10 @@ html, body {
   display: none;
   position: fixed;
   z-index: 200;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0,0,0,0.7);
 }
 .modal .modal-content {
@@ -197,7 +193,8 @@ html, body {
 }
 .modal .close {
   position: absolute;
-  top: 10px; right: 10px;
+  top: 10px;
+  right: 10px;
   font-size: 1.5em;
   cursor: pointer;
 }
