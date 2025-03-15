@@ -1,302 +1,285 @@
-/* ===============================
-   RESET / BASE
-============================== */
-html, body {
-  height: 100%;
-  margin: 0; padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  background: #141414;
-  color: #fff;
-  font-family: 'Montserrat', sans-serif;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-
-  /* Safe area (iOS) */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+/* Базовые переменные цветовой схемы */
+:root {
+  --primary-color: #8e44ad;    /* фиолетовый (акцент) */
+  --secondary-color: #ffffff;  /* белый (основной текст) */
+  --bg-color: #000000;         /* чёрный (фон) */
+  --accent-color: #4B0082;     /* дополнительный тёмно-фиолетовый */
 }
 
-/* SPLASH SCREEN */
-.splash-screen {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: flex; 
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  animation: fadeIn 0.5s ease forwards;
+/* Глобальные стили */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.splash-text {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #a749f8;
-  animation: colorFlow 2s infinite alternate;
-}
-@keyframes fadeIn {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
-}
-@keyframes fadeOut {
-  0%   { opacity: 1; }
-  100% { opacity: 0; }
-}
-@keyframes colorFlow {
-  0%   { color: #a749f8; }
-  100% { color: #fff; }
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--bg-color);
+  color: #dddddd; /* светло-серый текст для лучшего чтения на чёрном фоне */
+  line-height: 1.6;
 }
 
-/* HEADER */
+/* Заголовок/логотип AniVision */
+.logo {
+  font-family: 'Shippori Antique', sans-serif; /* аниме-стиль шрифта */
+  font-size: 1.5em;
+  color: var(--primary-color);
+  text-shadow: 0 0 5px var(--primary-color); /* лёгкое свечение фиолетовым */
+}
+
+/* Шапка (header) */
 .header {
-  background-color: #000;
-  padding: 1rem;
+  background: #1a1a1a; /* почти чёрный фон шапки */
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.app-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  text-align: center;
-}
-.logo-part1 {
-  color: #fff;
-}
-.logo-part2 {
-  color: #a749f8;
-  margin-left: 4px;
-  text-transform: capitalize;
-}
-.lang-btn, .notif-btn {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 1.3rem;
-  cursor: pointer;
-}
 
-/* CONTENT */
-.content {
-  flex: 1;
-  padding-bottom: 5rem; /* чтобы не наезжать на bottom-nav */
-}
-
-/* HERO-CAROUSEL (auto-rotate) */
-.hero-carousel {
-  position: relative;
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
-}
-.hero-slide {
-  position: absolute;
-  top: 0; left: 100%;
-  width: 100%; height: 100%;
-  display: flex;
-  flex-shrink: 0;
-  transition: left 0.8s ease;
-}
-.hero-slide-bg {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-}
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, rgba(0,0,0,0.7), transparent);
+/* Навигационное меню */
+.nav-menu ul {
+  list-style: none;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
 }
-.banner-poster {
-  width: 120px;
-  height: calc(120px * 16/9);
-  object-fit: cover;
-  border-radius: 8px;
+.nav-menu li {
+  margin: 0 15px;
 }
-.banner-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 50%;
+.nav-link {
+  position: relative;
+  color: #cccccc;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95em;
+  padding: 5px 0;
+  transition: color 0.3s;
 }
-.banner-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
-}
-.banner-desc {
-  font-size: 0.85rem;
-  color: #ccc;
-  margin-bottom: 0.5rem;
-}
-.btn-banner {
-  background: #a749f8;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  transition: background 0.3s, transform 0.3s;
-  cursor: pointer;
-}
-.btn-banner:hover {
-  background: #933ae0;
-  transform: scale(1.05);
-}
-/* Слайд видимый (active) */
-.hero-slide.active {
+/* Ховер-эффект для пунктов меню: фиолетовое подчеркивание */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
   left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
 }
-/* скрываем предыдущий/следующий */
-.hero-slide.prev {
-  left: -100%;
+.nav-link:hover {
+  color: var(--primary-color);
 }
-.hero-slide.next {
-  left: 100%;
-}
-
-/* SECTION-ROW */
-.section-row {
-  margin-bottom: 1rem;
-}
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 1rem 0.5rem;
-}
-.section-title {
-  font-size: 1rem;
-  font-weight: 600;
-}
-.btn-more {
-  background: none;
-  border: none;
-  color: #a749f8;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.btn-more:hover {
-  color: #fff;
-}
-
-/* ROW-CONTAINER (горизонтальная прокрутка) */
-.row-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 0.5rem;
-  padding: 0 1rem 1rem;
-  scrollbar-width: none; /* Firefox */
-}
-.row-container::-webkit-scrollbar {
-  display: none; /* Chrome */
-}
-/* Каждая карточка внутри row */
-.row-item {
-  position: relative;
-  flex-shrink: 0; /* чтобы не сжималось */
-  width: 140px;    /* фиксированная ширина для примера */
-}
-.row-poster {
+.nav-link:hover::after {
   width: 100%;
-  height: 210px;
-  object-fit: cover;
-  border-radius: 4px;
-  background: #333;
-  transition: transform 0.3s;
 }
-.row-poster:hover {
-  transform: scale(1.08);
+/* Активный пункт меню (текущая страница) */
+.nav-link.active {
+  color: var(--primary-color);
 }
-/* Небольшие оверлеи на постере (TV, Ep. 13, рейтинг и т.д.) */
-.row-info-overlay {
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Селектор языка */
+#lang-select {
+  background: #000;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 3px;
+  padding: 3px 5px;
+  font: inherit;
+}
+#lang-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Секция карусели (slider) */
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 60vh; /* высота карусели относительно высоты экрана */
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+/* Слайды карусели */
+.slide {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* чтобы клики шли по постеру */
+  background: #000 no-repeat center center;
+  background-size: cover;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 1;
 }
-.row-type, .row-episode, .row-rating {
+.slide.active {
+  opacity: 1;
+}
+/* Информация на слайде (заголовок, описание, кнопка) */
+.slide-info {
   position: absolute;
-  background: rgba(0,0,0,0.7);
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.6);  /* полупрозрачный фон под текстом */
+  padding: 15px;
+  border-radius: 5px;
+  max-width: 60%;
+}
+.slide-info h2 {
+  font-family: 'Shippori Antique', sans-serif;
+  font-size: 1.6em;
+  color: var(--secondary-color);
+  margin-bottom: 5px;
+}
+.slide-info p {
+  font-size: 0.9em;
+  color: var(--secondary-color);
+  margin-bottom: 10px;
+}
+/* Кнопка "Watch Now" на слайде */
+.slide-info button {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  background: var(--primary-color);
   color: #fff;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.7rem;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
 }
-.row-type {
-  top: 5px; left: 5px;
+.slide-info button:hover {
+  background: #a25fe8; /* слегка более светлый фиолетовый */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-.row-episode {
-  top: 5px; right: 5px;
-}
-.row-rating {
-  bottom: 5px; left: 5px;
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-.row-rating i {
-  color: #ffb400;
-  font-size: 0.7rem;
+.slide-info button:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
-/* BOTTOM NAV (4 вкладки) */
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0;
-  width: 100%;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(10px);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.5rem 0;
-  z-index: 999;
-  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
-}
-.nav-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Стрелки навигации карусели */
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 2em;
   text-decoration: none;
-  transition: color 0.3s;
+  padding: 5px 10px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  user-select: none;
+  z-index: 2;
 }
-.nav-label {
-  font-size: 0.7rem;
-  margin-top: 0.2rem;
+.prev {
+  left: 15px;
 }
-.nav-link.active,
-.nav-link:hover {
-  color: #a749f8;
+.next {
+  right: 15px;
+}
+.prev:hover, .next:hover {
+  background: rgba(0,0,0,0.6);
 }
 
-/* MEDIA QUERIES */
-@media (min-width: 768px) {
-  .hero-carousel {
-    height: 280px;
+/* Индикаторы (точки) карусели */
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+}
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+  background: #777;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.dot.active {
+  background: var(--secondary-color);
+}
+
+/* Секции списка аниме */
+.anime-section {
+  padding: 0 20px;
+  margin-bottom: 40px;
+}
+.section-title {
+  font-family: 'Shippori Antique', sans-serif;
+  font-size: 1.4em;
+  color: #ffffff;
+  /* Фиолетовая полоса слева заголовка секции */
+  border-left: 4px solid var(--primary-color);
+  padding-left: 10px;
+  margin-bottom: 15px;
+}
+
+/* Список карточек аниме */
+.anime-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+/* Карточка аниме */
+.anime-card {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  color: var(--secondary-color);
+}
+.anime-card img {
+  width: 150px;
+  height: 225px;
+  border-radius: 5px;
+  object-fit: cover;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+/* Название аниме под постером */
+.anime-title {
+  margin-top: 5px;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+.anime-card:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--primary-color);
+}
+.anime-card:hover .anime-title {
+  color: var(--primary-color);
+}
+
+/* Плавное появление контента (при загрузке/прокрутке) */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Адаптивность (пример): на маленьких экранах навигация становится вертикальной */
+@media (max-width: 600px) {
+  .nav-menu ul {
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  .banner-poster {
-    width: 140px;
-    height: calc(140px * 16/9);
+  .nav-menu li {
+    margin: 10px;
   }
-  .row-item {
-    width: 160px;
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .row-poster {
-    height: 240px;
+  .logo {
+    margin-bottom: 10px;
   }
 }
