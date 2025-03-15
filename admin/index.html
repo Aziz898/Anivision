@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <title>AniVision Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Подключаем стили (можно вынести в отдельный admin.css) -->
+  <!-- Подключаем стили (можно вынести в отдельный файл admin.css) -->
   <link rel="stylesheet" href="admin.css">
-  <!-- Иконки FontAwesome -->
+  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     /* Общие стили админ-панели */
     body {
@@ -311,25 +312,23 @@
   </div>
 
   <script type="module">
-    // Импорт Firebase и Storage (версия 11.4.0)
+    // Импорт Firebase SDK (версия 11.4.0)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } 
-      from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL } 
-      from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
 
-    // Конфигурация Firebase
+    // Конфигурация Firebase (вставляем напрямую)
     const firebaseConfig = {
       apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
       authDomain: "anivision-194f5.firebaseapp.com",
       projectId: "anivision-194f5",
-      storageBucket: "anivision-194f5.appspot.com", /* Обратите внимание на .appspot.com */
+      storageBucket: "anivision-194f5.appspot.com",
       messagingSenderId: "793506779659",
       appId: "1:793506779659:web:b391b63343af935afbed0e",
       measurementId: "G-JGNDHJT219"
     };
 
-    // Инициализация Firebase
+    // Инициализация Firebase, Firestore и Storage
     const appFirebase = initializeApp(firebaseConfig);
     const db = getFirestore(appFirebase);
     const storage = getStorage(appFirebase);
@@ -376,8 +375,6 @@
       tr.appendChild(tdSections);
 
       const tdActions = document.createElement("td");
-
-      // Кнопка "Редактировать" – переходим на другую страницу (пример)
       const btnEdit = document.createElement("button");
       btnEdit.textContent = "Редактировать";
       btnEdit.classList.add("btn-action");
@@ -387,7 +384,6 @@
       });
       tdActions.appendChild(btnEdit);
 
-      // Кнопка "Удалить"
       const btnDelete = document.createElement("button");
       btnDelete.textContent = "Удалить";
       btnDelete.classList.add("btn-action");
@@ -409,19 +405,25 @@
       document.getElementById("anime-table-body").appendChild(tr);
     }
 
-    // Функция загрузки файла в Firebase Storage
-    async function uploadFile(file, folder) {
-      const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
-      // Загружаем файл
-      const snap = await uploadBytes(storageRef, file);
-      console.log("File uploaded:", snap.metadata.fullPath);
-      // Получаем URL
-      const url = await getDownloadURL(storageRef);
-      console.log("Download URL:", url);
-      return url;
+    // Функция загрузки файла через Cloudinary (без переменных) через Netlify endpoint
+    async function uploadImageToCloudinary(file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      // Замените URL ниже на URL вашего Netlify endpoint (если вы развернули функцию)
+      const endpoint = "https://ВАШЕ_ИМЯ_НА_NETLIFY.netlify.app/.netlify/functions/uploadImage";
+      const response = await fetch(endpoint, {
+        method: "POST",
+        body: formData
+      });
+      if (!response.ok) {
+        throw new Error("Ошибка загрузки изображения");
+      }
+      const result = await response.json();
+      console.log("Cloudinary upload result:", result);
+      return result.secure_url; // secure_url обычно содержит публичный URL
     }
 
-    // Обработчик формы (Добавление/обновление аниме)
+    // Обработчик формы для добавления/обновления аниме
     document.getElementById("anime-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const title = document.getElementById("anime-title").value.trim();
@@ -431,12 +433,12 @@
       const rating = document.getElementById("anime-rating").value;
       const playerLink = document.getElementById("anime-player").value.trim();
 
-      // Если выбран файл
       const coverFileInput = document.getElementById("cover-file");
       let coverURL = coverURLInput;
       if (coverFileInput.files.length > 0) {
         try {
-          coverURL = await uploadFile(coverFileInput.files[0], "covers");
+          coverURL = await uploadImageToCloudinary(coverFileInput.files[0]);
+          console.log("Получен URL обложки:", coverURL);
         } catch (error) {
           console.error("Ошибка при загрузке обложки:", error);
           alert("Ошибка при загрузке обложки.");
@@ -476,7 +478,7 @@
       }
     });
 
-    // Обработчик формы (Добавление баннера карусели)
+    // Обработчик формы для добавления баннера карусели
     document.getElementById("carousel-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const bannerLink = document.getElementById("banner-link").value.trim();
@@ -485,7 +487,7 @@
       let bannerImageURL = bannerLinkInput;
       if (bannerFileInput.files.length > 0) {
         try {
-          bannerImageURL = await uploadFile(bannerFileInput.files[0], "carouselBanners");
+          bannerImageURL = await uploadImageToCloudinary(bannerFileInput.files[0]);
         } catch (error) {
           console.error("Ошибка при загрузке баннера:", error);
           alert("Ошибка при загрузке баннера.");
@@ -528,11 +530,9 @@
       const tdImage = document.createElement("td");
       tdImage.innerHTML = `<img src="${data.image ? data.image : 'https://via.placeholder.com/100x50?text=No+Image'}" alt="Banner" style="width:100px;">`;
       tr.appendChild(tdImage);
-
       const tdLink = document.createElement("td");
       tdLink.innerHTML = `<a href="${data.link}" target="_blank">${data.link}</a>`;
       tr.appendChild(tdLink);
-
       const tdActions = document.createElement("td");
       const btnDelete = document.createElement("button");
       btnDelete.textContent = "Удалить";
@@ -551,7 +551,7 @@
       });
       tdActions.appendChild(btnDelete);
       tr.appendChild(tdActions);
-      tableBody.appendChild(tr);
+      document.getElementById("carousel-table-body").appendChild(tr);
     }
 
     // Обработка навигации в sidebar
