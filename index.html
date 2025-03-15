@@ -9,15 +9,10 @@
   <link rel="stylesheet" href="style.css" />
   <!-- Font Awesome (иконки) -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-  <!-- Скрипт (включая Firebase SDK v8 подключаем в script.js) -->
+  <!-- Скрипт (Firebase SDK + функционал) -->
   <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- SPLASH SCREEN (с анимацией) -->
-  <div class="splash-screen" id="splash-screen">
-    <div class="splash-logo">AniVision</div>
-  </div>
-
   <!-- HEADER -->
   <header class="header">
     <!-- Кнопка смены языка -->
@@ -36,12 +31,12 @@
 
   <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main class="content">
-    <!-- HERO-КАРУСЕЛЬ -->
+    <!-- Hero-карусель -->
     <section class="hero-carousel" id="hero-carousel">
       <!-- Слайды будут подгружаться динамически из Firestore (коллекция carouselBanners) -->
     </section>
 
-    <!-- Секция Trending -->
+    <!-- Секция Trending (пример) -->
     <section class="content-section">
       <h2 class="section-title" data-i18n="trendingTitle">Популярное</h2>
       <div class="cards-container" id="trending-container">
@@ -49,7 +44,7 @@
       </div>
     </section>
 
-    <!-- При желании можно добавить другие секции: Continue Watching, Recommendations, etc. -->
+    <!-- При желании можно добавить другие секции: Continue Watching, Recommendations и т.д. -->
   </main>
 
   <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar) -->
@@ -72,7 +67,7 @@
     </a>
   </nav>
 
-  <!-- МОДАЛЬНОЕ ОКНО УВЕДОМЛЕНИЙ -->
+  <!-- МОДАЛЬНОЕ ОКНО УВЕДОМЛЕНИЙ (заглушка) -->
   <div id="notif-modal" class="modal">
     <div class="modal-content">
       <span id="notif-close" class="close">&times;</span>
