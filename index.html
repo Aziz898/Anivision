@@ -1,59 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AniVision – Home</title>
-  <!-- Подключение шрифтов (анимешный стиль и основной) -->
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Antique&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Подключение файла стилей (CSS) -->
+  <title>AniVision</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Google Font (optional) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
+  <!-- Firebase SDKs -->
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- Шапка сайта -->
-  <header class="header fade-in">
-    <div class="logo" data-i18n="">AniVision</div>
-    <nav class="nav-menu">
-      <ul>
-        <li><a href="#" class="nav-link home-link active" data-i18n="navHome">Home</a></li>
-        <li><a href="#" class="nav-link anime-link" data-i18n="navAnime">Anime</a></li>
-        <li><a href="#" class="nav-link movies-link" data-i18n="navMovies">Movies</a></li>
-        <!-- Ссылка "Admin" видна только администраторам -->
-        <li><a href="#" class="nav-link admin-link" data-i18n="navAdmin" style="display:none;">Admin</a></li>
+  <!-- Header / Navigation -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">AniVision</div>
+      <ul class="nav-links">
+        <li class="active"><a href="#">Главная</a></li>
+        <li><a href="#">Аниме</a></li>
+        <li><a href="#">Мой список</a></li>
       </ul>
+      <div class="user-icon">
+        <a href="#"><span>Профиль</span></a>
+      </div>
     </nav>
-    <!-- Переключатель языка -->
-    <select id="lang-select">
-      <option value="en">EN</option>
-      <option value="ru">RU</option>
-    </select>
   </header>
 
-  <!-- Карусель с авто-переключением (слайдер) -->
-  <section class="carousel fade-in">
-    <!-- Слайды будут вставлены динамически через JS -->
-    <a href="#" class="prev">&#10094;</a>
-    <a href="#" class="next">&#10095;</a>
-    <div class="carousel-dots"></div>
-  </section>
-
-  <!-- Секция "Популярное аниме" -->
-  <section class="anime-section fade-in">
-    <h3 class="section-title popular-title" data-i18n="sectionPopular">Popular Anime</h3>
-    <div class="anime-list popular-list">
-      <!-- Карточки аниме будут вставлены динамически через JS -->
+  <!-- Carousel Section -->
+  <section class="carousel-section">
+    <div class="carousel" id="carousel">
+      <!-- Slides will be injected by script.js -->
     </div>
   </section>
 
-  <!-- Секция "Новые релизы" -->
-  <section class="anime-section fade-in">
-    <h3 class="section-title new-title" data-i18n="sectionNew">New Releases</h3>
-    <div class="anime-list new-list">
-      <!-- Карточки аниме будут вставлены динамически через JS -->
+  <!-- Trending Section -->
+  <section class="content-section" id="trending-section">
+    <h2 class="section-title">Популярное</h2>
+    <div class="cards-container" id="trending-list">
+      <!-- Trending cards inserted by script.js -->
     </div>
   </section>
 
-  <!-- Подключение файла со скриптами (JavaScript) -->
-  <script src="scripts.js"></script>
+  <!-- Continue Watching Section -->
+  <section class="content-section" id="continue-section">
+    <h2 class="section-title">Продолжить просмотр</h2>
+    <div class="cards-container" id="continue-list">
+      <!-- Continue watching cards inserted by script.js -->
+    </div>
+  </section>
+
+  <!-- Recommendations Section -->
+  <section class="content-section" id="recommend-section">
+    <h2 class="section-title">Рекомендации</h2>
+    <div class="cards-container" id="recommend-list">
+      <!-- Recommendation cards inserted by script.js -->
+    </div>
+  </section>
+
+  <!-- Admin Panel Section (hidden by default, visible only to admins) -->
+  <section id="admin-panel">
+    <h2>Админ панель</h2>
+    <!-- Form to add new anime (Trending or Recommendations) -->
+    <form id="addAnimeForm">
+      <h3>Добавить аниме</h3>
+      <label for="animeTitle">Название аниме:</label>
+      <input type="text" id="animeTitle" required />
+
+      <label for="animeSection">Раздел:</label>
+      <select id="animeSection">
+        <option value="trending">Популярное (Trending)</option>
+        <option value="recommendations">Рекомендации</option>
+      </select>
+
+      <label for="animeCover">Обложка (файл):</label>
+      <input type="file" id="animeCover" accept="image/*" required />
+
+      <button type="submit">Добавить</button>
+    </form>
+
+    <!-- Form to add new carousel banner -->
+    <form id="addCarouselForm">
+      <h3>Добавить баннер в карусель</h3>
+      <label for="bannerTitle">Заголовок/Название:</label>
+      <input type="text" id="bannerTitle" required />
+
+      <label for="bannerImage">Изображение баннера (файл):</label>
+      <input type="file" id="bannerImage" accept="image/*" required />
+
+      <button type="submit">Добавить баннер</button>
+    </form>
+  </section>
 </body>
 </html>
