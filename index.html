@@ -3,76 +3,103 @@
 <head>
   <meta charset="UTF-8" />
   <title>AniVision – Главная</title>
-  <!-- Мобильная адаптация и safe area -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <!-- Мобильная адаптация и safe-area -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- Подключаем стили -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
   <!-- Font Awesome (иконки) -->
   <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-  <!-- Подключаем скрипт (Firebase SDK и наш код) -->
+  <!-- Шрифт Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Подключаем скрипт -->
   <script defer src="script.js"></script>
 </head>
 <body>
+  <!-- SPLASH SCREEN -->
+  <div class="splash-screen" id="splash-screen">
+    <div class="splash-logo">AniVision</div>
+  </div>
+
   <!-- HEADER -->
   <header class="header">
-    <button id="lang-btn" class="lang-btn"><i class="fas fa-flag"></i></button>
-    <div class="app-title"><span class="logo-part1">Ani</span><span class="logo-part2">Vision</span></div>
-    <button id="notif-btn" class="notif-btn"><i class="fas fa-bell"></i></button>
+    <button class="lang-btn" id="lang-btn"><i class="fas fa-flag"></i></button>
+    <h1 class="app-title"><span class="logo-part1">Ani</span><span class="logo-part2">Vision</span></h1>
+    <button class="notif-btn" id="notif-btn"><i class="fas fa-bell"></i></button>
   </header>
 
   <!-- MAIN CONTENT -->
   <main class="content">
-    <!-- HERO-карусель -->
+    <!-- HERO-КАРУСЕЛЬ -->
     <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайды подгружаются из Firestore (коллекция carouselBanners) -->
+      <!-- Слайды будут подгружаться динамически из Firestore (коллекция carouselBanners) -->
     </section>
 
-    <!-- Секция Trending -->
-    <section class="content-section" id="trending-section">
-      <h2 class="section-title" data-i18n="trendingTitle">Trending</h2>
-      <div class="cards-container" id="trending-container">
-        <!-- Карточки Trending будут подгружаться динамически -->
+    <!-- Секция: Trending -->
+    <section class="section-row">
+      <div class="section-header">
+        <h3 class="section-title" id="trending-title">Trending</h3>
+        <button class="btn-more" id="trending-more">See All</button>
+      </div>
+      <div class="row-container" id="trending-container">
+        <!-- Карточки Trending подгружаются динамически -->
       </div>
     </section>
 
-    <!-- Секция Continue Watching -->
-    <section class="content-section" id="continue-section">
-      <h2 class="section-title" data-i18n="continueTitle">Continue Watching</h2>
-      <div class="cards-container" id="continue-container">
-        <!-- Карточки Continue Watching -->
+    <!-- Секция: Continue Watching -->
+    <section class="section-row">
+      <div class="section-header">
+        <h3 class="section-title" id="continue-title">Continue Watching</h3>
+        <button class="btn-more">See All</button>
+      </div>
+      <div class="row-container" id="continue-container">
+        <!-- Карточки Continue Watching подгружаются динамически -->
       </div>
     </section>
 
-    <!-- Секция Recommendations -->
-    <section class="content-section" id="recommend-section">
-      <h2 class="section-title" data-i18n="recommendTitle">Recommendations</h2>
-      <div class="cards-container" id="recommend-container">
-        <!-- Карточки Recommendations -->
+    <!-- Секция: Recommendations -->
+    <section class="section-row">
+      <div class="section-header">
+        <h3 class="section-title" id="recommend-title">Recommendations</h3>
+        <button class="btn-more">See All</button>
+      </div>
+      <div class="row-container" id="recommend-container">
+        <!-- Карточки Recommendations подгружаются динамически -->
+      </div>
+    </section>
+
+    <!-- Секция: Upcoming -->
+    <section class="section-row">
+      <div class="section-header">
+        <h3 class="section-title" id="upcoming-title">Upcoming</h3>
+        <button class="btn-more">See All</button>
+      </div>
+      <div class="row-container" id="upcoming-container">
+        <!-- Карточки Upcoming подгружаются динамически -->
       </div>
     </section>
   </main>
 
-  <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar) -->
+  <!-- Нижняя панель (Tab Bar) -->
   <nav class="bottom-nav">
-    <a href="#" class="nav-link active" data-i18n="navHome">
+    <a href="#" class="nav-link active">
       <i class="fas fa-home"></i>
       <span class="nav-label">Главная</span>
     </a>
-    <a href="#" class="nav-link" data-i18n="navAnime">
+    <a href="#" class="nav-link">
       <i class="fas fa-film"></i>
       <span class="nav-label">Аниме</span>
     </a>
-    <a href="#" class="nav-link" data-i18n="navManga">
+    <a href="#" class="nav-link">
       <i class="fas fa-book"></i>
       <span class="nav-label">Манга</span>
     </a>
-    <a href="#" class="nav-link" data-i18n="navProfile">
+    <a href="#" class="nav-link">
       <i class="fas fa-user"></i>
       <span class="nav-label">Профиль</span>
     </a>
   </nav>
 
-  <!-- МОДАЛЬНОЕ ОКНО УВЕДОМЛЕНИЙ (заглушка) -->
+  <!-- Модальное окно уведомлений (заглушка) -->
   <div id="notif-modal" class="modal">
     <div class="modal-content">
       <span id="notif-close" class="close">&times;</span>
