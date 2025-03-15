@@ -1,205 +1,245 @@
-/* Base styles and color scheme */
+/* Переменные цветовой схемы */
+:root {
+  --primary-color: #8e44ad;  /* Фиолетовый */
+  --bg-color: #000;          /* Чёрный */
+  --text-color: #fff;        /* Белый */
+  --accent-color: #4B0082;   /* Тёмно-фиолетовый */
+}
+
+/* Безопасная зона (Safe Area) */
+html, body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Общие стили */
 body {
-  background-color: #0f0f0f;
-  color: #ffffff;
   margin: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
   font-family: 'Poppins', sans-serif;
 }
-a {
-  color: #ffffff;
-  text-decoration: none;
-}
-h2.section-title {
-  font-size: 1.5em;
-  margin: 0 0 0.5em 0;
-  /* Purple accent bar on the left of section title */
-  border-left: 4px solid #8a2be2;
-  padding-left: 0.5em;
-}
-/* Navbar */
-.navbar {
+
+/* Splash Screen */
+.splash-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--bg-color);
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.5em 1em;
-  background-color: #181818;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.7s ease;
 }
-.logo {
-  font-size: 1.5em;
+.splash-logo {
+  font-size: 2rem;
   font-weight: 600;
-  color: #8a2be2;
+  color: var(--primary-color);
+  animation: logoPulse 2s ease-in-out;
 }
-.nav-links {
-  list-style: none;
+@keyframes logoPulse {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Header */
+.header {
+  background: #111;
+  padding: 10px 15px;
   display: flex;
-  gap: 1em;
-  margin: 0;
-  padding: 0;
+  justify-content: space-between;
+  align-items: center;
 }
-.nav-links li a {
-  color: #ffffff;
-  font-weight: 500;
+.lang-btn, .notif-btn {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  cursor: pointer;
 }
-.nav-links li.active a {
-  color: #8a2be2;
+.app-title {
+  font-size: 1.4rem;
+  font-weight: 600;
 }
-.nav-links li a:hover {
-  text-decoration: underline;
+.logo-part1 { color: var(--text-color); }
+.logo-part2 { color: var(--primary-color); margin-left: 5px; }
+
+/* Основной контент */
+.content {
+  padding: 15px;
+  padding-bottom: 70px; /* Для нижней панели */
 }
-.user-icon a {
-  color: #ffffff;
-  font-weight: 500;
-}
-/* Carousel */
-.carousel-section {
-  position: relative;
-  overflow: hidden;
-}
-.carousel {
+
+/* Hero-карусель */
+.hero-carousel {
   position: relative;
   width: 100%;
   height: 60vh;
-  min-height: 300px;
+  min-height: 250px;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 .slide {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 100%;
   width: 100%;
   height: 100%;
-  background-color: #000;
-  background-size: cover;
-  background-position: center center;
   opacity: 0;
   transition: opacity 1s ease;
-  pointer-events: none;
-  z-index: 0;
 }
 .slide.active {
+  left: 0;
   opacity: 1;
-  pointer-events: auto;
   z-index: 1;
 }
-.slide-content {
+.slide .slide-content {
   position: absolute;
   bottom: 20%;
   left: 5%;
-  width: 40%;
-  color: #ffffff;
+  color: var(--text-color);
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  border-radius: 5px;
 }
-.slide-content h2 {
+.slide .slide-content h2 {
   font-size: 2em;
-  margin: 0 0 0.2em 0;
+  margin-bottom: 5px;
 }
-.slide-content p {
+.slide .slide-content p {
   font-size: 1em;
-  margin: 0 0 0.5em 0;
+  margin-bottom: 10px;
 }
-.watch-btn {
-  display: inline-block;
-  padding: 0.5em 1em;
-  background-color: #8a2be2;
-  color: #ffffff;
+.slide .slide-content button {
+  background: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 8px 15px;
   border-radius: 4px;
-  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
 }
-.watch-btn:hover {
-  background-color: #9d47e8;
+.slide .slide-content button:hover {
+  background: var(--accent-color);
 }
-/* Content Sections (Trending, Continue Watching, Recommendations) */
+
+/* Контент-секции (например, Trending) */
 .content-section {
-  padding: 1em 1.5em;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  padding-left: 8px;
+  border-left: 4px solid var(--primary-color);
 }
 .cards-container {
   display: flex;
-  gap: 1em;
+  gap: 10px;
   overflow-x: auto;
-  padding-bottom: 1em;
-  /* Hide horizontal scrollbar */
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;     /* Firefox */
+  padding-bottom: 10px;
+  scrollbar-width: none;  /* Firefox */
 }
 .cards-container::-webkit-scrollbar {
-  display: none;             /* Chrome/Safari */
+  display: none;
 }
-.card {
-  flex: 0 0 200px;
-  height: 112px;  /* 16:9 aspect ratio if width 200px */
-  background-color: #222;
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-}
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-.card:hover img {
-  transform: scale(1.05);
-}
-/* Card title below image */
-.card-title {
-  margin-top: 0.3em;
-  font-size: 0.9em;
+.anime-card {
+  flex: 0 0 auto;
+  width: 140px;
   text-align: center;
+  text-decoration: none;
+  color: var(--text-color);
 }
-/* Continue Watching specific - progress bar overlay */
-.card.progress-card .progress-bar {
-  position: absolute;
+.anime-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform 0.3s;
+}
+.anime-card:hover img {
+  transform: scale(1.08);
+}
+.anime-card .anime-title {
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+
+/* Нижняя панель (Tab Bar) */
+.bottom-nav {
+  position: fixed;
   bottom: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.7);
   width: 100%;
-  height: 5px;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  z-index: 100;
 }
-.card.progress-card .progress-bar span {
-  display: block;
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-link .nav-label {
+  font-size: 0.7em;
+  margin-top: 3px;
+}
+.nav-link.active, .nav-link:hover {
+  color: var(--primary-color);
+}
+
+/* Модальное окно уведомлений */
+.modal {
+  display: none; /* Скрыто по умолчанию */
+  position: fixed;
+  z-index: 200;
+  left: 0;
+  top: 0;
+  width: 100%;
   height: 100%;
-  background-color: #8a2be2;
-  width: 0%;
+  overflow: auto;
+  background: rgba(0,0,0,0.7);
 }
-/* Admin Panel */
-#admin-panel {
-  display: none;  /* hidden by default; made visible when admin is logged in */
-  background-color: #141414;
-  padding: 1em;
-  margin: 2em;
-  border: 1px solid #333;
+.modal-content {
+  background: var(--bg-color);
+  margin: 15% auto;
+  padding: 20px;
   border-radius: 8px;
+  width: 80%;
+  max-width: 400px;
 }
-#admin-panel h2 {
-  color: #8a2be2;
+.modal-content h3 {
+  margin-top: 0;
+  color: var(--primary-color);
 }
-#admin-panel form {
-  margin-bottom: 1.5em;
-}
-#admin-panel label {
-  display: block;
-  margin: 0.5em 0 0.2em;
-}
-#admin-panel input[type="text"],
-#admin-panel select,
-#admin-panel input[type="file"] {
-  width: 100%;
-  padding: 0.4em;
-  margin-bottom: 0.5em;
-  background: #222;
-  border: 1px solid #444;
-  color: #fff;
-  border-radius: 4px;
-}
-#admin-panel button {
-  background-color: #8a2be2;
-  color: #fff;
-  border: none;
-  padding: 0.6em 1.2em;
-  border-radius: 4px;
+.close {
+  color: var(--text-color);
+  float: right;
+  font-size: 1.5em;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 1em;
 }
-#admin-panel button:hover {
-  background-color: #9d47e8;
+.close:hover {
+  color: var(--primary-color);
+}
+
+/* Плавное появление элементов */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
