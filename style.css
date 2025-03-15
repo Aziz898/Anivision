@@ -1,25 +1,47 @@
 /* ---------- Переменные цветовой схемы ---------- */
 :root {
   --primary-color: #8e44ad; /* Фиолетовый */
-  --bg-color: #000;         /* Чёрный */
-  --text-color: #fff;       /* Белый */
+  --bg-color: #141414;      /* Тёмный фон */
+  --text-color: #fff;       /* Белый текст */
   --accent-color: #4B0082;  /* Тёмно-фиолетовый */
 }
 
-/* Safe area */
+/* Safe Area для iOS */
 html, body {
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
   margin: 0;
   background: var(--bg-color);
   color: var(--text-color);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ---------- Splash Screen ---------- */
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.7s ease;
+}
+.splash-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.splash-logo {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
 /* ---------- Header ---------- */
 .header {
-  background: #111;
-  padding: 10px 15px;
+  background: #000;
+  padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,43 +50,42 @@ html, body {
   background: none;
   border: none;
   color: var(--text-color);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   cursor: pointer;
 }
 .app-title {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
+  text-align: center;
 }
 .logo-part1 { color: var(--text-color); }
-.logo-part2 { color: var(--primary-color); margin-left: 5px; }
+.logo-part2 { color: var(--primary-color); margin-left: 4px; }
 
 /* ---------- Main Content ---------- */
 .content {
-  padding: 15px;
-  padding-bottom: 70px; /* Отступ под нижнюю панель */
+  padding-bottom: 5rem;
 }
 
 /* ---------- Hero-карусель ---------- */
 .hero-carousel {
   position: relative;
   width: 100%;
-  height: 60vh;
-  min-height: 250px;
+  height: 250px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
-.hero-carousel .slide {
+.hero-slide {
   position: absolute;
   top: 0;
   left: 100%;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  transition: opacity 1s ease;
+  transition: left 0.8s ease;
   background-size: cover;
   background-position: center;
+  opacity: 0;
 }
-.hero-carousel .slide.active {
+.hero-slide.active {
   left: 0;
   opacity: 1;
   z-index: 1;
@@ -72,7 +93,7 @@ html, body {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,57 +101,61 @@ html, body {
 .hero-overlay a {
   background: var(--primary-color);
   color: var(--text-color);
-  padding: 0.6em 1.2em;
+  padding: 0.5rem 1rem;
   border-radius: 4px;
   text-decoration: none;
-  font-weight: 500;
   transition: background 0.3s;
 }
 .hero-overlay a:hover {
   background: var(--accent-color);
 }
 
-/* ---------- Content Sections ---------- */
-.content-section {
-  margin-bottom: 20px;
+/* ---------- Секции с горизонтальными каруселями ---------- */
+.section-row {
+  margin-bottom: 1rem;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1rem 0.5rem;
 }
 .section-title {
-  font-size: 1.3em;
-  margin-bottom: 10px;
-  padding-left: 8px;
-  border-left: 4px solid var(--primary-color);
+  font-size: 1rem;
+  font-weight: 600;
 }
-.cards-container {
+.btn-more {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.btn-more:hover { color: var(--text-color); }
+.row-container {
   display: flex;
-  gap: 10px;
   overflow-x: auto;
-  padding-bottom: 10px;
-  scrollbar-width: none; /* Firefox */
+  gap: 0.5rem;
+  padding: 0 1rem 1rem;
+  scrollbar-width: none;
 }
-.cards-container::-webkit-scrollbar {
-  display: none;         /* Chrome/Safari */
-}
-/* Карточка аниме */
-.anime-card {
-  flex: 0 0 auto;
+.row-container::-webkit-scrollbar { display: none; }
+.row-item {
+  flex-shrink: 0;
   width: 140px;
-  text-align: center;
-  color: var(--text-color);
-  text-decoration: none;
-}
-.anime-card img {
-  width: 100%;
   height: 210px;
-  object-fit: cover;
   border-radius: 4px;
+  overflow: hidden;
+  background: #333;
   transition: transform 0.3s;
 }
-.anime-card:hover img {
-  transform: scale(1.08);
-}
-.anime-card .anime-title {
-  margin-top: 5px;
-  font-size: 0.9em;
+.row-item:hover { transform: scale(1.08); }
+.row-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* ---------- Bottom Navigation (Tab Bar) ---------- */
@@ -144,25 +169,24 @@ html, body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 0;
-  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  padding: 0.5rem 0;
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
   z-index: 100;
 }
-.bottom-nav .nav-link {
+.nav-link {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: var(--text-color);
-  text-decoration: none;
   font-size: 1.2rem;
+  text-decoration: none;
   transition: color 0.3s;
 }
-.bottom-nav .nav-link .nav-label {
-  font-size: 0.7em;
-  margin-top: 3px;
+.nav-label {
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
 }
-.bottom-nav .nav-link.active,
-.bottom-nav .nav-link:hover {
+.nav-link.active, .nav-link:hover {
   color: var(--primary-color);
 }
 
