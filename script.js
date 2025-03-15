@@ -8,21 +8,10 @@ var firebaseConfig = {
   appId: "1:793506779659:web:b391b63343af935afbed0e",
   measurementId: "G-JGNDHJT219"
 };
-// Инициализация
+// Инициализация Firebase
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 var storage = firebase.storage();
-
-/* ---------- Splash Screen (fade-out) ---------- */
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    var splash = document.getElementById('splash-screen');
-    splash.classList.add('hidden'); // плавное исчезновение через transition
-    setTimeout(function() {
-      splash.style.display = 'none'; // убираем из потока
-    }, 700); // 0.7s соответствует transition в CSS
-  }, 2000);
-});
 
 /* ---------- Переключение языка (RU ↔ EN) ---------- */
 var translations = {
@@ -45,14 +34,19 @@ var translations = {
 };
 var currentLang = "ru";
 function applyTranslations() {
-  document.querySelector('[data-i18n="trendingTitle"]').textContent = translations[currentLang].trendingTitle;
-  document.querySelector('[data-i18n="navHome"]').innerHTML = `<i class="fas fa-home"></i><span class="nav-label">${translations[currentLang].navHome}</span>`;
-  document.querySelector('[data-i18n="navAnime"]').innerHTML = `<i class="fas fa-film"></i><span class="nav-label">${translations[currentLang].navAnime}</span>`;
-  document.querySelector('[data-i18n="navManga"]').innerHTML = `<i class="fas fa-book"></i><span class="nav-label">${translations[currentLang].navManga}</span>`;
-  document.querySelector('[data-i18n="navProfile"]').innerHTML = `<i class="fas fa-user"></i><span class="nav-label">${translations[currentLang].navProfile}</span>`;
-  // Если есть другие тексты, тоже обновите
+  // Заголовок Trending
+  var trendingTitleEl = document.querySelector('[data-i18n="trendingTitle"]');
+  if (trendingTitleEl) trendingTitleEl.textContent = translations[currentLang].trendingTitle;
+  // Нижние вкладки
+  var navHome = document.querySelector('[data-i18n="navHome"]');
+  if (navHome) navHome.innerHTML = `<i class="fas fa-home"></i><span class="nav-label">${translations[currentLang].navHome}</span>`;
+  var navAnime = document.querySelector('[data-i18n="navAnime"]');
+  if (navAnime) navAnime.innerHTML = `<i class="fas fa-film"></i><span class="nav-label">${translations[currentLang].navAnime}</span>`;
+  var navManga = document.querySelector('[data-i18n="navManga"]');
+  if (navManga) navManga.innerHTML = `<i class="fas fa-book"></i><span class="nav-label">${translations[currentLang].navManga}</span>`;
+  var navProfile = document.querySelector('[data-i18n="navProfile"]');
+  if (navProfile) navProfile.innerHTML = `<i class="fas fa-user"></i><span class="nav-label">${translations[currentLang].navProfile}</span>`;
 }
-// Кнопка смены языка
 document.getElementById('lang-btn').addEventListener('click', function() {
   currentLang = (currentLang === 'ru') ? 'en' : 'ru';
   applyTranslations();
@@ -60,7 +54,7 @@ document.getElementById('lang-btn').addEventListener('click', function() {
 });
 applyTranslations();
 
-/* ---------- Модальное окно Уведомлений ---------- */
+/* ---------- Уведомления (модальное окно) ---------- */
 var notifModal = document.getElementById('notif-modal');
 var notifBtn = document.getElementById('notif-btn');
 var notifClose = document.getElementById('notif-close');
@@ -86,11 +80,10 @@ function loadCarousel() {
       var data = doc.data();
       var slide = document.createElement('div');
       slide.className = 'slide';
-      // Устанавливаем фон слайду
       if (data.image) {
         slide.style.backgroundImage = `url("${data.image}")`;
       }
-      // Overlay с кнопкой "Смотреть"
+      // Накладываем overlay с кнопкой "Смотреть"
       var overlay = document.createElement('div');
       overlay.className = 'hero-overlay';
       var link = document.createElement('a');
@@ -101,7 +94,7 @@ function loadCarousel() {
       carouselElem.appendChild(slide);
       slides.push(slide);
     });
-    // Если есть хотя бы 1 слайд, активируем первый
+    // Активируем первый слайд
     if (slides.length > 0) {
       slides[0].classList.add('active');
       var currentIndex = 0;
@@ -119,6 +112,7 @@ function loadCarousel() {
 /* ---------- Секция Trending (пример) ---------- */
 function loadTrending() {
   var trendingContainer = document.getElementById('trending-container');
+  if (!trendingContainer) return;
   trendingContainer.innerHTML = '';
   // Получаем аниме, у которых "sections" содержит "trending"
   db.collection("anime").where("sections", "array-contains", "trending").get()
@@ -128,10 +122,12 @@ function loadTrending() {
         var card = document.createElement('a');
         card.className = 'anime-card';
         card.href = '#'; // ссылка на подробную страницу, если нужно
+        // Обложка
         var img = document.createElement('img');
         img.src = data.cover || "https://via.placeholder.com/140x210?text=No+Image";
         img.alt = data.title || 'Anime Title';
         card.appendChild(img);
+        // Название
         var title = document.createElement('div');
         title.className = 'anime-title';
         title.textContent = data.title || 'No Title';
@@ -145,8 +141,8 @@ function loadTrending() {
 }
 
 // Запуск при загрузке
-window.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
   loadCarousel();
   loadTrending();
-  // Если нужны другие секции (continue watching, recommendations), добавьте их вызовы
+  // Если нужны другие секции (continue watching, recommendations) – реализуйте аналогично
 });
