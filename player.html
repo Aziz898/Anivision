@@ -1,81 +1,94 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>AniVision Player</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome (для иконок) -->
+  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
   <style>
     body {
       margin: 0;
       background: #141414;
       color: #fff;
       font-family: 'Montserrat', sans-serif;
+      /* Немного отступа снизу, если нужно под «миниапп» в Telegram */
+      padding-bottom: 5rem;
     }
     header {
-      background: #000;
-      display: flex;
-      align-items: center;
-      padding: 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
-    .back-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.3rem;
-      margin-right: 1rem;
-      cursor: pointer;
-    }
-    .logo {
-      font-weight: 600;
-      font-size: 1.2rem;
-      color: #a749f8;
-    }
-    .container {
-      padding: 1rem;
-    }
-    /* Блок с плеером */
-    .player-box {
       position: relative;
       width: 100%;
-      padding-top: 56.25%; /* Соотношение 16:9 */
+      height: 180px;
       background: #000;
+      overflow: hidden;
       margin-bottom: 1rem;
     }
-    .player-box iframe {
+    /* Баннер (как у animego) */
+    .banner-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.5; /* затемнение */
+    }
+    .banner-overlay {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      border: none;
-      background: #000;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2));
     }
-    /* Инфа об аниме */
-    .anime-info {
+    /* Заголовок поверх баннера */
+    .banner-title {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+    /* Контейнер основной инфы */
+    .container {
+      width: calc(100% - 2rem);
+      margin: 0 auto;
+    }
+    .anime-info-block {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
       margin-bottom: 1rem;
     }
-    .anime-title {
-      font-size: 1.3rem;
+    .anime-poster {
+      width: 120px;
+      height: 170px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .anime-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .anime-details h2 {
+      margin: 0;
+      font-size: 1.2rem;
       font-weight: 600;
-      margin: 0 0 0.5rem;
     }
     .anime-meta {
       font-size: 0.9rem;
       color: #ccc;
-      margin-bottom: 0.5rem;
     }
     .anime-desc {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       line-height: 1.4;
-      margin-bottom: 1rem;
+      margin-top: 0.5rem;
     }
-    /* Кнопки сверху */
-    .top-actions {
+    /* Кнопки (Смотреть онлайн / Все озвучки) */
+    .action-buttons {
+      margin: 1rem 0;
       display: flex;
       gap: 0.5rem;
-      margin-bottom: 1rem;
     }
     .action-btn {
       background: #a749f8;
@@ -85,29 +98,58 @@
       color: #fff;
       font-size: 0.9rem;
       cursor: pointer;
+      transition: background 0.3s;
     }
     .action-btn:hover {
       background: #933ae0;
     }
+    /* Плеер */
+    .player-container {
+      margin-bottom: 1rem;
+    }
+    .player-box {
+      width: 100%;
+      position: relative;
+      padding-top: 56.25%; /* 16:9 */
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .player-box iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
     /* Список серий */
     .episodes-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .episodes-list h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
     }
     .episode-item {
       background: #1f1f1f;
       padding: 0.5rem;
       border-radius: 4px;
+      margin-bottom: 0.5rem;
       cursor: pointer;
-      font-size: 0.9rem;
+      transition: background 0.2s;
     }
     .episode-item:hover {
-      background: #2a2a2a;
+      background: #333;
     }
-    /* Комментарии (пример) */
+    /* Комментарии */
     .comments-section {
-      margin-top: 1rem;
+      margin-bottom: 2rem;
+    }
+    .comments-section h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
     }
     .comment-item {
       background: #1f1f1f;
@@ -123,75 +165,73 @@
   </style>
 </head>
 <body>
-  <!-- Шапка -->
   <header>
-    <button class="back-btn" onclick="history.back()">
-      <i class="fas fa-arrow-left"></i>
-    </button>
-    <div class="logo">AniVision</div>
+    <!-- Баннер (фон) -->
+    <img src="https://via.placeholder.com/600x300?text=Anime+Banner" alt="Banner" class="banner-image">
+    <div class="banner-overlay"></div>
+    <!-- Название аниме поверх баннера -->
+    <div class="banner-title" id="banner-title">AniVision</div>
   </header>
 
   <div class="container">
-    <!-- Блок с плеером -->
-    <div class="player-box">
-      <iframe id="player-iframe" src="" allowfullscreen></iframe>
+    <!-- Блок с инфой об аниме -->
+    <div class="anime-info-block">
+      <img id="anime-poster" class="anime-poster" src="https://via.placeholder.com/120x170?text=Poster" alt="Poster">
+      <div class="anime-details">
+        <h2 id="anime-title">Название аниме</h2>
+        <div class="anime-meta" id="anime-meta">Год: 2023 | Рейтинг: 8.5</div>
+        <p class="anime-desc" id="anime-desc">
+          Описание аниме...
+        </p>
+      </div>
     </div>
 
-    <!-- Кнопки сверху -->
-    <div class="top-actions">
+    <!-- Кнопки -->
+    <div class="action-buttons">
       <button class="action-btn" id="btn-watch">Смотреть онлайн</button>
       <button class="action-btn" id="btn-other">Все озвучки</button>
     </div>
 
-    <!-- Инфа об аниме -->
-    <div class="anime-info">
-      <h2 class="anime-title" id="anime-title">Название аниме</h2>
-      <div class="anime-meta">
-        <span id="anime-year">Год: 2023</span> | 
-        <span id="anime-rating">Рейтинг: 8.5</span>
-      </div>
-      <div class="anime-desc" id="anime-desc">
-        Описание: Демонстрация MP4-плеера. Замените ссылку на свой контент.
+    <!-- Плеер -->
+    <div class="player-container">
+      <div class="player-box">
+        <iframe id="player-iframe" src="" allowfullscreen></iframe>
       </div>
     </div>
 
     <!-- Список серий -->
-    <h3>Список серий</h3>
     <div class="episodes-list" id="episodes-list">
-      <!-- Пример:
-      <div class="episode-item" onclick="openEpisode('Серия 1', 'https://player.site/episode1')">Серия 1</div>
-      <div class="episode-item" onclick="openEpisode('Серия 2', 'https://player.site/episode2')">Серия 2</div>
-      -->
+      <h3>Список серий</h3>
+      <!-- Эпизоды будут добавляться через JS -->
     </div>
 
-    <!-- Комментарии (пример) -->
+    <!-- Комментарии -->
     <div class="comments-section" id="comments-section">
       <h3>Комментарии</h3>
       <div class="comment-item">
-        <div class="comment-author">Fushigura</div>
-        <div class="comment-text">Классный эпизод!</div>
+        <div class="comment-author">User1</div>
+        <div class="comment-text">Отличное аниме!</div>
       </div>
       <div class="comment-item">
-        <div class="comment-author">User123</div>
-        <div class="comment-text">Очень понравилось, жду продолжения.</div>
+        <div class="comment-author">User2</div>
+        <div class="comment-text">Жду новый эпизод.</div>
       </div>
+      <!-- Можно динамически подгружать комментарии, если нужно -->
     </div>
   </div>
 
-  <!-- Подключаем Font Awesome (для иконки стрелки назад) -->
-  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js"></script>
   <script>
-    // Ваш Firebase-конфиг
+    // Firebase конфиг (тот же, что и на главной)
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_BUCKET",
-      messagingSenderId: "SENDER_ID",
-      appId: "APP_ID"
+      apiKey: "ВАШ_API_KEY",
+      authDomain: "ВАШ_AUTH_DOMAIN",
+      projectId: "ВАШ_PROJECT_ID",
+      storageBucket: "ВАШ_BUCKET",
+      messagingSenderId: "ВАШ_SENDER_ID",
+      appId: "ВАШ_APP_ID"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
@@ -203,7 +243,6 @@
     }
     const animeId = getQueryParam('animeId');
 
-    // При загрузке страницы
     window.addEventListener('DOMContentLoaded', () => {
       if (!animeId) {
         document.getElementById('anime-title').textContent = "Ошибка: Не указан animeId";
@@ -216,39 +255,41 @@
       try {
         const docSnap = await db.collection('anime').doc(docId).get();
         if (!docSnap.exists) {
-          document.getElementById('anime-title').textContent = "Аниме не найдено";
+          document.getElementById('anime-title').textContent = "Аниме не найдено!";
           return;
         }
         const data = docSnap.data();
         console.log("Данные аниме:", data);
 
-        // Заполняем данные
+        // Устанавливаем заголовок в баннере
+        document.getElementById('banner-title').textContent = data.title || "Без названия";
+
+        // Постер, заголовок, мета-инфа
+        document.getElementById('anime-poster').src = data.cover || "https://via.placeholder.com/120x170?text=No+Poster";
         document.getElementById('anime-title').textContent = data.title || "Без названия";
-        document.getElementById('anime-year').textContent = `Год: ${data.year || "N/A"}`;
-        document.getElementById('anime-rating').textContent = `Рейтинг: ${data.rating || "N/A"}`;
+        const metaText = `Год: ${data.year || 'N/A'} | Рейтинг: ${data.rating || 'N/A'}`;
+        document.getElementById('anime-meta').textContent = metaText;
         document.getElementById('anime-desc').textContent = data.desc || "";
 
-        // Если есть episodes
-        if (data.episodes && Array.isArray(data.episodes)) {
+        // Если есть массив episodes
+        if (Array.isArray(data.episodes)) {
           const episodesList = document.getElementById('episodes-list');
-          episodesList.innerHTML = "";
           data.episodes.forEach(ep => {
-            const div = document.createElement("div");
-            div.className = "episode-item";
-            div.textContent = `Серия ${ep.number}: ${ep.name || ""}`;
-            div.addEventListener("click", () => {
-              openEpisode(ep.name || `Серия ${ep.number}`, ep.link || "");
+            const div = document.createElement('div');
+            div.className = 'episode-item';
+            div.textContent = `Эпизод ${ep.number}: ${ep.name || ''}`;
+            div.addEventListener('click', () => {
+              openEpisode(ep.name, ep.link);
             });
             episodesList.appendChild(div);
           });
         }
-
-        // Устанавливаем плеер на первую серию (если хотите)
-        if (data.episodes && data.episodes.length > 0) {
-          openEpisode(data.episodes[0].name, data.episodes[0].link);
-        } else if (data.playerLink) {
-          // Либо если есть просто playerLink
+        // Если есть playerLink
+        if (data.playerLink) {
           openEpisode(data.title, data.playerLink);
+        } else if (data.episodes && data.episodes.length > 0) {
+          // Открываем первую серию по умолчанию
+          openEpisode(data.episodes[0].name, data.episodes[0].link);
         }
       } catch (error) {
         console.error("Ошибка при загрузке аниме:", error);
@@ -256,17 +297,16 @@
     }
 
     function openEpisode(epName, epLink) {
-      document.getElementById('player-iframe').src = epLink || "";
-      // Меняем заголовок эпизода
-      // Можно сделать что-то вроде: document.getElementById('player-episode-name').textContent = epName;
+      const iframe = document.getElementById('player-iframe');
+      iframe.src = epLink || "";
     }
 
-    // Пример кнопок
+    // Кнопки «Смотреть онлайн» / «Все озвучки» (пример)
     document.getElementById('btn-watch').addEventListener('click', () => {
-      alert("Здесь можно переключать озвучки или что-то ещё");
+      alert("Здесь можно переключить плеер на онлайн-версию.");
     });
     document.getElementById('btn-other').addEventListener('click', () => {
-      alert("Список доступных озвучек");
+      alert("Здесь можно отобразить список доступных озвучек.");
     });
   </script>
 </body>
