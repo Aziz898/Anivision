@@ -1,36 +1,50 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
+  background-color: #2b2b2b;
   font-family: 'Arial', sans-serif;
-  background-color: #2c2c2c;
   color: white;
+  height: 100vh;
 }
 
-.container {
+.wrapper {
   display: flex;
   height: 100vh;
-  width: 100%;
 }
 
 /* Sidebar */
 .sidebar {
-  width: 15%;
-  background-color: #1f1f1f;
+  width: 250px;
+  background: #1d1d1d;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 20px 10px;
+  justify-content: space-between;
+  border-radius: 20px 0 0 20px;
+}
+
+.sidebar-block {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
-.icon {
+.logo {
+  font-size: 28px;
+  text-align: center;
+}
+
+.nav-icons .icon {
+  background: #333;
+  margin: 10px 0;
   width: 40px;
   height: 40px;
-  background-color: #444;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
 }
 
@@ -40,103 +54,103 @@ body {
 
 .profile img, .merch img {
   width: 60px;
+  height: 60px;
   border-radius: 50%;
 }
 
-.download-btn {
+.download {
+  margin-top: 5px;
   background: red;
   color: white;
   border: none;
-  border-radius: 50%;
   width: 30px;
   height: 30px;
-  font-size: 20px;
-  margin-top: 5px;
+  border-radius: 50%;
 }
 
-.lang-switch button,
-.socials button {
+.language button, .socials button {
   margin: 5px;
-  background: #333;
-  color: white;
-  border: none;
   padding: 5px 10px;
+  background: #444;
+  border: none;
   border-radius: 5px;
+  color: white;
 }
 
-/* Main Content */
-.main-content {
-  flex-grow: 1;
-  background: #2c2c2c;
-  position: relative;
+/* Main Area */
+.main {
+  flex: 1;
   padding: 30px;
+  position: relative;
 }
 
-.nav {
+.top-menu {
   display: flex;
-  gap: 30px;
-  margin-bottom: 20px;
+  gap: 40px;
   font-size: 18px;
+  margin-bottom: 20px;
 }
 
-.hero {
+.content {
   position: relative;
   height: 100%;
   background: #1a1a1a;
-  border-radius: 20px;
+  border-radius: 25px;
+  overflow: hidden;
   padding: 20px;
 }
 
-.hero-img {
-  max-width: 100%;
+.character img {
+  width: 100%;
   border-radius: 20px;
+  object-fit: cover;
 }
 
-.episode-info {
+.episode-box {
   position: absolute;
-  top: 20px;
-  right: 40px;
-  background: rgba(0,0,0,0.5);
-  padding: 15px;
-  border-radius: 10px;
+  top: 30px;
+  right: 30px;
+  background: rgba(0,0,0,0.4);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
 }
 
-.continue-watch {
+.continue-box {
   position: absolute;
-  bottom: 40px;
-  left: 40px;
+  bottom: 30px;
+  left: 30px;
 }
 
 .continue-btn {
-  background: #444;
-  color: white;
   padding: 10px 20px;
+  background: #333;
   border: none;
+  color: white;
   margin-right: 10px;
-  border-radius: 5px;
-}
-
-.preview {
-  display: inline-block;
-  position: relative;
-  margin-top: 10px;
-}
-
-.preview img {
-  width: 150px;
   border-radius: 10px;
 }
 
-.play-btn {
+.video-preview {
+  display: inline-block;
+  margin-top: 10px;
+  position: relative;
+}
+
+.video-preview img {
+  width: 160px;
+  border-radius: 10px;
+}
+
+.play {
   position: absolute;
-  top: 40%;
-  left: 40%;
-  transform: translate(-50%, -50%);
+  top: 35%;
+  left: 35%;
   background: white;
   color: black;
   border: none;
-  border-radius: 50%;
-  font-size: 20px;
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
 }
