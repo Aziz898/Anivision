@@ -1,227 +1,156 @@
-/* ---------- Переменные цветовой схемы ---------- */
-:root {
-  --primary-color: #8e44ad; /* Фиолетовый */
-  --bg-color: #141414;      /* Тёмный фон */
-  --text-color: #fff;       /* Белый текст */
-  --accent-color: #4B0082;  /* Тёмно-фиолетовый */
-}
-
-/* Safe Area для iOS */
-html, body {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+* {
+  box-sizing: border-box;
   margin: 0;
-  background: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Montserrat', sans-serif;
+  padding: 0;
 }
 
-/* ---------- Splash Screen ---------- */
-.splash-screen {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  opacity: 1;
-  transition: opacity 0.7s ease;
-}
-.splash-screen.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-.splash-logo {
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--primary-color);
+body {
+  background-color: #2b2b2b;
+  font-family: 'Arial', sans-serif;
+  color: white;
+  height: 100vh;
 }
 
-/* ---------- Header ---------- */
-.header {
-  background: #000;
-  padding: 1rem;
+.wrapper {
   display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #1d1d1d;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  border-radius: 20px 0 0 20px;
 }
-.lang-btn, .notif-btn {
-  background: none;
-  border: none;
-  color: var(--text-color);
-  font-size: 1.3rem;
-  cursor: pointer;
+
+.sidebar-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-.app-title {
-  font-size: 1.3rem;
-  font-weight: 600;
+
+.logo {
+  font-size: 28px;
   text-align: center;
 }
-.logo-part1 { color: var(--text-color); }
-.logo-part2 { color: var(--primary-color); margin-left: 4px; }
 
-/* ---------- Main Content ---------- */
-.content {
-  padding-bottom: 5rem;
-}
-
-/* ---------- Hero-карусель ---------- */
-.hero-carousel {
-  position: relative;
-  width: 100%;
-  height: 250px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-.hero-slide {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  width: 100%;
-  height: 100%;
-  transition: left 0.8s ease;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-}
-.hero-slide.active {
-  left: 0;
-  opacity: 1;
-  z-index: 1;
-}
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.hero-overlay a {
-  background: var(--primary-color);
-  color: var(--text-color);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-.hero-overlay a:hover {
-  background: var(--accent-color);
-}
-
-/* ---------- Секции с горизонтальными каруселями ---------- */
-.section-row {
-  margin-bottom: 1rem;
-}
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 1rem 0.5rem;
-}
-.section-title {
-  font-size: 1rem;
-  font-weight: 600;
-}
-.btn-more {
-  background: none;
-  border: none;
-  color: var(--primary-color);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-.btn-more:hover { color: var(--text-color); }
-.row-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 0.5rem;
-  padding: 0 1rem 1rem;
-  scrollbar-width: none;
-}
-.row-container::-webkit-scrollbar { display: none; }
-.row-item {
-  flex-shrink: 0;
-  width: 140px;
-  height: 210px;
-  border-radius: 4px;
-  overflow: hidden;
+.nav-icons .icon {
   background: #333;
-  transition: transform 0.3s;
+  margin: 10px 0;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
 }
-.row-item:hover { transform: scale(1.08); }
-.row-poster {
-  width: 100%;
+
+.profile, .merch {
+  text-align: center;
+}
+
+.profile img, .merch img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.download {
+  margin-top: 5px;
+  background: red;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.language button, .socials button {
+  margin: 5px;
+  padding: 5px 10px;
+  background: #444;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+/* Main Area */
+.main {
+  flex: 1;
+  padding: 30px;
+  position: relative;
+}
+
+.top-menu {
+  display: flex;
+  gap: 40px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.content {
+  position: relative;
   height: 100%;
+  background: #1a1a1a;
+  border-radius: 25px;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.character img {
+  width: 100%;
+  border-radius: 20px;
   object-fit: cover;
 }
 
-/* ---------- Bottom Navigation (Tab Bar) ---------- */
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(10px);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.5rem 0;
-  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
-  z-index: 100;
-}
-.nav-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--text-color);
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-.nav-label {
-  font-size: 0.7rem;
-  margin-top: 0.2rem;
-}
-.nav-link.active, .nav-link:hover {
-  color: var(--primary-color);
+.episode-box {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: rgba(0,0,0,0.4);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
 }
 
-/* ---------- Modal (Уведомления) ---------- */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 200;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.7);
+.continue-box {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
 }
-.modal .modal-content {
-  background: #222;
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 400px;
-  color: var(--text-color);
+
+.continue-btn {
+  padding: 10px 20px;
+  background: #333;
+  border: none;
+  color: white;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+.video-preview {
+  display: inline-block;
+  margin-top: 10px;
   position: relative;
 }
-.modal .modal-content h3 {
-  margin-top: 0;
-  color: var(--primary-color);
+
+.video-preview img {
+  width: 160px;
+  border-radius: 10px;
 }
-.modal .close {
+
+.play {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.5em;
-  cursor: pointer;
-}
-.modal .close:hover {
-  color: var(--accent-color);
+  top: 35%;
+  left: 35%;
+  background: white;
+  color: black;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
 }
