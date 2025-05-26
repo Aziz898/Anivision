@@ -3,57 +3,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Anime Dashboard</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Anime Dashboard UI</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+  <div class="wrapper">
     <!-- Sidebar -->
-    <div class="sidebar">
-      <div class="icon home"></div>
-      <div class="icon star"></div>
-      <div class="icon skull"></div>
-      <div class="profile">
-        <img src="profile.jpg" alt="Profile">
-        <span>PROFILE</span>
+    <aside class="sidebar">
+      <div class="sidebar-block">
+        <div class="logo">◎</div>
+        <nav class="nav-icons">
+          <div class="icon">🏠</div>
+          <div class="icon">⭐</div>
+          <div class="icon">☠️</div>
+        </nav>
+        <div class="profile">
+          <img src="profile.jpg" alt="Profile">
+          <span>PROFILE</span>
+        </div>
+        <div class="merch">
+          <img src="merch.jpg" alt="Merch">
+          <button class="download">↓</button>
+        </div>
+        <div class="language">
+          <button>EN</button>
+          <button>RU</button>
+        </div>
+        <div class="socials">
+          <button>IG</button>
+          <button>YT</button>
+        </div>
       </div>
-      <div class="merch">
-        <img src="merch.jpg" alt="Merch">
-        <button class="download-btn">↓</button>
-      </div>
-      <div class="lang-switch">
-        <button>EN</button>
-        <button>RU</button>
-      </div>
-      <div class="socials">
-        <button>IG</button>
-        <button>YT</button>
-      </div>
-    </div>
+    </aside>
 
     <!-- Main Content -->
-    <div class="main-content">
-      <div class="nav">
+    <main class="main">
+      <header class="top-menu">
         <span>ANIME</span>
         <span>MANGA</span>
         <span>MERCH</span>
-      </div>
-      <div class="hero">
-        <img src="character.jpg" alt="Hero" class="hero-img" />
-        <div class="episode-info">
+      </header>
+
+      <section class="content">
+        <div class="character">
+          <img src="character.jpg" alt="Character">
+        </div>
+
+        <div class="episode-box">
           <p>NEW EPISODE</p>
           <h2>21 FEB</h2>
         </div>
-        <div class="continue-watch">
+
+        <div class="continue-box">
           <button class="continue-btn">CONTINUE</button>
-          <button class="download-btn">↓</button>
-          <div class="preview">
+          <button class="download">↓</button>
+          <div class="video-preview">
             <img src="preview.jpg" alt="Preview">
-            <button class="play-btn">▶</button>
+            <button class="play">▶</button>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   </div>
 </body>
 </html>
