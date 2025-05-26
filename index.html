@@ -1,445 +1,59 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AniVision MiniApp</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <!-- Подключаем шрифты -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <!-- Font Awesome (иконки уведомлений) -->
-  <script src="https://kit.fontawesome.com/94b0d7b6e2.js" crossorigin="anonymous"></script>
-  <style>
-    /* ---------- Общие стили ---------- */
-    html, body {
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
-      margin: 0;
-      background: #141414;
-      color: #fff;
-      font-family: 'Montserrat', sans-serif;
-    }
-    /* ---------- Splash Screen ---------- */
-    .splash-screen {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      opacity: 1;
-      transition: opacity 0.7s ease;
-    }
-    .splash-logo {
-      font-size: 2rem;
-      font-weight: 600;
-      color: #a749f8;
-    }
-    /* ---------- Header ---------- */
-    .header {
-      background: #000;
-      padding: 0.5rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .left-part, .right-part {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .app-title {
-      flex: 1;
-      font-size: 1.3rem;
-      font-weight: 600;
-      text-align: center;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      justify-content: center;
-    }
-    .logo-part1 { color: #fff; }
-    .logo-part2 { color: #a749f8; margin-left: 4px; }
-    .lang-toggle {
-      background: none;
-      border: 1px solid #a749f8;
-      color: #a749f8;
-      border-radius: 4px;
-      padding: 0.3rem 0.6rem;
-      cursor: pointer;
-      font-size: 0.8rem;
-    }
-    .lang-toggle:hover {
-      background: #a749f8;
-      color: #fff;
-    }
-    .search-bar {
-      background: #2a2a2a;
-      border: none;
-      border-radius: 4px;
-      padding: 0.4rem 0.6rem;
-      color: #fff;
-      font-size: 0.85rem;
-      width: 120px;
-    }
-    .notif-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-    /* ---------- Main Content ---------- */
-    .content {
-      padding-bottom: 5rem;
-    }
-    /* ---------- HERO-карусель ---------- */
-    .hero-carousel {
-      position: relative;
-      width: calc(100% - 2rem); /* Чтобы слева/справа был отступ */
-      margin: 0 auto 1rem;      /* Центрируем и снизу делаем отступ */
-      height: 220px;
-      overflow: hidden;
-      border-radius: 12px;
-    }
-    .hero-slide {
-      position: absolute;
-      top: 0;
-      left: 100%;
-      width: 100%;
-      height: 100%;
-      transition: left 0.8s ease;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      border-radius: 12px;
-    }
-    .hero-slide.active {
-      left: 0;
-      opacity: 1;
-      z-index: 1;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.3);
-      border-radius: 12px;
-    }
-    /* ---------- Секции ---------- */
-    .section-row {
-      margin-bottom: 1rem;
-    }
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 1rem 0.5rem;
-    }
-    .section-title {
-      font-size: 1rem;
-      font-weight: 600;
-      position: relative;
-      padding-left: 8px;
-    }
-    .section-title::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 4px;
-      height: 80%;
-      background: #a749f8;
-      box-shadow: 0 0 8px #a749f8;
-      border-radius: 2px;
-    }
-    .btn-more {
-      background: none;
-      border: none;
-      color: #a749f8;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-    .btn-more:hover {
-      color: #fff;
-    }
-    .row-container {
-      display: flex;
-      overflow-x: auto;
-      gap: 0.5rem;
-      padding: 0 1rem 1rem;
-      scrollbar-width: none;
-    }
-    .row-container::-webkit-scrollbar { display: none; }
-    .row-item {
-      flex-shrink: 0;
-      width: 140px;
-      height: 210px;
-      border-radius: 12px; /* более округлые углы */
-      overflow: hidden;
-      background: #333;
-      transition: transform 0.3s;
-      box-shadow: 0 0 8px rgba(167,73,248,0);
-    }
-    .row-item:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 8px rgba(167,73,248,0.7);
-    }
-    .row-poster {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-    /* ---------- Bottom Nav (Tab Bar) ---------- */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0.5rem 0;
-      padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
-      z-index: 100;
-    }
-    .nav-link {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #fff;
-      font-size: 1.2rem;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .nav-label {
-      font-size: 0.7rem;
-      margin-top: 0.2rem;
-    }
-    .nav-link.active, .nav-link:hover {
-      color: #a749f8;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anime Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- SPLASH SCREEN -->
-  <div class="splash-screen" id="splash-screen">
-    <div class="splash-logo">AniVision</div>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="icon home"></div>
+      <div class="icon star"></div>
+      <div class="icon skull"></div>
+      <div class="profile">
+        <img src="profile.jpg" alt="Profile">
+        <span>PROFILE</span>
+      </div>
+      <div class="merch">
+        <img src="merch.jpg" alt="Merch">
+        <button class="download-btn">↓</button>
+      </div>
+      <div class="lang-switch">
+        <button>EN</button>
+        <button>RU</button>
+      </div>
+      <div class="socials">
+        <button>IG</button>
+        <button>YT</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="nav">
+        <span>ANIME</span>
+        <span>MANGA</span>
+        <span>MERCH</span>
+      </div>
+      <div class="hero">
+        <img src="character.jpg" alt="Hero" class="hero-img" />
+        <div class="episode-info">
+          <p>NEW EPISODE</p>
+          <h2>21 FEB</h2>
+        </div>
+        <div class="continue-watch">
+          <button class="continue-btn">CONTINUE</button>
+          <button class="download-btn">↓</button>
+          <div class="preview">
+            <img src="preview.jpg" alt="Preview">
+            <button class="play-btn">▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <!-- HEADER -->
-  <header class="header">
-    <div class="left-part">
-      <button class="lang-toggle" id="lang-toggle">EN</button>
-    </div>
-    <div class="app-title">
-      <span class="logo-part1">Ani</span><span class="logo-part2">Vision</span>
-      <input type="text" class="search-bar" id="search-bar" placeholder="Поиск...">
-    </div>
-    <div class="right-part">
-      <button class="notif-btn" id="notif-btn"><i class="fas fa-bell"></i></button>
-    </div>
-  </header>
-
-  <!-- MAIN CONTENT -->
-  <main class="content">
-    <!-- HERO-КАРУСЕЛЬ -->
-    <section class="hero-carousel" id="hero-carousel">
-      <!-- Слайды будут подгружаться динамически -->
-    </section>
-
-    <!-- СЕКЦИЯ: Trending -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title" id="trending-title">Trending</h3>
-        <button class="btn-more" id="trending-more">See All</button>
-      </div>
-      <div class="row-container" id="trending-container"></div>
-    </section>
-
-    <!-- СЕКЦИЯ: Continue Watching -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title" id="continue-title">Continue Watching</h3>
-        <button class="btn-more">See All</button>
-      </div>
-      <div class="row-container" id="continue-container"></div>
-    </section>
-
-    <!-- СЕКЦИЯ: Recommendations -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title" id="recommend-title">Recommendations</h3>
-        <button class="btn-more">See All</button>
-      </div>
-      <div class="row-container" id="recommend-container"></div>
-    </section>
-
-    <!-- СЕКЦИЯ: Upcoming -->
-    <section class="section-row">
-      <div class="section-header">
-        <h3 class="section-title" id="upcoming-title">Upcoming</h3>
-        <button class="btn-more">See All</button>
-      </div>
-      <div class="row-container" id="upcoming-container"></div>
-    </section>
-  </main>
-
-  <!-- НИЖНЯЯ ПАНЕЛЬ (Tab Bar) -->
-  <nav class="bottom-nav">
-    <a href="#" class="nav-link active">
-      <i class="fas fa-home"></i>
-      <span class="nav-label">Главная</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-film"></i>
-      <span class="nav-label">Аниме</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-book"></i>
-      <span class="nav-label">Манга</span>
-    </a>
-    <a href="#" class="nav-link">
-      <i class="fas fa-user"></i>
-      <span class="nav-label">Профиль</span>
-    </a>
-  </nav>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-
-    // Полный Firebase-конфиг (с вашими ключами)
-    const firebaseConfig = {
-      apiKey: "AIzaSyBrgoL47GPj30GHYkNBEBQyj3ddflFVXfI",
-      authDomain: "anivision-194f5.firebaseapp.com",
-      projectId: "anivision-194f5",
-      storageBucket: "anivision-194f5.appspot.com",
-      messagingSenderId: "793506779659",
-      appId: "1:793506779659:web:b391b63343af935afbed0e",
-      measurementId: "G-JGNDHJT219"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Fade-out Splash Screen
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        const splash = document.getElementById("splash-screen");
-        splash.style.opacity = 0;
-        setTimeout(() => { splash.style.display = "none"; }, 700);
-      }, 2000);
-    });
-
-    // Переключатель языка
-    let currentLang = "en";
-    const langToggle = document.getElementById("lang-toggle");
-    langToggle.addEventListener("click", () => {
-      currentLang = (currentLang === "en") ? "ru" : "en";
-      langToggle.textContent = currentLang.toUpperCase();
-      applyTranslations();
-    });
-
-    const translations = {
-      en: {
-        trending: "Trending",
-        continue: "Continue Watching",
-        recommendations: "Recommendations",
-        upcoming: "Upcoming",
-        seeAll: "See All"
-      },
-      ru: {
-        trending: "Популярное",
-        continue: "Продолжить",
-        recommendations: "Рекомендации",
-        upcoming: "Upcoming",
-        seeAll: "Ещё"
-      }
-    };
-
-    function applyTranslations() {
-      document.getElementById("trending-title").textContent = translations[currentLang].trending;
-      document.getElementById("trending-more").textContent = translations[currentLang].seeAll;
-      document.getElementById("continue-title").textContent = translations[currentLang].continue;
-      document.getElementById("recommend-title").textContent = translations[currentLang].recommendations;
-      document.getElementById("upcoming-title").textContent = translations[currentLang].upcoming;
-    }
-    applyTranslations();
-
-    // Нотификации
-    document.getElementById("notif-btn").addEventListener("click", () => {
-      alert("Уведомления пока не реализованы!");
-    });
-
-    // HERO-карусель
-    async function loadCarousel() {
-      const carouselElem = document.getElementById("hero-carousel");
-      carouselElem.innerHTML = "";
-      try {
-        const qSnap = await getDocs(collection(db, "carouselBanners"));
-        const slides = [];
-        qSnap.forEach(doc => {
-          const data = doc.data();
-          const slide = document.createElement("div");
-          slide.className = "hero-slide";
-          slide.style.backgroundImage = `url("${data.image}")`;
-          slide.innerHTML = `<div class="hero-overlay"></div>`;
-          carouselElem.appendChild(slide);
-          slides.push(slide);
-        });
-        if (slides.length > 0) {
-          slides[0].classList.add("active");
-          let currentIndex = 0;
-          setInterval(() => {
-            slides[currentIndex].classList.remove("active");
-            currentIndex = (currentIndex + 1) % slides.length;
-            slides[currentIndex].classList.add("active");
-          }, 5000);
-        }
-      } catch (error) {
-        console.error("Ошибка при загрузке карусели:", error);
-      }
-    }
-    loadCarousel();
-
-    // Функция для загрузки секций
-    async function loadSection(sectionKey, containerId) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      container.innerHTML = "";
-      try {
-        const animeRef = collection(db, "anime");
-        const q = query(animeRef, where("sections", "array-contains", sectionKey));
-        const qSnap = await getDocs(q);
-        qSnap.forEach(docSnap => {
-          const data = docSnap.data();
-          const docId = docSnap.id;
-          const cardLink = document.createElement("a");
-          cardLink.href = `player.html?animeId=${docId}`;
-          cardLink.classList.add("row-item");
-          cardLink.innerHTML = `
-            <img class="row-poster"
-                 src="${data.cover ? data.cover : 'https://via.placeholder.com/140x210?text=No+Image'}"
-                 alt="${data.title || 'No title'}">
-          `;
-          container.appendChild(cardLink);
-        });
-      } catch (error) {
-        console.error(`Ошибка при загрузке [${sectionKey}]:`, error);
-      }
-    }
-    // Загружаем секции
-    loadSection("trending", "trending-container");
-    loadSection("continue_watching", "continue-container");
-    loadSection("recommendations", "recommend-container");
-    loadSection("upcoming", "upcoming-container");
-  </script>
 </body>
 </html>
